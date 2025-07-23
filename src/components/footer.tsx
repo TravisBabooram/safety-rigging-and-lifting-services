@@ -16,7 +16,7 @@ const quickLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-gradient-card border-t border-border">
+    <footer className="bg-black text-white border-t border-gray-800">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
@@ -26,11 +26,11 @@ export function Footer() {
                 <Wrench className="h-6 w-6 text-primary-foreground" />
               </div>
               <div>
-                <div className="text-lg font-bold text-foreground">SRLS</div>
-                <div className="text-xs text-muted-foreground">Safety Rigging & Lifting</div>
+                <div className="text-lg font-bold text-white">SRLS</div>
+                <div className="text-xs text-gray-400">Safety Rigging & Lifting</div>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground max-w-xs">
+            <p className="text-sm text-gray-400 max-w-xs">
               Your trusted partner in rigging & lifting solutions. Expert guidance and support for lifting operations in Trinidad & Tobago.
             </p>
           </div>
