@@ -1,0 +1,167 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Users, Target, Award, Shield, Link } from "lucide-react";
+
+export default function About() {
+  const certifications = [
+    "OPITO Certified",
+    "OSHA Compliance",
+    "ISO 9001 Certified",
+    "NCCCO Certified",
+    "API Standards",
+    "ASME B30 Certified"
+  ];
+
+  return (
+    <div className="container mx-auto px-4 py-16 space-y-16">
+      {/* Hero Section */}
+      <section className="text-center space-y-6">
+        <h1 className="text-4xl md:text-6xl font-bold text-foreground">About SRLS</h1>
+        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          Your trusted partner in rigging & lifting solutions with over a decade of expertise 
+          in safety, compliance, and operational excellence.
+        </p>
+      </section>
+
+      {/* Who We Are */}
+      <section className="grid md:grid-cols-2 gap-8 items-center">
+        <div className="space-y-6">
+          <div className="flex items-center space-x-2">
+            <Users className="h-6 w-6 text-accent" />
+            <h2 className="text-3xl font-bold text-foreground">Who We Are</h2>
+          </div>
+          <p className="text-muted-foreground leading-relaxed">
+            Safety Rigging & Lifting Services (SRLS) is a premier rigging consultancy company 
+            based in Trinidad & Tobago. Founded with a commitment to safety excellence and 
+            operational efficiency, we provide comprehensive rigging and lifting solutions 
+            across various industries including oil & gas, construction, and marine operations.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            Our team brings together decades of combined experience in complex rigging operations, 
+            safety management, and regulatory compliance. We pride ourselves on delivering solutions 
+            that not only meet but exceed industry standards.
+          </p>
+        </div>
+        <div className="bg-gradient-card rounded-lg p-8 shadow-card">
+          <div className="space-y-4">
+            <div className="text-3xl font-bold text-primary">10+</div>
+            <div className="text-muted-foreground">Years of Experience</div>
+            <div className="text-3xl font-bold text-primary">200+</div>
+            <div className="text-muted-foreground">Projects Completed</div>
+            <div className="text-3xl font-bold text-primary">100%</div>
+            <div className="text-muted-foreground">Safety Record</div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mission & Values */}
+      <section className="bg-gradient-card rounded-lg p-8 shadow-card">
+        <div className="grid md:grid-cols-2 gap-8">
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2">
+              <Target className="h-6 w-6 text-accent" />
+              <h3 className="text-2xl font-bold text-foreground">Our Mission</h3>
+            </div>
+            <p className="text-muted-foreground leading-relaxed">
+              To provide world-class rigging and lifting consultancy services that prioritize 
+              safety, efficiency, and regulatory compliance. We are committed to protecting 
+              lives, assets, and the environment through innovative solutions and expert guidance.
+            </p>
+          </div>
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2">
+              <Shield className="h-6 w-6 text-accent" />
+              <h3 className="text-2xl font-bold text-foreground">Our Values</h3>
+            </div>
+            <ul className="space-y-2 text-muted-foreground">
+              <li>• Safety First - Zero compromises on safety standards</li>
+              <li>• Integrity - Honest, transparent, and ethical practices</li>
+              <li>• Excellence - Continuous improvement and quality delivery</li>
+              <li>• Innovation - Embracing new technologies and methodologies</li>
+              <li>• Reliability - Consistent, dependable service delivery</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Meet the Director */}
+      <section className="space-y-8">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-foreground mb-4">Meet Our Director</h2>
+        </div>
+        <Card className="max-w-4xl mx-auto shadow-card">
+          <CardContent className="p-8">
+            <div className="grid md:grid-cols-3 gap-6 items-center">
+              <div className="flex justify-center">
+                <div className="w-48 h-48 bg-gradient-primary rounded-full flex items-center justify-center">
+                  <Users className="h-24 w-24 text-primary-foreground" />
+                </div>
+              </div>
+              <div className="md:col-span-2 space-y-4">
+                <div>
+                  <h3 className="text-2xl font-bold text-foreground">Michael Williams</h3>
+                  <p className="text-accent font-semibold">Managing Director & Principal Consultant</p>
+                </div>
+                <p className="text-muted-foreground leading-relaxed">
+                  Michael brings over 15 years of experience in rigging and lifting operations 
+                  across the Caribbean region. His expertise spans offshore drilling operations, 
+                  construction projects, and marine lifting operations. He holds multiple 
+                  international certifications and has successfully managed complex rigging 
+                  projects valued at over $50 million.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="secondary">OPITO Certified</Badge>
+                  <Badge variant="secondary">NCCCO Crane Operator</Badge>
+                  <Badge variant="secondary">API Inspector</Badge>
+                  <Badge variant="secondary">OSHA 30-Hour</Badge>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Certifications */}
+      <section className="space-y-8">
+        <div className="text-center">
+          <div className="flex items-center justify-center space-x-2 mb-4">
+            <Award className="h-6 w-6 text-accent" />
+            <h2 className="text-3xl font-bold text-foreground">Certifications & Memberships</h2>
+          </div>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Our commitment to excellence is backed by industry-recognized certifications 
+            and professional memberships.
+          </p>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {certifications.map((cert, index) => (
+            <Card key={index} className="text-center p-4 hover:shadow-card transition-shadow">
+              <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-3">
+                <Award className="h-8 w-8 text-primary-foreground" />
+              </div>
+              <p className="text-sm font-medium text-foreground">{cert}</p>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="text-center space-y-6 bg-gradient-primary rounded-lg p-12 text-primary-foreground">
+        <h2 className="text-3xl font-bold">Ready to Work With Us?</h2>
+        <p className="text-lg opacity-90 max-w-2xl mx-auto">
+          Let our experienced team help you with your next rigging and lifting project. 
+          Contact us today for a consultation.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button variant="outline" size="lg" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90">
+            <Link to="/contact">Get in Touch</Link>
+          </Button>
+          <Button variant="ghost" size="lg" className="text-primary-foreground border-primary-foreground hover:bg-primary-foreground/10">
+            <Link to="/services">View Our Services</Link>
+          </Button>
+        </div>
+      </section>
+    </div>
+  );
+}
