@@ -27,29 +27,33 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <div className="min-h-screen flex flex-col">
-            <Navigation />
-            <main className="flex-1">
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/services" element={<Services />} />
-                <Route path="/portfolio" element={<Portfolio />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/contact-form" element={<ContactForm />} />
-                <Route path="/faq" element={<FAQ />} />
-                <Route path="/sitemap" element={<Sitemap />} />
-                <Route path="/privacy-terms" element={<PrivacyTerms />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-            <Footer />
-            <ScrollToTop />
-          </div>
+          <AppContent />
         </BrowserRouter>
       </TooltipProvider>
     </ThemeProvider>
   </QueryClientProvider>
+);
+
+const AppContent = () => (
+  <div className="min-h-screen flex flex-col">
+    <Navigation />
+    <main className="flex-1">
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/contact-form" element={<ContactForm />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/sitemap" element={<Sitemap />} />
+        <Route path="/privacy-terms" element={<PrivacyTerms />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </main>
+    <Footer />
+    <ScrollToTop />
+  </div>
 );
 
 export default App;
