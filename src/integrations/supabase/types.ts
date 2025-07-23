@@ -101,6 +101,27 @@ export type Database = {
         }
         Relationships: []
       }
+      site_status: {
+        Row: {
+          id: string
+          maintenance_mode: boolean
+          message: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          maintenance_mode?: boolean
+          message?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          maintenance_mode?: boolean
+          message?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       users: {
         Row: {
           created_at: string | null
