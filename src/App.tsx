@@ -11,6 +11,7 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Services from "./pages/Services";
 import Portfolio from "./pages/Portfolio";
+import LiftPlanning from "./pages/LiftPlanning";
 import Contact from "./pages/Contact";
 import ContactForm from "./pages/ContactForm";
 import FAQ from "./pages/FAQ";
@@ -43,6 +44,7 @@ const AppContent = () => (
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
         <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/services/lift-planning" element={<LiftPlanning />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/contact-form" element={<ContactForm />} />
         <Route path="/faq" element={<FAQ />} />
