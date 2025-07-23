@@ -14,7 +14,114 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      messages: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: string
+          message: string
+          name: string
+          preferred_contact: string | null
+          service_type: string | null
+          subject: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: string
+          message: string
+          name: string
+          preferred_contact?: string | null
+          service_type?: string | null
+          subject: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          preferred_contact?: string | null
+          service_type?: string | null
+          subject?: string
+        }
+        Relationships: []
+      }
+      portfolio: {
+        Row: {
+          category: string
+          description: string | null
+          id: string
+          media_url: string
+          thumbnail_url: string | null
+          title: string
+          uploaded_at: string | null
+        }
+        Insert: {
+          category: string
+          description?: string | null
+          id?: string
+          media_url: string
+          thumbnail_url?: string | null
+          title: string
+          uploaded_at?: string | null
+        }
+        Update: {
+          category?: string
+          description?: string | null
+          id?: string
+          media_url?: string
+          thumbnail_url?: string | null
+          title?: string
+          uploaded_at?: string | null
+        }
+        Relationships: []
+      }
+      services: {
+        Row: {
+          content: string
+          created_at: string | null
+          icon: string | null
+          id: string
+          title: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          icon?: string | null
+          id?: string
+          title: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          icon?: string | null
+          id?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      users: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: string
+          role: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: string
+          role?: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: string
+          role?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

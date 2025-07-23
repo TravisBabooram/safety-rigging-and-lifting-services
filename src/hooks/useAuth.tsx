@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         .single();
 
       if (error) throw error;
-      setUserRole(data);
+      setUserRole(data as UserRole);
     } catch (error) {
       console.error('Error fetching user role:', error);
       setUserRole(null);
@@ -93,14 +93,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const redirectUrl = `${window.location.origin}/admin/dashboard`;
-    
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
-      options: {
-        emailRedirectTo: redirectUrl
-      }
     });
     
     if (error) throw error;
