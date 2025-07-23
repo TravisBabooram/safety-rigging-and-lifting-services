@@ -40,8 +40,9 @@ const Index = () => {
           <img 
             src="/lovable-uploads/cdae1e93-e234-4e65-8bf1-356fd65f4de2.png" 
             alt="SRLS - Safety Rigging & Lifting Services" 
-            className="h-20 w-auto mx-auto"
+            className="h-32 w-auto mx-auto mb-4"
           />
+          <h2 className="text-2xl font-bold text-foreground">Safety Rigging & Lifting Services</h2>
         </div>
       </section>
 
