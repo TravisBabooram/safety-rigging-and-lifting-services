@@ -32,15 +32,15 @@ export default function About() {
             <h2 className="text-3xl font-bold text-foreground">Who We Are</h2>
           </div>
           <p className="text-muted-foreground leading-relaxed">
-            Safety Rigging & Lifting Services (SRLS) is a premier rigging consultancy company 
-            based in Trinidad & Tobago. Founded with a commitment to safety excellence and 
-            operational efficiency, we provide comprehensive rigging and lifting solutions 
-            across various industries including oil & gas, construction, and marine operations.
+            Safety Rigging & Lifting Services (SRLS) became a registered company in March 2020 to support 
+            construction, oil & gas, and industrial projects across Trinidad and Tobago. We specialize in 
+            rigging and lifting operations, with a commitment to safety that matches our pursuit of quality 
+            and timely delivery.
           </p>
           <p className="text-muted-foreground leading-relaxed">
-            Our team brings together decades of combined experience in complex rigging operations, 
-            safety management, and regulatory compliance. We pride ourselves on delivering solutions 
-            that not only meet but exceed industry standards.
+            Our expertise spans across various industries including petrochemical facilities, marine terminals, 
+            construction sites, and offshore platforms. We bring together technical knowledge, operational 
+            experience, and regulatory compliance to deliver solutions that exceed client expectations.
           </p>
         </div>
         <div className="bg-gradient-card rounded-lg p-8 shadow-card">
@@ -64,9 +64,11 @@ export default function About() {
               <h3 className="text-2xl font-bold text-foreground">Our Mission</h3>
             </div>
             <p className="text-muted-foreground leading-relaxed">
-              To provide world-class rigging and lifting consultancy services that prioritize 
-              safety, efficiency, and regulatory compliance. We are committed to protecting 
-              lives, assets, and the environment through innovative solutions and expert guidance.
+              SRLS's aim is to provide an efficient and reliable service to our clients and to enable them 
+              in every aspect of operation to achieve sustainable growth and development. Clients are our 
+              highest priority. We provide quality services while respecting health, safety, and the 
+              environment by applying international standards, safe work, and best practices in all 
+              lifting and rigging operations.
             </p>
           </div>
           <div className="space-y-4">
@@ -76,10 +78,9 @@ export default function About() {
             </div>
             <ul className="space-y-2 text-muted-foreground">
               <li>• Safety First - Zero compromises on safety standards</li>
-              <li>• Integrity - Honest, transparent, and ethical practices</li>
-              <li>• Excellence - Continuous improvement and quality delivery</li>
-              <li>• Innovation - Embracing new technologies and methodologies</li>
-              <li>• Reliability - Consistent, dependable service delivery</li>
+              <li>• Professionalism - Maintaining excellence in all operations</li>
+              <li>• Client-Centered Service - Putting client needs at the forefront</li>
+              <li>• Integrity in Every Lift - Honest and transparent practices</li>
             </ul>
           </div>
         </div>
@@ -104,17 +105,17 @@ export default function About() {
                   <p className="text-accent font-semibold">Managing Director & Principal Consultant</p>
                 </div>
                 <p className="text-muted-foreground leading-relaxed">
-                  Michael brings over 15 years of experience in rigging and lifting operations 
-                  across the Caribbean region. His expertise spans offshore drilling operations, 
-                  construction projects, and marine lifting operations. He holds multiple 
-                  international certifications and has successfully managed complex rigging 
-                  projects valued at over $50 million.
+                  Michael Williams, OPITO-certified assessor, brings extensive experience in lifting 
+                  operations, procedural audits, and rigging inspections. His leadership and technical 
+                  knowledge ensure every project meets the highest standards. Michael's expertise spans 
+                  across offshore drilling operations, construction projects, and marine lifting operations 
+                  throughout the Caribbean region.
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  <Badge variant="secondary">OPITO Certified</Badge>
-                  <Badge variant="secondary">NCCCO Crane Operator</Badge>
-                  <Badge variant="secondary">API Inspector</Badge>
-                  <Badge variant="secondary">OSHA 30-Hour</Badge>
+                  <Badge variant="secondary">OPITO Certified Assessor</Badge>
+                  <Badge variant="secondary">OPR Registered</Badge>
+                  <Badge variant="secondary">Lifting Operations Expert</Badge>
+                  <Badge variant="secondary">Safety Compliance</Badge>
                 </div>
               </div>
             </div>

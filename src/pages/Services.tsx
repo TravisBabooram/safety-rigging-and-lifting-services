@@ -15,82 +15,144 @@ import { Link } from "react-router-dom";
 
 const services = [
   {
-    icon: Construction,
-    title: "Rigging & Lifting Supervision",
-    description: "Expert supervision of complex rigging and lifting operations ensuring safety and efficiency.",
-    features: [
-      "On-site supervision and guidance",
-      "Critical lift oversight",
-      "Equipment inspection and verification",
-      "Safety protocol implementation",
-      "Real-time decision making support"
-    ],
-    category: "Operations"
-  },
-  {
-    icon: FileText,
-    title: "Lift Plan Development",
-    description: "Comprehensive lift planning services from concept to execution with detailed engineering analysis.",
-    features: [
-      "Detailed lift calculations",
-      "3D modeling and simulation",
-      "Risk assessment integration",
-      "Equipment selection guidance",
-      "Regulatory compliance documentation"
-    ],
-    category: "Planning"
-  },
-  {
-    icon: Shield,
-    title: "Risk Assessments",
-    description: "Thorough risk analysis and mitigation strategies for all rigging and lifting operations.",
-    features: [
-      "Hazard identification and analysis",
-      "Risk matrix development",
-      "Mitigation strategy planning",
-      "Safety protocol development",
-      "Compliance verification"
-    ],
-    category: "Safety"
-  },
-  {
-    icon: CheckCircle,
-    title: "Equipment Fit-for-Purpose Evaluations",
-    description: "Comprehensive assessment of lifting equipment to ensure operational readiness and compliance.",
-    features: [
-      "Equipment inspection and testing",
-      "Load capacity verification",
-      "Certification review",
-      "Compliance documentation",
-      "Recommendation reports"
-    ],
-    category: "Inspection"
-  },
-  {
     icon: GraduationCap,
-    title: "Lifting Awareness Training",
-    description: "Professional training programs to enhance team competency in rigging and lifting operations.",
+    title: "Rigging & Lifting Awareness Training",
+    description: "Comprehensive training programs for safe rigging and lifting practices.",
     features: [
-      "Safety awareness training",
-      "Equipment operation training",
-      "Best practices workshops",
-      "Certification programs",
-      "Customized training modules"
+      "In-house awareness training tailored to your team",
+      "Safety protocols and best practices",
+      "Equipment operation and maintenance",
+      "Regulatory compliance training",
+      "Certification programs available"
     ],
-    category: "Training"
+    category: "Training",
+    path: "/services/training"
   },
   {
     icon: Settings,
-    title: "Engineering Consultancy",
-    description: "Specialized engineering support for complex rigging challenges and custom solutions.",
+    title: "Site Supervision & Turnaround Coverage",
+    description: "On-site supervision during plant turnarounds, shutdowns, and live projects.",
     features: [
-      "Structural analysis",
-      "Custom rigging design",
-      "Load path analysis",
-      "Equipment modification guidance",
-      "Technical documentation"
+      "Experienced supervision during critical operations",
+      "Plant turnaround and shutdown support",
+      "Live project oversight and guidance",
+      "Safety compliance monitoring",
+      "Real-time decision making support"
     ],
-    category: "Engineering"
+    category: "Operations",
+    path: "/services/supervision"
+  },
+  {
+    icon: FileText,
+    title: "Lift Plan Development & Review",
+    description: "Custom lift plans with method statements and risk assessments.",
+    features: [
+      "Detailed lift plan development",
+      "Method statement creation",
+      "Risk assessment integration",
+      "Compliance with local and international standards",
+      "Equipment selection guidance"
+    ],
+    category: "Planning",
+    path: "/services/lift-planning"
+  },
+  {
+    icon: CheckCircle,
+    title: "Visual Inspections & Equipment Assessment",
+    description: "Audits and fit-for-purpose evaluations of lifting gear and equipment.",
+    features: [
+      "Comprehensive equipment inspections",
+      "Fit-for-purpose evaluations",
+      "Lifting gear assessments",
+      "Accessory and hoisting equipment audits",
+      "Certification and compliance verification"
+    ],
+    category: "Inspection",
+    path: "/services/inspection"
+  },
+  {
+    icon: Shield,
+    title: "Risk Assessments & Safety Strategy",
+    description: "Thorough risk analysis and mitigation strategies for lifting operations.",
+    features: [
+      "Comprehensive risk identification",
+      "Safety strategy development",
+      "Hazard analysis and control measures",
+      "Emergency response planning",
+      "Safety protocol implementation"
+    ],
+    category: "Safety",
+    path: "/services/risk-assessment"
+  },
+  {
+    icon: ClipboardCheck,
+    title: "Technical Advisory & Policy Review",
+    description: "Expert technical guidance and lifting policy development.",
+    features: [
+      "Technical advisory services",
+      "Lifting policy review and development",
+      "Best practices consultation",
+      "Regulatory compliance guidance",
+      "Industry standards implementation"
+    ],
+    category: "Advisory",
+    path: "/services/technical-advisory"
+  },
+  {
+    icon: AlertTriangle,
+    title: "Regulatory Compliance Audits",
+    description: "Comprehensive audits to ensure regulatory compliance.",
+    features: [
+      "Compliance audit services",
+      "Regulatory requirement assessments",
+      "Documentation review",
+      "Gap analysis and recommendations",
+      "Compliance action plan development"
+    ],
+    category: "Compliance",
+    path: "/services/compliance-audits"
+  },
+  {
+    icon: FileText,
+    title: "Custom Lifting Procedures & Documentation",
+    description: "Development of custom lifting procedures and comprehensive documentation.",
+    features: [
+      "Custom procedure development",
+      "Technical documentation creation",
+      "Standard operating procedures",
+      "Work instruction development",
+      "Quality assurance documentation"
+    ],
+    category: "Documentation",
+    path: "/services/custom-procedures"
+  },
+  {
+    icon: Construction,
+    title: "Client Lifting Policy Development",
+    description: "Comprehensive lifting policy development tailored to client needs.",
+    features: [
+      "Custom lifting policy creation",
+      "Client-specific requirements integration",
+      "Industry best practices implementation",
+      "Regulatory compliance alignment",
+      "Policy training and implementation support"
+    ],
+    category: "Policy",
+    path: "/services/policy-development"
+  },
+  {
+    icon: Settings,
+    title: "Onshore & Offshore Site Visits",
+    description: "Professional site visits for both onshore and offshore locations.",
+    features: [
+      "Onshore facility assessments",
+      "Offshore platform inspections",
+      "Site-specific risk evaluations",
+      "Equipment condition assessments",
+      "Operational safety reviews"
+    ],
+    category: "Site Services",
+    path: "/services/site-visits"
   }
 ];
 

@@ -6,10 +6,30 @@ import { Link } from "react-router-dom";
 
 const Index = () => {
   const services = [
-    { icon: Construction, title: "Rigging & Lifting Supervision", description: "Expert supervision of complex operations", path: "/services" },
-    { icon: FileText, title: "Lift Plan Development", description: "Comprehensive planning with engineering analysis", path: "/services" },
-    { icon: Shield, title: "Risk Assessments", description: "Thorough analysis and mitigation strategies", path: "/services" },
-    { icon: GraduationCap, title: "Training Programs", description: "Professional lifting awareness training", path: "/services" }
+    { 
+      icon: Construction, 
+      title: "Rigging & Lifting Supervision", 
+      description: "On-site supervision during plant turnarounds, shutdowns, and live projects with a focus on safety and compliance.", 
+      path: "/services/supervision" 
+    },
+    { 
+      icon: FileText, 
+      title: "Lift Planning", 
+      description: "We develop and review custom lift plans, including method statements, risk assessments, and compliance with local and international standards.", 
+      path: "/services/lift-planning" 
+    },
+    { 
+      icon: GraduationCap, 
+      title: "Training & Awareness", 
+      description: "In-house awareness training for safe rigging and lifting practices tailored to your team.", 
+      path: "/services/training" 
+    },
+    { 
+      icon: Shield, 
+      title: "Equipment Inspection", 
+      description: "Audits and fit-for-purpose evaluations of lifting gear, accessories, and hoisting equipment.", 
+      path: "/services/inspection" 
+    }
   ];
 
   return (
@@ -22,13 +42,12 @@ const Index = () => {
             Your Trusted Partner in<br />
             <span className="text-accent">Rigging & Lifting Solutions</span>
           </h1>
-          <p className="text-xl md:text-2xl opacity-90 max-w-2xl mx-auto">
-            Professional consultancy services ensuring safety, compliance, and operational excellence 
-            across Trinidad & Tobago and the Caribbean.
+          <p className="text-xl md:text-2xl opacity-90 max-w-3xl mx-auto">
+            Serving the Oil & Gas, Construction, and Industrial Sectors with Precision, Safety & Excellence
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="cta" size="xl" asChild>
-              <Link to="/services">Our Services</Link>
+              <Link to="/services">Explore Our Services</Link>
             </Button>
             <Button variant="outline" size="xl" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90" asChild>
               <Link to="/contact">Get in Touch</Link>
@@ -73,13 +92,21 @@ const Index = () => {
       {/* Certifications Preview */}
       <section className="py-16 bg-gradient-card">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-foreground mb-8">Certified Excellence</h2>
-          <div className="flex flex-wrap justify-center gap-6 mb-8">
-            {["OPITO", "OSHA", "ISO 9001", "NCCCO", "API", "ASME"].map((cert) => (
-              <div key={cert} className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-primary">
+          <h2 className="text-3xl font-bold text-foreground mb-8">Our Certifications</h2>
+          <div className="flex flex-wrap justify-center gap-8 mb-8">
+            <div className="text-center space-y-2">
+              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-primary mx-auto">
                 <Award className="h-10 w-10 text-primary-foreground" />
               </div>
-            ))}
+              <p className="text-sm font-medium">OPITO Certified Assessor</p>
+            </div>
+            <div className="text-center space-y-2">
+              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-primary mx-auto">
+                <Award className="h-10 w-10 text-primary-foreground" />
+              </div>
+              <p className="text-sm font-medium">OPR Registered</p>
+              <p className="text-xs text-muted-foreground">Supplier ID: WMF123673</p>
+            </div>
           </div>
           <Button variant="outline" asChild>
             <Link to="/about">View All Certifications</Link>

@@ -108,13 +108,13 @@ export default function Contact() {
               <p className="text-muted-foreground">
                 #1 Rahaman Development<br />
                 Bamboo Village, La Romaine<br />
-                Trinidad & Tobago
+                Trinidad and Tobago
               </p>
             </div>
             <div className="bg-gradient-card rounded-lg p-4">
               <p className="text-sm text-muted-foreground">
-                <strong>Note:</strong> We provide on-site services throughout Trinidad & Tobago 
-                and the wider Caribbean region. Remote consultations available globally.
+                <strong>Ready to support your project:</strong> We're ready to support your next 
+                lifting or rigging project. Contact us today for a consultation or quote.
               </p>
             </div>
           </CardContent>
