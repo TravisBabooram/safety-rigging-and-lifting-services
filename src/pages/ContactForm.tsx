@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,195 +9,314 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useToast } from "@/hooks/use-toast";
-import { Send, Phone, Mail, MessageSquare, CheckCircle, Shield } from "lucide-react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Send, CheckCircle, Shield, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 
+// Form validation schema
+const contactFormSchema = z.object({
+  fullName: z.string().min(2, "Full name must be at least 2 characters"),
+  companyName: z.string().optional(),
+  email: z.string().email("Please enter a valid email address"),
+  phoneNumber: z.string().optional(),
+  subject: z.string().min(3, "Subject must be at least 3 characters"),
+  message: z.string().min(10, "Message must be at least 10 characters"),
+  serviceType: z.string().optional(),
+  preferredContact: z.string().optional(),
+  consent: z.boolean().refine((val) => val === true, {
+    message: "You must consent to data storage and contact",
+  }),
+});
+
+type ContactFormData = z.infer<typeof contactFormSchema>;
+
 export default function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    company: "",
-    email: "",
-    phone: "",
-    subject: "",
-    serviceType: "",
-    message: "",
-    agreeToTerms: false
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  
+  const form = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      fullName: "",
+      companyName: "",
+      email: "",
+      phoneNumber: "",
+      subject: "",
+      message: "",
+      serviceType: "",
+      preferredContact: "",
+      consent: false,
+    },
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
 
-  const handleInputChange = (field: string, value: string | boolean) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.agreeToTerms) {
-      toast({
-        title: "Terms Required",
-        description: "Please agree to our privacy policy to continue.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    setIsSubmitting(true);
-    
+  const onSubmit = async (data: ContactFormData) => {
     // Simulate form submission
+    console.log("Form submitted:", data);
+    
+    // Set success state
+    setIsSubmitted(true);
+    
+    // Reset form after showing success message
     setTimeout(() => {
-      toast({
-        title: "Message Sent Successfully!",
-        description: "We'll get back to you within 24 hours.",
-      });
-      setIsSubmitting(false);
-      setFormData({
-        name: "",
-        company: "",
-        email: "",
-        phone: "",
-        subject: "",
-        serviceType: "",
-        message: "",
-        agreeToTerms: false
-      });
-    }, 2000);
+      form.reset();
+      setIsSubmitted(false);
+    }, 5000);
   };
+
+  const serviceTypeOptions = [
+    { value: "general", label: "General Inquiry" },
+    { value: "rigging-supervision", label: "Rigging Supervision" },
+    { value: "lift-plan-review", label: "Lift Plan Review" },
+    { value: "equipment-assessment", label: "Equipment Assessment" },
+    { value: "training-request", label: "Training Request" },
+    { value: "other", label: "Other" },
+  ];
+
+  const preferredContactOptions = [
+    { value: "phone", label: "Phone" },
+    { value: "email", label: "Email" },
+    { value: "either", label: "Either" },
+  ];
 
   return (
     <div className="container mx-auto px-4 py-16 space-y-16">
       {/* Hero Section */}
       <section className="text-center space-y-6">
-        <h1 className="text-4xl md:text-6xl font-bold text-foreground">Contact Form</h1>
+        <h1 className="text-4xl md:text-6xl font-bold text-foreground">Get In Touch</h1>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          Ready to discuss your rigging and lifting project? Fill out the form below and 
-          our expert team will get back to you within 24 hours.
+          We'd love to hear from you. Please fill out the form below and we'll get back to you shortly.
         </p>
       </section>
 
-      <div className="grid lg:grid-cols-3 gap-8">
+      <div className="max-w-4xl mx-auto">
+        {/* Success Message */}
+        {isSubmitted && (
+          <Alert className="mb-8 bg-green-50 border-green-200 dark:bg-green-950 dark:border-green-800">
+            <CheckCircle className="h-4 w-4 text-green-600" />
+            <AlertDescription className="text-green-800 dark:text-green-200">
+              Thank you! Your message has been received. We'll contact you shortly.
+            </AlertDescription>
+          </Alert>
+        )}
+
         {/* Contact Form */}
-        <div className="lg:col-span-2">
-          <Card className="shadow-industrial">
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <MessageSquare className="h-6 w-6 text-accent" />
-                <span>Send Us a Message</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Full Name *</Label>
-                    <Input
-                      id="name"
-                      value={formData.name}
-                      onChange={(e) => handleInputChange("name", e.target.value)}
-                      placeholder="Enter your full name"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="company">Company (Optional)</Label>
-                    <Input
-                      id="company"
-                      value={formData.company}
-                      onChange={(e) => handleInputChange("company", e.target.value)}
-                      placeholder="Your company name"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email Address *</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => handleInputChange("email", e.target.value)}
-                      placeholder="your.email@example.com"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number (Optional)</Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      value={formData.phone}
-                      onChange={(e) => handleInputChange("phone", e.target.value)}
-                      placeholder="(868) XXX-XXXX"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="subject">Subject *</Label>
-                  <Input
-                    id="subject"
-                    value={formData.subject}
-                    onChange={(e) => handleInputChange("subject", e.target.value)}
-                    placeholder="Brief description of your inquiry"
-                    required
+        <Card className="shadow-industrial">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <MessageSquare className="h-6 w-6 text-primary" />
+              <span>Contact Form</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                {/* Full Name and Company Name */}
+                <div className="grid md:grid-cols-2 gap-6">
+                  <FormField
+                    control={form.control}
+                    name="fullName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Full Name *</FormLabel>
+                        <FormControl>
+                          <Input 
+                            id="full-name"
+                            placeholder="Enter your full name" 
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="companyName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Company Name</FormLabel>
+                        <FormControl>
+                          <Input 
+                            id="company-name"
+                            placeholder="Your company name (optional)" 
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="serviceType">Service Type (Optional)</Label>
-                  <Select onValueChange={(value) => handleInputChange("serviceType", value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a service type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="rigging-supervision">Rigging & Lifting Supervision</SelectItem>
-                      <SelectItem value="lift-planning">Lift Plan Development</SelectItem>
-                      <SelectItem value="risk-assessment">Risk Assessment</SelectItem>
-                      <SelectItem value="equipment-evaluation">Equipment Evaluation</SelectItem>
-                      <SelectItem value="training">Training Services</SelectItem>
-                      <SelectItem value="engineering">Engineering Consultancy</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="message">Message *</Label>
-                  <Textarea
-                    id="message"
-                    value={formData.message}
-                    onChange={(e) => handleInputChange("message", e.target.value)}
-                    placeholder="Please provide details about your project, timeline, location, and any specific requirements..."
-                    className="min-h-[120px]"
-                    required
+                {/* Email and Phone */}
+                <div className="grid md:grid-cols-2 gap-6">
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email Address *</FormLabel>
+                        <FormControl>
+                          <Input 
+                            id="email"
+                            type="email"
+                            placeholder="your.email@example.com" 
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="phoneNumber"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Phone Number</FormLabel>
+                        <FormControl>
+                          <Input 
+                            id="phone-number"
+                            type="tel"
+                            placeholder="(868) XXX-XXXX" 
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
                 </div>
 
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="terms"
-                    checked={formData.agreeToTerms}
-                    onCheckedChange={(checked) => handleInputChange("agreeToTerms", checked as boolean)}
-                  />
-                  <Label htmlFor="terms" className="text-sm leading-relaxed">
-                    I agree to the{" "}
-                    <Link to="/privacy-terms" className="text-accent hover:underline">
-                      privacy policy
-                    </Link>{" "}
-                    and consent to SRLS contacting me regarding my inquiry. We respect your data 
-                    and do not share information without consent.
-                  </Label>
-                </div>
+                {/* Subject */}
+                <FormField
+                  control={form.control}
+                  name="subject"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Subject *</FormLabel>
+                      <FormControl>
+                        <Input 
+                          id="subject"
+                          placeholder="Brief description of your inquiry" 
+                          {...field} 
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
+                {/* Message */}
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Message *</FormLabel>
+                      <FormControl>
+                        <Textarea 
+                          id="message"
+                          placeholder="Please provide details about your project, timeline, location, and any specific requirements..."
+                          className="min-h-[120px]"
+                          {...field} 
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Service Type */}
+                <FormField
+                  control={form.control}
+                  name="serviceType"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Service Type</FormLabel>
+                      <Select onValueChange={field.onChange} value={field.value}>
+                        <FormControl>
+                          <SelectTrigger id="service-type" className="bg-background">
+                            <SelectValue placeholder="Select a service type (optional)" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="bg-background border border-border z-50">
+                          {serviceTypeOptions.map((option) => (
+                            <SelectItem key={option.value} value={option.value}>
+                              {option.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Preferred Contact Method */}
+                <FormField
+                  control={form.control}
+                  name="preferredContact"
+                  render={({ field }) => (
+                    <FormItem className="space-y-3">
+                      <FormLabel>Preferred Contact Method</FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          onValueChange={field.onChange}
+                          value={field.value}
+                          className="flex flex-row space-x-6"
+                        >
+                          {preferredContactOptions.map((option) => (
+                            <div key={option.value} className="flex items-center space-x-2">
+                              <RadioGroupItem 
+                                value={option.value} 
+                                id={`contact-${option.value}`}
+                              />
+                              <Label htmlFor={`contact-${option.value}`} className="text-sm">
+                                {option.label}
+                              </Label>
+                            </div>
+                          ))}
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Consent Checkbox */}
+                <FormField
+                  control={form.control}
+                  name="consent"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          id="consent"
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel htmlFor="consent" className="text-sm leading-relaxed">
+                          I consent to SRLS storing and using my data to contact me regarding my inquiry. *
+                        </FormLabel>
+                        <FormMessage />
+                      </div>
+                    </FormItem>
+                  )}
+                />
+
+                {/* Submit Button */}
                 <Button 
                   type="submit" 
                   variant="cta" 
                   size="lg" 
-                  className="w-full" 
-                  disabled={isSubmitting}
+                  className="w-full"
+                  disabled={form.formState.isSubmitting}
                 >
-                  {isSubmitting ? (
+                  {form.formState.isSubmitting ? (
                     "Sending Message..."
                   ) : (
                     <>
@@ -204,120 +326,33 @@ export default function ContactForm() {
                   )}
                 </Button>
               </form>
-            </CardContent>
-          </Card>
-        </div>
+            </Form>
+          </CardContent>
+        </Card>
 
-        {/* Sidebar */}
-        <div className="space-y-6">
-          {/* Quick Contact */}
-          <Card className="shadow-card">
-            <CardHeader>
-              <CardTitle className="text-lg">Quick Contact</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center space-x-3">
-                <Phone className="h-5 w-5 text-accent" />
-                <div>
-                  <p className="font-semibold text-sm">(868) 301-2781</p>
-                  <p className="text-xs text-muted-foreground">Primary</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Phone className="h-5 w-5 text-accent" />
-                <div>
-                  <p className="font-semibold text-sm">(868) 774-1498</p>
-                  <p className="text-xs text-muted-foreground">Secondary</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Mail className="h-5 w-5 text-accent" />
-                <div>
-                  <p className="font-semibold text-sm">srls.mw21@gmail.com</p>
-                  <p className="text-xs text-muted-foreground">Email</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Response Time */}
-          <Card className="shadow-card">
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center space-x-2">
-                <CheckCircle className="h-5 w-5 text-accent" />
-                <span>Response Promise</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex items-center space-x-2">
-                <CheckCircle className="h-4 w-4 text-accent" />
-                <span className="text-sm">24-hour response guarantee</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <CheckCircle className="h-4 w-4 text-accent" />
-                <span className="text-sm">Free initial consultation</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <CheckCircle className="h-4 w-4 text-accent" />
-                <span className="text-sm">No obligation quote</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <CheckCircle className="h-4 w-4 text-accent" />
-                <span className="text-sm">Emergency support available</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Privacy Notice */}
-          <Card className="shadow-card bg-accent/5 border-accent/20">
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center space-x-2">
-                <Shield className="h-5 w-5 text-accent" />
-                <span>Privacy Notice</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Your information is secure with us. We use your contact details only to respond 
-                to your inquiry and provide relevant updates about our services. We never share 
-                your information with third parties without your explicit consent.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
+        {/* Privacy Notice */}
+        <Card className="mt-8 bg-muted/30 border-muted">
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center space-x-2">
+              <Shield className="h-5 w-5 text-primary" />
+              <span>Privacy & Data Protection</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Safety Rigging & Lifting Services is committed to protecting and respecting your privacy. 
+              We only use your information to respond to inquiries and do not share your data. Read our{" "}
+              <Link 
+                to="/privacy-terms" 
+                className="text-primary hover:underline font-medium"
+              >
+                Privacy Policy
+              </Link>
+              .
+            </p>
+          </CardContent>
+        </Card>
       </div>
-
-      {/* Alternative Contact Methods */}
-      <section className="bg-gradient-card rounded-lg p-8 shadow-card">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-foreground mb-4">Prefer Other Ways to Connect?</h2>
-          <p className="text-muted-foreground">
-            Choose the communication method that works best for you
-          </p>
-        </div>
-        
-        <div className="grid md:grid-cols-3 gap-6">
-          <Button variant="outline" size="lg" className="h-auto p-6 flex-col space-y-2">
-            <Phone className="h-8 w-8 text-accent" />
-            <span className="font-semibold">Call Directly</span>
-            <span className="text-sm text-muted-foreground">(868) 301-2781</span>
-          </Button>
-          
-          <Button variant="outline" size="lg" className="h-auto p-6 flex-col space-y-2">
-            <Mail className="h-8 w-8 text-accent" />
-            <span className="font-semibold">Send Email</span>
-            <span className="text-sm text-muted-foreground">srls.mw21@gmail.com</span>
-          </Button>
-          
-          <Button variant="outline" size="lg" className="h-auto p-6 flex-col space-y-2" asChild>
-            <Link to="/contact">
-              <MessageSquare className="h-8 w-8 text-accent" />
-              <span className="font-semibold">Visit Contact Page</span>
-              <span className="text-sm text-muted-foreground">More contact options</span>
-            </Link>
-          </Button>
-        </div>
-      </section>
     </div>
   );
 }
