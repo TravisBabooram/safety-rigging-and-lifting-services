@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { FolderOpen, Settings, MessageSquare, BarChart3 } from 'lucide-react';
+import { MaintenanceModeToggle } from '@/components/MaintenanceModeToggle';
 
 interface DashboardStats {
   portfolioCount: number;
@@ -120,6 +121,9 @@ const DashboardHome = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Maintenance Mode Toggle - Admin Only */}
+      <MaintenanceModeToggle />
 
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
