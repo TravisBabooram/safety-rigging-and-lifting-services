@@ -37,10 +37,11 @@ const Index = () => {
       {/* Logo Section */}
       <section className="py-8 bg-background border-b">
         <div className="container mx-auto px-4 text-center">
-          <div className="text-2xl font-bold text-foreground">
-            SRLS
-          </div>
-          <p className="text-sm text-muted-foreground mt-1">Safety Rigging & Lifting Services</p>
+          <img 
+            src="/lovable-uploads/cdae1e93-e234-4e65-8bf1-356fd65f4de2.png" 
+            alt="SRLS - Safety Rigging & Lifting Services" 
+            className="h-20 w-auto mx-auto"
+          />
         </div>
       </section>
 

@@ -22,13 +22,11 @@ export function Footer() {
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-primary">
-                <Wrench className="h-6 w-6 text-primary-foreground" />
-              </div>
-              <div>
-                <div className="text-lg font-bold text-white">SRLS</div>
-                <div className="text-xs text-gray-400">Safety Rigging & Lifting</div>
-              </div>
+              <img 
+                src="/lovable-uploads/cdae1e93-e234-4e65-8bf1-356fd65f4de2.png" 
+                alt="SRLS" 
+                className="h-12 w-auto"
+              />
             </div>
             <p className="text-sm text-gray-400 max-w-xs">
               Your trusted partner in rigging & lifting solutions. Expert guidance and support for lifting operations in Trinidad & Tobago.

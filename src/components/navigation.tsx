@@ -26,13 +26,11 @@ export function Navigation() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-primary">
-              <Wrench className="h-6 w-6 text-primary-foreground" />
-            </div>
-            <div className="hidden sm:block">
-              <div className="text-lg font-bold text-foreground">SRLS</div>
-              <div className="text-xs text-muted-foreground">Safety Rigging & Lifting</div>
-            </div>
+            <img 
+              src="/lovable-uploads/cdae1e93-e234-4e65-8bf1-356fd65f4de2.png" 
+              alt="SRLS" 
+              className="h-10 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}
