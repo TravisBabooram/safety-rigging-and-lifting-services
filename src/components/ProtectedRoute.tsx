@@ -23,8 +23,20 @@ const ProtectedRoute = ({ children, requiredRole = 'viewer' }: ProtectedRoutePro
     );
   }
 
-  if (!user || !userRole) {
+  if (!user) {
     return <Navigate to="/admin/login" replace />;
+  }
+
+  if (!userRole) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <h2 className="text-xl font-semibold">Access Denied</h2>
+          <p className="text-muted-foreground">Your account doesn't have the required permissions.</p>
+          <p className="text-sm text-muted-foreground">Please contact an administrator.</p>
+        </div>
+      </div>
+    );
   }
 
   // Check role hierarchy: admin > editor > viewer

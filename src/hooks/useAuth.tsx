@@ -50,9 +50,20 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         .from('users')
         .select('id, email, role')
         .eq('id', userId)
-        .single();
+        .maybeSingle();
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching user role:', error);
+        setUserRole(null);
+        return;
+      }
+
+      if (!data) {
+        console.warn('User not found in users table:', userId);
+        setUserRole(null);
+        return;
+      }
+
       setUserRole(data as UserRole);
     } catch (error) {
       console.error('Error fetching user role:', error);
