@@ -1,56 +1,71 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Construction, FileText, Shield, GraduationCap, Award, Phone, Mail } from "lucide-react";
+import { Construction, FileText, Shield, GraduationCap, Phone, Mail, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import heroImage from "@/assets/hero-banner.jpg";
 
 const Index = () => {
   const services = [
     { 
       icon: Construction, 
-      title: "Rigging & Lifting Supervision", 
-      description: "On-site supervision during plant turnarounds, shutdowns, and live projects with a focus on safety and compliance.", 
-      path: "/services/supervision" 
+      title: "Site Assessments & Supervision", 
+      description: "Evaluating site conditions and providing on-site support during lifting operations to ensure adherence to safety protocols.", 
+      path: "/services" 
     },
     { 
       icon: FileText, 
-      title: "Lift Planning", 
-      description: "We develop and review custom lift plans, including method statements, risk assessments, and compliance with local and international standards.", 
-      path: "/services/lift-planning" 
+      title: "Lift Planning & Review", 
+      description: "Developing detailed lift plans and providing documented reviews of safe systems of work against regulatory obligations.", 
+      path: "/services" 
     },
     { 
       icon: GraduationCap, 
-      title: "Training & Awareness", 
-      description: "In-house awareness training for safe rigging and lifting practices tailored to your team.", 
-      path: "/services/training" 
+      title: "Training & Compliance", 
+      description: "In-house awareness training for safe lifting practices and ensuring compliance with local and international regulations.", 
+      path: "/services" 
     },
     { 
       icon: Shield, 
-      title: "Equipment Inspection", 
-      description: "Audits and fit-for-purpose evaluations of lifting gear, accessories, and hoisting equipment.", 
-      path: "/services/inspection" 
+      title: "Risk Assessment & Investigation", 
+      description: "Conducting comprehensive risk assessments and providing expert support for incident investigations.", 
+      path: "/services" 
     }
   ];
 
   return (
     <div className="space-y-0">
+      {/* Logo Section */}
+      <section className="py-8 bg-background border-b">
+        <div className="container mx-auto px-4 text-center">
+          <div className="text-2xl font-bold text-foreground">
+            SRLS
+          </div>
+          <p className="text-sm text-muted-foreground mt-1">Safety Rigging & Lifting Services</p>
+        </div>
+      </section>
+
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center bg-gradient-hero text-primary-foreground overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-primary opacity-90"></div>
-        <div className="relative z-10 text-center space-y-8 max-w-4xl mx-auto px-4">
-          <h1 className="text-5xl md:text-7xl font-bold leading-tight">
-            Your Trusted Partner in<br />
-            <span className="text-accent">Rigging & Lifting Solutions</span>
+      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        >
+          <div className="absolute inset-0 bg-black/60"></div>
+        </div>
+        <div className="relative z-10 text-center space-y-8 max-w-4xl mx-auto px-4 text-white">
+          <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+            Expert Rigging & Lifting Services<br />
+            <span className="text-accent">in Trinidad & Tobago</span>
           </h1>
-          <p className="text-xl md:text-2xl opacity-90 max-w-3xl mx-auto">
-            Serving the Oil & Gas, Construction, and Industrial Sectors with Precision, Safety & Excellence
+          <p className="text-lg md:text-xl opacity-90 max-w-3xl mx-auto">
+            We deliver safe, efficient, and customized solutions for every lifting challenge.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="cta" size="xl" asChild>
               <Link to="/services">Explore Our Services</Link>
             </Button>
-            <Button variant="outline" size="xl" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90" asChild>
-              <Link to="/contact">Get in Touch</Link>
+            <Button variant="outline" size="xl" className="bg-white/10 text-white border-white hover:bg-white/20" asChild>
+              <Link to="/contact">Request a Quote</Link>
             </Button>
           </div>
         </div>
@@ -62,7 +77,7 @@ const Index = () => {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-foreground mb-4">Our Expertise</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Comprehensive rigging and lifting solutions with certified expertise and proven track record.
+              Expert guidance and support for lifting operations, ensuring safety, efficiency, and compliance with industry standards, regulations, and legislations.
             </p>
           </div>
           
@@ -89,27 +104,42 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Certifications Preview */}
+      {/* Why Choose SRLS */}
       <section className="py-16 bg-gradient-card">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-foreground mb-8">Our Certifications</h2>
-          <div className="flex flex-wrap justify-center gap-8 mb-8">
-            <div className="text-center space-y-2">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-primary mx-auto">
-                <Award className="h-10 w-10 text-primary-foreground" />
+          <h2 className="text-3xl font-bold text-foreground mb-8">Why Choose SRLS?</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="text-center space-y-3">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-primary mx-auto">
+                <CheckCircle className="h-8 w-8 text-primary-foreground" />
               </div>
-              <p className="text-sm font-medium">OPITO Certified Assessor</p>
+              <h3 className="font-semibold">Safety First</h3>
+              <p className="text-sm text-muted-foreground">Reducing risk of accidents and injuries during lifting operations</p>
             </div>
-            <div className="text-center space-y-2">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-primary mx-auto">
-                <Award className="h-10 w-10 text-primary-foreground" />
+            <div className="text-center space-y-3">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-primary mx-auto">
+                <CheckCircle className="h-8 w-8 text-primary-foreground" />
               </div>
-              <p className="text-sm font-medium">OPR Registered</p>
-              <p className="text-xs text-muted-foreground">Supplier ID: WMF123673</p>
+              <h3 className="font-semibold">Efficiency</h3>
+              <p className="text-sm text-muted-foreground">Streamlining operations to minimize downtime and costs</p>
+            </div>
+            <div className="text-center space-y-3">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-primary mx-auto">
+                <CheckCircle className="h-8 w-8 text-primary-foreground" />
+              </div>
+              <h3 className="font-semibold">Expertise</h3>
+              <p className="text-sm text-muted-foreground">Access to industry knowledge and best practices</p>
+            </div>
+            <div className="text-center space-y-3">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-primary mx-auto">
+                <CheckCircle className="h-8 w-8 text-primary-foreground" />
+              </div>
+              <h3 className="font-semibold">Customization</h3>
+              <p className="text-sm text-muted-foreground">Tailoring solutions to specific project needs and challenges</p>
             </div>
           </div>
           <Button variant="outline" asChild>
-            <Link to="/about">View All Certifications</Link>
+            <Link to="/about">Learn More About SRLS</Link>
           </Button>
         </div>
       </section>

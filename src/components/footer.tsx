@@ -31,7 +31,7 @@ export function Footer() {
               </div>
             </div>
             <p className="text-sm text-muted-foreground max-w-xs">
-              Your trusted partner in rigging & lifting solutions. Professional consultancy services with certified expertise.
+              Your trusted partner in rigging & lifting solutions. Expert guidance and support for lifting operations in Trinidad & Tobago.
             </p>
           </div>
 

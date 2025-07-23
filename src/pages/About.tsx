@@ -1,18 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Users, Target, Award, Shield, Link } from "lucide-react";
+import { Users, Target, Shield } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function About() {
-  const certifications = [
-    "OPITO Certified",
-    "OSHA Compliance",
-    "ISO 9001 Certified",
-    "NCCCO Certified",
-    "API Standards",
-    "ASME B30 Certified"
-  ];
-
   return (
     <div className="container mx-auto px-4 py-16 space-y-16">
       {/* Hero Section */}
@@ -45,7 +36,7 @@ export default function About() {
         </div>
         <div className="bg-gradient-card rounded-lg p-8 shadow-card">
           <div className="space-y-4">
-            <div className="text-3xl font-bold text-primary">10+</div>
+            <div className="text-3xl font-bold text-primary">5+</div>
             <div className="text-muted-foreground">Years of Experience</div>
             <div className="text-3xl font-bold text-primary">200+</div>
             <div className="text-muted-foreground">Projects Completed</div>
@@ -105,45 +96,55 @@ export default function About() {
                   <p className="text-accent font-semibold">Managing Director & Principal Consultant</p>
                 </div>
                 <p className="text-muted-foreground leading-relaxed">
-                  Michael Williams, OPITO-certified assessor, brings extensive experience in lifting 
-                  operations, procedural audits, and rigging inspections. His leadership and technical 
+                  Michael Williams brings extensive experience in lifting operations, procedural audits, and rigging inspections. His leadership and technical 
                   knowledge ensure every project meets the highest standards. Michael's expertise spans 
                   across offshore drilling operations, construction projects, and marine lifting operations 
                   throughout the Caribbean region.
                 </p>
-                <div className="flex flex-wrap gap-2">
-                  <Badge variant="secondary">OPITO Certified Assessor</Badge>
-                  <Badge variant="secondary">OPR Registered</Badge>
-                  <Badge variant="secondary">Lifting Operations Expert</Badge>
-                  <Badge variant="secondary">Safety Compliance</Badge>
-                </div>
               </div>
             </div>
           </CardContent>
         </Card>
       </section>
 
-      {/* Certifications */}
+      {/* Our Approach */}
       <section className="space-y-8">
         <div className="text-center">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <Award className="h-6 w-6 text-accent" />
-            <h2 className="text-3xl font-bold text-foreground">Certifications & Memberships</h2>
-          </div>
+          <h2 className="text-3xl font-bold text-foreground mb-4">Our Approach</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Our commitment to excellence is backed by industry-recognized certifications 
-            and professional memberships.
+            We believe in delivering solutions that prioritize safety, efficiency, and compliance while exceeding client expectations.
           </p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {certifications.map((cert, index) => (
-            <Card key={index} className="text-center p-4 hover:shadow-card transition-shadow">
-              <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-3">
-                <Award className="h-8 w-8 text-primary-foreground" />
-              </div>
-              <p className="text-sm font-medium text-foreground">{cert}</p>
-            </Card>
-          ))}
+        <div className="grid md:grid-cols-3 gap-6">
+          <Card className="text-center p-6 hover:shadow-card transition-shadow">
+            <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
+              <Shield className="h-8 w-8 text-primary-foreground" />
+            </div>
+            <h3 className="text-lg font-bold text-foreground mb-2">Safety Excellence</h3>
+            <p className="text-sm text-muted-foreground">
+              Zero compromise approach to safety with comprehensive risk management and mitigation strategies.
+            </p>
+          </Card>
+          
+          <Card className="text-center p-6 hover:shadow-card transition-shadow">
+            <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
+              <Target className="h-8 w-8 text-primary-foreground" />
+            </div>
+            <h3 className="text-lg font-bold text-foreground mb-2">Precision Planning</h3>
+            <p className="text-sm text-muted-foreground">
+              Detailed planning and execution ensuring every lifting operation is conducted with precision and control.
+            </p>
+          </Card>
+          
+          <Card className="text-center p-6 hover:shadow-card transition-shadow">
+            <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
+              <Users className="h-8 w-8 text-primary-foreground" />
+            </div>
+            <h3 className="text-lg font-bold text-foreground mb-2">Client Focus</h3>
+            <p className="text-sm text-muted-foreground">
+              Tailored solutions that meet specific client requirements while maintaining the highest service standards.
+            </p>
+          </Card>
         </div>
       </section>
 
@@ -155,10 +156,10 @@ export default function About() {
           Contact us today for a consultation.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button variant="outline" size="lg" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90">
+          <Button variant="outline" size="lg" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90" asChild>
             <Link to="/contact">Get in Touch</Link>
           </Button>
-          <Button variant="ghost" size="lg" className="text-primary-foreground border-primary-foreground hover:bg-primary-foreground/10">
+          <Button variant="ghost" size="lg" className="text-primary-foreground border-primary-foreground hover:bg-primary-foreground/10" asChild>
             <Link to="/services">View Our Services</Link>
           </Button>
         </div>
