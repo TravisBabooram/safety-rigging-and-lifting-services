@@ -14,18 +14,16 @@ import { ScrollToTop } from "@/components/scroll-to-top";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Services from "./pages/Services";
-import Portfolio from "./pages/Portfolio";
 import LiftPlanning from "./pages/LiftPlanning";
 import Contact from "./pages/Contact";
 import ContactForm from "./pages/ContactForm";
-import FAQ from "./pages/FAQ";
 import Sitemap from "./pages/Sitemap";
 import PrivacyTerms from "./pages/PrivacyTerms";
 import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import DashboardHome from "./pages/admin/DashboardHome";
-import ManagePortfolio from "./pages/admin/ManagePortfolio";
+
 import ManageServices from "./pages/admin/ManageServices";
 import ViewMessages from "./pages/admin/ViewMessages";
 import { MaintenancePage } from "./components/MaintenancePage";
@@ -68,11 +66,9 @@ const AppContent = () => {
       <Route path="/" element={<PublicLayout><Index /></PublicLayout>} />
       <Route path="/about" element={<PublicLayout><About /></PublicLayout>} />
       <Route path="/services" element={<PublicLayout><Services /></PublicLayout>} />
-      <Route path="/portfolio" element={<PublicLayout><Portfolio /></PublicLayout>} />
       <Route path="/services/lift-planning" element={<PublicLayout><LiftPlanning /></PublicLayout>} />
       <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
       <Route path="/contact-form" element={<PublicLayout><ContactForm /></PublicLayout>} />
-      <Route path="/faq" element={<PublicLayout><FAQ /></PublicLayout>} />
       <Route path="/sitemap" element={<PublicLayout><Sitemap /></PublicLayout>} />
       <Route path="/privacy-terms" element={<PublicLayout><PrivacyTerms /></PublicLayout>} />
       
@@ -84,11 +80,6 @@ const AppContent = () => {
         </ProtectedRoute>
       }>
         <Route path="dashboard" element={<DashboardHome />} />
-        <Route path="portfolio" element={
-          <ProtectedRoute requiredRole="editor">
-            <ManagePortfolio />
-          </ProtectedRoute>
-        } />
         <Route path="services" element={
           <ProtectedRoute requiredRole="editor">
             <ManageServices />
