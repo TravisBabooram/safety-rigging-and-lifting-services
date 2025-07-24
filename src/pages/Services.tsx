@@ -115,7 +115,7 @@ const Services = () => {
       </section>
 
       {/* Key Services Offered */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-background">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-foreground mb-4">Key Services Offered</h2>
@@ -177,7 +177,7 @@ const Services = () => {
       </section>
 
       {/* Lift Planning Section */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-background">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl font-bold text-foreground mb-8 text-center">Lift Planning</h2>
@@ -195,21 +195,21 @@ const Services = () => {
               
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="h-6 w-6 text-green-500 flex-shrink-0 mt-0.5" />
                   <div>
                     <span className="font-bold text-foreground">Safety:</span> Lift plans identify hazards, associated risks, and ensure all necessary precautions and equipment are in place to protect everyone involved.
                   </div>
                 </div>
                 
                 <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="h-6 w-6 text-green-500 flex-shrink-0 mt-0.5" />
                   <div>
                     <span className="font-bold text-foreground">Precision:</span> They provide step-by-step instructions for executing smooth and controlled lifting operations, ensuring accuracy throughout the process.
                   </div>
                 </div>
                 
                 <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="h-6 w-6 text-green-500 flex-shrink-0 mt-0.5" />
                   <div>
                     <span className="font-bold text-foreground">Efficiency:</span> Proper planning minimizes delays and ensures that resources are used effectively, keeping projects on schedule.
                   </div>
