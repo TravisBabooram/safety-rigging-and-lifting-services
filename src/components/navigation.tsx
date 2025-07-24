@@ -81,9 +81,9 @@ export function Navigation() {
                   key={item.path}
                   to={item.path}
                   onClick={toggleMenu}
-                  className={`block px-3 py-2 text-base font-medium transition-colors hover:text-primary hover:bg-accent rounded-md ${
+                  className={`block px-3 py-2 text-base font-medium transition-colors hover:text-accent-foreground hover:bg-accent rounded-md ${
                     location.pathname === item.path
-                      ? "text-primary bg-accent"
+                      ? "text-accent-foreground bg-accent"
                       : "text-muted-foreground"
                   }`}
                 >
