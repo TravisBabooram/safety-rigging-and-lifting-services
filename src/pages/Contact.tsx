@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { 
   Phone, 
   Mail, 
-  MapPin, 
   Clock, 
   MessageSquare, 
   PhoneCall,
@@ -101,93 +100,44 @@ export default function Contact() {
       </section>
 
       {/* Company Information */}
-      <section className="grid md:grid-cols-2 gap-8">
-        <Card className="shadow-card">
-          <CardHeader>
-            <div className="flex items-center space-x-2">
-              <MapPin className="h-6 w-6 text-accent" />
-              <CardTitle>Our Location</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <p className="font-semibold text-foreground">Safety Rigging & Lifting Services</p>
-              <p className="text-muted-foreground">
-                #1 Rahaman Development<br />
-                Bamboo Village, La Romaine<br />
-                Trinidad and Tobago
-              </p>
-            </div>
-            <div className="bg-gradient-card rounded-lg p-4">
-              <p className="text-sm text-muted-foreground">
-                <strong>Ready to support your project:</strong> We're ready to support your next 
-                lifting or rigging project. Contact us today for a consultation or quote.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="shadow-card">
-          <CardHeader>
-            <div className="flex items-center space-x-2">
-              <Clock className="h-6 w-6 text-accent" />
-              <CardTitle>Business Hours</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Monday - Friday</span>
-                <span className="font-semibold">8:00 AM - 6:00 PM</span>
+      <section className="flex justify-center">
+        <div className="w-full max-w-md">
+          <Card className="shadow-card">
+            <CardHeader>
+              <div className="flex items-center space-x-2">
+                <Clock className="h-6 w-6 text-accent" />
+                <CardTitle>Business Hours</CardTitle>
               </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Saturday</span>
-                <span className="font-semibold">9:00 AM - 2:00 PM</span>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-3">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Monday - Friday</span>
+                  <span className="font-semibold">8:00 AM - 6:00 PM</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Saturday</span>
+                  <span className="font-semibold">9:00 AM - 2:00 PM</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Sunday</span>
+                  <span className="font-semibold">Emergency Only</span>
+                </div>
               </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Sunday</span>
-                <span className="font-semibold">Emergency Only</span>
+              <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
+                <div className="flex items-start space-x-2">
+                  <AlertCircle className="h-5 w-5 text-accent mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-foreground">
+                    <strong>24/7 Emergency Support</strong><br />
+                    Critical lifting operations and emergency consultations available around the clock.
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
-              <div className="flex items-start space-x-2">
-                <AlertCircle className="h-5 w-5 text-accent mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-foreground">
-                  <strong>24/7 Emergency Support</strong><br />
-                  Critical lifting operations and emergency consultations available around the clock.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Map Placeholder */}
-      <section className="space-y-6">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold text-foreground mb-4">Find Us</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Located in the heart of Trinidad, we're strategically positioned to serve 
-            clients across the Caribbean region efficiently.
-          </p>
+            </CardContent>
+          </Card>
         </div>
-        <Card className="overflow-hidden shadow-industrial">
-          <div className="aspect-video bg-gradient-card flex items-center justify-center">
-            <div className="text-center space-y-4">
-              <MapPin className="h-16 w-16 text-primary mx-auto" />
-              <div>
-                <p className="text-lg font-semibold text-foreground">Interactive Map</p>
-                <p className="text-muted-foreground">
-                  Bamboo Village, La Romaine, Trinidad
-                </p>
-              </div>
-              <Button variant="outline">
-                Open in Google Maps
-              </Button>
-            </div>
-          </div>
-        </Card>
       </section>
+
 
       {/* Why Contact Us */}
       <section className="bg-gradient-card rounded-lg p-8 shadow-card">
