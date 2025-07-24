@@ -57,14 +57,21 @@ export default function Contact() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <p className="font-semibold text-foreground">srls.mw21@gmail.com</p>
+              <a 
+                href="mailto:srls.mw21@gmail.com" 
+                className="font-semibold text-foreground hover:text-primary transition-colors"
+              >
+                srls.mw21@gmail.com
+              </a>
               <p className="text-sm text-muted-foreground">
                 We respond to all inquiries within 24 hours
               </p>
             </div>
-            <Button variant="cta" className="w-full">
-              <Mail className="h-4 w-4 mr-2" />
-              Send Email
+            <Button variant="cta" className="w-full" asChild>
+              <a href="mailto:srls.mw21@gmail.com">
+                <Mail className="h-4 w-4 mr-2" />
+                Send Email
+              </a>
             </Button>
           </CardContent>
         </Card>
