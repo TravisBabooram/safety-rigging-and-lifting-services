@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Construction, FileText, Shield, GraduationCap, Phone, Mail, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-banner.jpg";
+import { LogoProcessor } from "@/components/LogoProcessor";
 
 const Index = () => {
   const services = [
@@ -42,6 +43,13 @@ const Index = () => {
             alt="SRLS - Safety Rigging & Lifting Services" 
             className="h-40 w-auto mx-auto"
           />
+        </div>
+      </section>
+
+      {/* Logo Processor - Temporary for background removal */}
+      <section className="py-8 bg-muted/50">
+        <div className="container mx-auto px-4">
+          <LogoProcessor />
         </div>
       </section>
 
