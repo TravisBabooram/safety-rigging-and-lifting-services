@@ -1,15 +1,13 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Phone, Mail, MapPin, Linkedin } from "lucide-react";
+import { Phone, Mail, Linkedin } from "lucide-react";
 
 const quickLinks = [
   { name: "Home", path: "/" },
   { name: "About Us", path: "/about" },
   { name: "Services", path: "/services" },
-  { name: "Portfolio", path: "/portfolio" },
   { name: "Contact", path: "/contact" },
-  { name: "FAQ", path: "/faq" },
   { name: "Sitemap", path: "/sitemap" },
   { name: "Privacy & Terms", path: "/privacy-terms" },
 ];
@@ -37,14 +35,6 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-foreground">Contact Info</h3>
             <div className="space-y-3">
-              <div className="flex items-start space-x-3">
-                <MapPin className="h-5 w-5 text-muted-foreground mt-0.5 flex-shrink-0" />
-                <div className="text-sm text-muted-foreground">
-                  #1 Rahaman Development<br />
-                  Bamboo Village, La Romaine<br />
-                  Trinidad
-                </div>
-              </div>
               <div className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-muted-foreground" />
                 <div className="text-sm text-muted-foreground">
