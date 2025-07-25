@@ -25,8 +25,8 @@ export function Navigation() {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <img 
-              src="/lovable-uploads/cdae1e93-e234-4e65-8bf1-356fd65f4de2.png" 
-              alt="SRLS" 
+              src="/lovable-uploads/25e7cac9-955d-46a1-8e99-1fae325046d6.png" 
+              alt="SRLS - Safety Rigging & Lifting Services" 
               className="h-10 w-auto"
             />
           </Link>

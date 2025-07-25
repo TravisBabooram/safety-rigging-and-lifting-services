@@ -38,7 +38,7 @@ const Index = () => {
       <section className="py-8 bg-background border-b">
         <div className="container mx-auto px-4 text-center">
           <img 
-            src="/lovable-uploads/cdae1e93-e234-4e65-8bf1-356fd65f4de2.png" 
+            src="/lovable-uploads/25e7cac9-955d-46a1-8e99-1fae325046d6.png" 
             alt="SRLS - Safety Rigging & Lifting Services" 
             className="h-40 w-auto mx-auto"
           />
