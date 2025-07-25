@@ -37,8 +37,13 @@ export function Footer() {
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-muted-foreground" />
-                <div className="text-sm text-muted-foreground">
-                  (868) 301-2781 / (868) 774-1498
+                <div className="text-sm text-muted-foreground space-y-1">
+                  <a href="tel:+18683012781" className="block hover:text-primary transition-colors">
+                    (868) 301-2781
+                  </a>
+                  <a href="tel:+18687741498" className="block hover:text-primary transition-colors">
+                    (868) 774-1498
+                  </a>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
