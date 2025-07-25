@@ -4,9 +4,10 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Checkbox } from '@/components/ui/checkbox';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Calendar, Mail, Phone, User, MessageSquare, Download, Eye } from 'lucide-react';
+import { Calendar, Mail, Phone, User, MessageSquare, Download, Eye, Check, X } from 'lucide-react';
 
 interface ContactMessage {
   id: string;
@@ -17,6 +18,7 @@ interface ContactMessage {
   service_type: string | null;
   preferred_contact: string | null;
   created_at: string;
+  is_read: boolean;
 }
 
 const ViewMessages = () => {
@@ -24,6 +26,7 @@ const ViewMessages = () => {
   const [loading, setLoading] = useState(true);
   const [selectedMessage, setSelectedMessage] = useState<ContactMessage | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedMessages, setSelectedMessages] = useState<string[]>([]);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -50,9 +53,82 @@ const ViewMessages = () => {
     }
   };
 
+  const toggleMessageRead = async (messageId: string, isRead: boolean) => {
+    try {
+      const { error } = await supabase
+        .from('messages')
+        .update({ is_read: isRead })
+        .eq('id', messageId);
+
+      if (error) throw error;
+
+      setMessages(prev => 
+        prev.map(msg => 
+          msg.id === messageId ? { ...msg, is_read: isRead } : msg
+        )
+      );
+
+      toast({
+        title: 'Success',
+        description: `Message marked as ${isRead ? 'read' : 'unread'}`,
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Error',
+        description: 'Failed to update message status',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const toggleMessageSelection = (messageId: string) => {
+    setSelectedMessages(prev => 
+      prev.includes(messageId) 
+        ? prev.filter(id => id !== messageId)
+        : [...prev, messageId]
+    );
+  };
+
+  const markSelectedAsRead = async (isRead: boolean) => {
+    if (selectedMessages.length === 0) return;
+
+    try {
+      const { error } = await supabase
+        .from('messages')
+        .update({ is_read: isRead })
+        .in('id', selectedMessages);
+
+      if (error) throw error;
+
+      setMessages(prev => 
+        prev.map(msg => 
+          selectedMessages.includes(msg.id) ? { ...msg, is_read: isRead } : msg
+        )
+      );
+
+      setSelectedMessages([]);
+
+      toast({
+        title: 'Success',
+        description: `${selectedMessages.length} message(s) marked as ${isRead ? 'read' : 'unread'}`,
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Error',
+        description: 'Failed to update message status',
+        variant: 'destructive',
+      });
+    }
+  };
+
   const viewMessage = (message: ContactMessage) => {
     setSelectedMessage(message);
     setDialogOpen(true);
+    
+    // Auto-mark as read when viewing
+    if (!message.is_read) {
+      toggleMessageRead(message.id, true);
+    }
   };
 
   const getServiceTypeBadge = (serviceType: string | null) => {
@@ -112,13 +188,142 @@ const ViewMessages = () => {
     return <div className="p-6">Loading messages...</div>;
   }
 
+  const unreadMessages = messages.filter(msg => !msg.is_read);
+  const readMessages = messages.filter(msg => msg.is_read);
+
+  const MessageTable = ({ messages: tableMessages, title }: { messages: ContactMessage[], title: string }) => (
+    <Card className="mb-6">
+      <CardHeader>
+        <CardTitle className="flex items-center justify-between">
+          <span>{title} ({tableMessages.length})</span>
+          {selectedMessages.length > 0 && (
+            <div className="flex gap-2">
+              <Button 
+                onClick={() => markSelectedAsRead(true)} 
+                variant="outline" 
+                size="sm"
+                className="gap-1"
+              >
+                <Check className="h-3 w-3" />
+                Mark Read
+              </Button>
+              <Button 
+                onClick={() => markSelectedAsRead(false)} 
+                variant="outline" 
+                size="sm"
+                className="gap-1"
+              >
+                <X className="h-3 w-3" />
+                Mark Unread
+              </Button>
+            </div>
+          )}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        {tableMessages.length === 0 ? (
+          <div className="text-center py-8 text-muted-foreground">
+            No {title.toLowerCase()} messages.
+          </div>
+        ) : (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-12">
+                  <Checkbox
+                    checked={tableMessages.every(msg => selectedMessages.includes(msg.id))}
+                    onCheckedChange={(checked) => {
+                      if (checked) {
+                        setSelectedMessages(prev => [...new Set([...prev, ...tableMessages.map(m => m.id)])]);
+                      } else {
+                        setSelectedMessages(prev => prev.filter(id => !tableMessages.map(m => m.id).includes(id)));
+                      }
+                    }}
+                  />
+                </TableHead>
+                <TableHead>Contact</TableHead>
+                <TableHead>Subject</TableHead>
+                <TableHead>Service Type</TableHead>
+                <TableHead>Preferred Contact</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {tableMessages.map((message) => (
+                <TableRow key={message.id} className={!message.is_read ? 'bg-blue-50/50 dark:bg-blue-950/20' : ''}>
+                  <TableCell>
+                    <Checkbox
+                      checked={selectedMessages.includes(message.id)}
+                      onCheckedChange={() => toggleMessageSelection(message.id)}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <div className="space-y-1">
+                      <div className="font-medium flex items-center gap-1">
+                        <User className="h-3 w-3 text-muted-foreground" />
+                        {message.name}
+                        {!message.is_read && <Badge variant="secondary" className="text-xs">New</Badge>}
+                      </div>
+                      <div className="text-xs text-muted-foreground flex items-center gap-1">
+                        <Mail className="h-3 w-3" />
+                        {message.email}
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell className="max-w-xs">
+                    <p className="truncate font-medium">{message.subject}</p>
+                  </TableCell>
+                  <TableCell>
+                    {getServiceTypeBadge(message.service_type)}
+                  </TableCell>
+                  <TableCell>
+                    {getPreferredContactBadge(message.preferred_contact)}
+                  </TableCell>
+                  <TableCell className="flex items-center gap-1">
+                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-sm">
+                      {new Date(message.created_at).toLocaleDateString()}
+                    </span>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <div className="flex gap-1 justify-end">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => toggleMessageRead(message.id, !message.is_read)}
+                        className="gap-1"
+                      >
+                        {message.is_read ? <X className="h-3 w-3" /> : <Check className="h-3 w-3" />}
+                        {message.is_read ? 'Unread' : 'Read'}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => viewMessage(message)}
+                        className="gap-1"
+                      >
+                        <Eye className="h-3 w-3" />
+                        View
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
+      </CardContent>
+    </Card>
+  );
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Contact Messages</h1>
           <p className="text-muted-foreground">
-            View and manage contact form submissions
+            View and manage contact form submissions ({unreadMessages.length} unread, {readMessages.length} read)
           </p>
         </div>
         {messages.length > 0 && (
@@ -129,75 +334,8 @@ const ViewMessages = () => {
         )}
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Messages ({messages.length})</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {messages.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
-              No messages found. Contact form submissions will appear here.
-            </div>
-          ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Contact</TableHead>
-                  <TableHead>Subject</TableHead>
-                  <TableHead>Service Type</TableHead>
-                  <TableHead>Preferred Contact</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {messages.map((message) => (
-                  <TableRow key={message.id}>
-                    <TableCell>
-                      <div className="space-y-1">
-                        <div className="font-medium flex items-center gap-1">
-                          <User className="h-3 w-3 text-muted-foreground" />
-                          {message.name}
-                        </div>
-                        <div className="text-xs text-muted-foreground flex items-center gap-1">
-                          <Mail className="h-3 w-3" />
-                          {message.email}
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell className="max-w-xs">
-                      <p className="truncate font-medium">{message.subject}</p>
-                    </TableCell>
-                    <TableCell>
-                      {getServiceTypeBadge(message.service_type)}
-                    </TableCell>
-                    <TableCell>
-                      {getPreferredContactBadge(message.preferred_contact)}
-                    </TableCell>
-                    <TableCell className="flex items-center gap-1">
-                      <Calendar className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-sm">
-                        {new Date(message.created_at).toLocaleDateString()}
-                      </span>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => viewMessage(message)}
-                        className="gap-1"
-                      >
-                        <Eye className="h-3 w-3" />
-                        View
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          )}
-        </CardContent>
-      </Card>
+      {unreadMessages.length > 0 && <MessageTable messages={unreadMessages} title="Unread Messages" />}
+      {readMessages.length > 0 && <MessageTable messages={readMessages} title="Read Messages" />}
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="max-w-2xl">

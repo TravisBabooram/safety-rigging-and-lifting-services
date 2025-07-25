@@ -19,6 +19,7 @@ export type Database = {
           created_at: string | null
           email: string
           id: string
+          is_read: boolean
           message: string
           name: string
           preferred_contact: string | null
@@ -29,6 +30,7 @@ export type Database = {
           created_at?: string | null
           email: string
           id?: string
+          is_read?: boolean
           message: string
           name: string
           preferred_contact?: string | null
@@ -39,6 +41,7 @@ export type Database = {
           created_at?: string | null
           email?: string
           id?: string
+          is_read?: boolean
           message?: string
           name?: string
           preferred_contact?: string | null
