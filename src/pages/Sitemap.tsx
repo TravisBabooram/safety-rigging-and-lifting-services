@@ -41,17 +41,6 @@ const siteStructure = [
       { name: "Sitemap", path: "/sitemap", description: "Complete site navigation and page listing" },
       { name: "Privacy & Terms", path: "/privacy-terms", description: "Privacy policy and terms of use" }
     ]
-  },
-  {
-    category: "Admin Area",
-    icon: Shield,
-    pages: [
-      { name: "Admin Login", path: "/admin/login", description: "Administrative login portal" },
-      { name: "Admin Dashboard", path: "/admin/dashboard", description: "Administrative dashboard and controls" },
-      { name: "Manage Services", path: "/admin/services", description: "Manage service offerings" },
-      { name: "Manage Documents", path: "/admin/documents", description: "Upload and manage company documents" },
-      { name: "View Messages", path: "/admin/messages", description: "View contact form submissions" }
-    ]
   }
 ];
 
