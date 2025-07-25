@@ -90,13 +90,31 @@ export function Footer() {
               </Button>
             </div>
             <div className="flex flex-col space-y-3">
-              <Button variant="cta" size="sm" className="w-full" asChild>
-                <Link to="/contact" className="block">
+              <Button 
+                variant="cta" 
+                size="sm" 
+                className="w-full" 
+                asChild
+              >
+                <Link 
+                  to="/contact" 
+                  className="block"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                >
                   Get in Touch
                 </Link>
               </Button>
-              <Button variant="outline" size="sm" className="w-full" asChild>
-                <Link to="/services" className="block">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full" 
+                asChild
+              >
+                <Link 
+                  to="/services" 
+                  className="block"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                >
                   Our Services
                 </Link>
               </Button>
