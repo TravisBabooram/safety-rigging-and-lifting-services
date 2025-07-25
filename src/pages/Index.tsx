@@ -56,7 +56,7 @@ const Index = () => {
       </section>
 
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-muted">
+      <section className="relative w-full min-h-[80vh] flex items-center justify-center overflow-hidden bg-muted">
         <Carousel
           plugins={[
             Autoplay({
@@ -70,9 +70,9 @@ const Index = () => {
             loop: true,
           }}
         >
-          <CarouselContent className="h-full">
+          <CarouselContent className="h-full w-full">
             {heroImages.map((image, index) => (
-              <CarouselItem key={index} className="h-full p-0 basis-full">
+              <CarouselItem key={index} className="h-full p-0 basis-full w-full">
                 <div className="relative w-full h-full">
                   <img 
                     src={image} 
