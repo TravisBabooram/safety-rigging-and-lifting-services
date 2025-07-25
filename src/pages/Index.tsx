@@ -1,10 +1,20 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { Construction, FileText, Shield, GraduationCap, Phone, Mail, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import heroImage from "@/assets/hero-banner.jpg";
+
+import Autoplay from "embla-carousel-autoplay";
 
 const Index = () => {
+  const heroImages = [
+    "/lovable-uploads/85823cab-9802-42ba-ac41-a859d74aac19.png",
+    "/lovable-uploads/2196359f-3834-4e7f-8657-edc6b441c4ce.png", 
+    "/lovable-uploads/bb510e32-4197-4c6c-ba9f-5aad3e21beca.png",
+    "/lovable-uploads/33c2738b-72b0-43ae-8577-fdf16a85bcf1.png",
+    "/lovable-uploads/a31f43de-44aa-4c56-ba71-82175c7558f2.png"
+  ];
+
   const services = [
     { 
       icon: Construction, 
@@ -47,12 +57,33 @@ const Index = () => {
 
       {/* Hero Section */}
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${heroImage})` }}
+        <Carousel
+          plugins={[
+            Autoplay({
+              delay: 5000,
+            }),
+          ]}
+          className="absolute inset-0 w-full h-full"
+          opts={{
+            align: "start",
+            loop: true,
+          }}
         >
-          <div className="absolute inset-0 bg-black/60"></div>
-        </div>
+          <CarouselContent className="h-full">
+            {heroImages.map((image, index) => (
+              <CarouselItem key={index} className="h-full">
+                <div className="relative h-full w-full">
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center bg-no-repeat h-full w-full"
+                    style={{ backgroundImage: `url(${image})` }}
+                  >
+                    <div className="absolute inset-0 bg-black/60"></div>
+                  </div>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
         <div className="relative z-10 text-center space-y-8 max-w-4xl mx-auto px-4 text-white">
           <h1 className="text-4xl md:text-6xl font-bold leading-tight">
             Safety Rigging & Lifting Services
