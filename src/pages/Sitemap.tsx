@@ -23,7 +23,7 @@ const siteStructure = [
       { name: "Home", path: "/", description: "Welcome page with company overview and services summary" },
       { name: "About Us", path: "/about", description: "Company history, mission, team, and certifications" },
       { name: "Services", path: "/services", description: "Comprehensive listing of rigging and lifting services" },
-      { name: "Portfolio", path: "/portfolio", description: "Gallery of completed projects and case studies" }
+      { name: "Lift Planning", path: "/services/lift-planning", description: "Specialized lift planning services and tools" }
     ]
   },
   {
@@ -31,16 +31,26 @@ const siteStructure = [
     icon: Phone,
     pages: [
       { name: "Contact Us", path: "/contact", description: "Contact information, location, and business hours" },
-      { name: "Contact Form", path: "/contact-form", description: "Detailed contact form for project inquiries" },
-      { name: "FAQ", path: "/faq", description: "Frequently asked questions and answers" }
+      { name: "Contact Form", path: "/contact-form", description: "Detailed contact form for project inquiries" }
     ]
   },
   {
-    category: "Information",
+    category: "Information & Legal",
     icon: FileText,
     pages: [
       { name: "Sitemap", path: "/sitemap", description: "Complete site navigation and page listing" },
       { name: "Privacy & Terms", path: "/privacy-terms", description: "Privacy policy and terms of use" }
+    ]
+  },
+  {
+    category: "Admin Area",
+    icon: Shield,
+    pages: [
+      { name: "Admin Login", path: "/admin/login", description: "Administrative login portal" },
+      { name: "Admin Dashboard", path: "/admin/dashboard", description: "Administrative dashboard and controls" },
+      { name: "Manage Services", path: "/admin/services", description: "Manage service offerings" },
+      { name: "Manage Documents", path: "/admin/documents", description: "Upload and manage company documents" },
+      { name: "View Messages", path: "/admin/messages", description: "View contact form submissions" }
     ]
   }
 ];
@@ -115,9 +125,9 @@ export default function Sitemap() {
           </Button>
           
           <Button variant="outline" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 h-auto p-4 flex-col space-y-2" asChild>
-            <Link to="/portfolio">
-              <Image className="h-6 w-6" />
-              <span className="text-sm font-medium">Portfolio</span>
+            <Link to="/services/lift-planning">
+              <FileText className="h-6 w-6" />
+              <span className="text-sm font-medium">Lift Planning</span>
             </Link>
           </Button>
           
@@ -181,9 +191,9 @@ export default function Sitemap() {
                 </Link>
               </Button>
               <Button variant="outline" size="sm" className="w-full" asChild>
-                <Link to="/faq">
-                  <HelpCircle className="h-4 w-4 mr-2" />
-                  View FAQ
+                <Link to="/contact">
+                  <Phone className="h-4 w-4 mr-2" />
+                  Contact Us
                 </Link>
               </Button>
             </div>
