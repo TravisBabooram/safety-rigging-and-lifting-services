@@ -3,10 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Users, Target, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 import { DocumentsSection } from "@/components/DocumentsSection";
-
 export default function About() {
-  return (
-    <div className="container mx-auto px-4 py-16 space-y-16">
+  return <div className="container mx-auto px-4 py-16 space-y-16">
       {/* Hero Section */}
       <section className="text-center space-y-6">
         <h1 className="text-4xl md:text-6xl font-bold text-foreground">About SRLS</h1>
@@ -35,16 +33,7 @@ export default function About() {
             experience, and regulatory compliance to deliver solutions that exceed client expectations.
           </p>
         </div>
-        <div className="bg-gradient-card rounded-lg p-8 shadow-card">
-          <div className="space-y-4">
-            <div className="text-3xl font-bold text-primary">5+</div>
-            <div className="text-muted-foreground">Years of Experience</div>
-            <div className="text-3xl font-bold text-primary">200+</div>
-            <div className="text-muted-foreground">Projects Completed</div>
-            <div className="text-3xl font-bold text-primary">100%</div>
-            <div className="text-muted-foreground">Safety Record</div>
-          </div>
-        </div>
+        
       </section>
 
       {/* Mission & Values */}
@@ -168,6 +157,5 @@ export default function About() {
           </Button>
         </div>
       </section>
-    </div>
-  );
+    </div>;
 }
