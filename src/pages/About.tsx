@@ -22,7 +22,7 @@ export default function About() {
         </div>
         <p className="text-muted-foreground leading-relaxed">
           Safety Rigging & Lifting Services (SRLS) became a registered company in March 2020 to support 
-          construction, oil & gas, and industrial projects across Trinidad and Tobago. We specialize in 
+          construction, oil & gas, and industrial projects across the Caribbean. We specialize in 
           rigging and lifting operations, with a commitment to safety that matches our pursuit of quality 
           and timely delivery.
         </p>

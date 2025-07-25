@@ -27,7 +27,7 @@ export function Footer() {
               />
             </div>
             <p className="text-sm text-gray-400 max-w-xs">
-              Your trusted partner in rigging & lifting solutions. Expert guidance and support for lifting operations in Trinidad & Tobago.
+              Your trusted partner in rigging & lifting solutions. Expert guidance and support for lifting operations across the Caribbean.
             </p>
           </div>
 
@@ -102,7 +102,7 @@ export function Footer() {
             © {new Date().getFullYear()} Safety Rigging & Lifting Services. All rights reserved.
           </div>
           <div className="text-sm text-muted-foreground">
-            Professional rigging consultancy services in Trinidad & Tobago
+            Professional rigging consultancy services across the Caribbean
           </div>
         </div>
       </div>
