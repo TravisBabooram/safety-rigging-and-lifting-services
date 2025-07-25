@@ -89,11 +89,11 @@ export function Footer() {
                 </a>
               </Button>
             </div>
-            <div className="space-y-2">
-              <Button variant="cta" size="sm" asChild>
+            <div className="space-y-3">
+              <Button variant="cta" size="sm" className="w-full" asChild>
                 <Link to="/contact">Get in Touch</Link>
               </Button>
-              <Button variant="outline" size="sm" asChild>
+              <Button variant="outline" size="sm" className="w-full" asChild>
                 <Link to="/services">Our Services</Link>
               </Button>
             </div>
