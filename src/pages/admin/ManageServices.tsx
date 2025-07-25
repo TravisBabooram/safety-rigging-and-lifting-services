@@ -7,8 +7,27 @@ import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Plus, Edit, Trash2, Settings } from 'lucide-react';
+import { Plus, Edit, Trash2, Settings, GripVertical } from 'lucide-react';
 import { IconPicker } from '@/components/IconPicker';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import {
+  useSortable,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 interface Service {
   id: string;
@@ -16,7 +35,84 @@ interface Service {
   content: string;
   icon: string | null;
   created_at: string;
+  display_order: number;
 }
+
+interface SortableServiceProps {
+  service: Service;
+  onEdit: (service: Service) => void;
+  onDelete: (service: Service) => void;
+}
+
+const SortableService = ({ service, onEdit, onDelete }: SortableServiceProps) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+  } = useSortable({ id: service.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <div ref={setNodeRef} style={style}>
+      <Card>
+        <CardHeader>
+          <div className="flex justify-between items-start">
+            <div className="flex items-start gap-3 flex-1">
+              <div
+                className="cursor-grab active:cursor-grabbing flex items-center mt-1"
+                {...attributes}
+                {...listeners}
+              >
+                <GripVertical className="h-5 w-5 text-muted-foreground" />
+              </div>
+              <div className="flex-1">
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Settings className="h-5 w-5 text-muted-foreground" />
+                  {service.title}
+                </CardTitle>
+                {service.icon && (
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Icon: {service.icon}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => onEdit(service)}
+              >
+                <Edit className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => onDelete(service)}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground mb-3">
+            {service.content}
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Created: {new Date(service.created_at).toLocaleDateString()}
+          </p>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
 
 const ManageServices = () => {
   const [services, setServices] = useState<Service[]>([]);
@@ -30,6 +126,13 @@ const ManageServices = () => {
   });
   const { toast } = useToast();
 
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
   useEffect(() => {
     fetchServices();
   }, []);
@@ -39,7 +142,7 @@ const ManageServices = () => {
       const { data, error } = await supabase
         .from('services')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('display_order', { ascending: true });
 
       if (error) throw error;
       setServices(data || []);
@@ -66,6 +169,12 @@ const ManageServices = () => {
     }
 
     try {
+      let nextDisplayOrder = 1;
+      if (services.length > 0) {
+        const maxOrder = Math.max(...services.map(s => s.display_order));
+        nextDisplayOrder = maxOrder + 1;
+      }
+
       if (editingService) {
         const { error } = await supabase
           .from('services')
@@ -88,6 +197,7 @@ const ManageServices = () => {
             title: formData.title,
             content: formData.content,
             icon: formData.icon || null,
+            display_order: nextDisplayOrder,
           }]);
 
         if (error) throw error;
@@ -145,6 +255,47 @@ const ManageServices = () => {
         description: 'Failed to delete service',
         variant: 'destructive',
       });
+    }
+  };
+
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (active.id !== over?.id) {
+      const oldIndex = services.findIndex((service) => service.id === active.id);
+      const newIndex = services.findIndex((service) => service.id === over?.id);
+
+      const newServices = arrayMove(services, oldIndex, newIndex);
+      setServices(newServices);
+
+      // Update display_order for all affected services
+      try {
+        const updates = newServices.map((service, index) => ({
+          id: service.id,
+          display_order: index + 1
+        }));
+
+        for (const update of updates) {
+          await supabase
+            .from('services')
+            .update({ display_order: update.display_order })
+            .eq('id', update.id);
+        }
+
+        toast({
+          title: 'Success',
+          description: 'Service order updated successfully',
+        });
+      } catch (error) {
+        console.error('Error updating service order:', error);
+        toast({
+          title: 'Error',
+          description: 'Failed to update service order',
+          variant: 'destructive',
+        });
+        // Revert on error
+        fetchServices();
+      }
     }
   };
 
@@ -218,60 +369,33 @@ const ManageServices = () => {
         </Dialog>
       </div>
 
-      <div className="grid gap-4">
-        {services.length === 0 ? (
-          <Card>
-            <CardContent className="p-6 text-center">
-              <Settings className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-              <p className="text-muted-foreground">No services created yet</p>
-            </CardContent>
-          </Card>
-        ) : (
-          services.map((service) => (
-            <Card key={service.id}>
-              <CardHeader>
-                <div className="flex justify-between items-start">
-                  <div>
-                    <CardTitle className="text-lg flex items-center gap-2">
-                      <Settings className="h-5 w-5 text-muted-foreground" />
-                      {service.title}
-                    </CardTitle>
-                    {service.icon && (
-                      <p className="text-sm text-muted-foreground mt-1">
-                        Icon: {service.icon}
-                      </p>
-                    )}
-                  </div>
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => startEdit(service)}
-                    >
-                      <Edit className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => deleteService(service)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground mb-3">
-                  {service.content}
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  Created: {new Date(service.created_at).toLocaleDateString()}
-                </p>
-              </CardContent>
-            </Card>
-          ))
-        )}
-      </div>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
+        <SortableContext items={services} strategy={verticalListSortingStrategy}>
+          <div className="grid gap-4">
+            {services.length === 0 ? (
+              <Card>
+                <CardContent className="p-6 text-center">
+                  <Settings className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                  <p className="text-muted-foreground">No services created yet</p>
+                </CardContent>
+              </Card>
+            ) : (
+              services.map((service) => (
+                <SortableService
+                  key={service.id}
+                  service={service}
+                  onEdit={startEdit}
+                  onDelete={deleteService}
+                />
+              ))
+            )}
+          </div>
+        </SortableContext>
+      </DndContext>
     </div>
   );
 };

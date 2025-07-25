@@ -62,7 +62,7 @@ const Services = () => {
         const { data, error } = await supabase
           .from('services')
           .select('*')
-          .order('created_at');
+          .order('display_order');
 
         if (error) {
           console.error('Error fetching services:', error);
