@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Plus, Edit, Trash2, Calendar, Settings } from 'lucide-react';
+import { Plus, Edit, Trash2, Settings } from 'lucide-react';
 
 interface Service {
   id: string;
@@ -20,7 +20,7 @@ interface Service {
 const ManageServices = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingService, setEditingService] = useState<Service | null>(null);
   const [formData, setFormData] = useState({
     title: '',
@@ -42,7 +42,8 @@ const ManageServices = () => {
 
       if (error) throw error;
       setServices(data || []);
-    } catch (error: any) {
+    } catch (error) {
+      console.error('Error fetching services:', error);
       toast({
         title: 'Error',
         description: 'Failed to fetch services',
@@ -53,9 +54,16 @@ const ManageServices = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
+  const handleSubmit = async () => {
+    if (!formData.title || !formData.content) {
+      toast({
+        title: 'Missing information',
+        description: 'Please provide both title and description',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     try {
       if (editingService) {
         const { error } = await supabase
@@ -88,37 +96,39 @@ const ManageServices = () => {
         });
       }
 
-      setDialogOpen(false);
-      setEditingService(null);
+      // Reset form and refresh
       setFormData({ title: '', content: '', icon: '' });
+      setEditingService(null);
+      setIsDialogOpen(false);
       fetchServices();
-    } catch (error: any) {
+    } catch (error) {
+      console.error('Error saving service:', error);
       toast({
         title: 'Error',
-        description: error.message,
+        description: 'Failed to save service',
         variant: 'destructive',
       });
     }
   };
 
-  const handleEdit = (service: Service) => {
+  const startEdit = (service: Service) => {
     setEditingService(service);
     setFormData({
       title: service.title,
       content: service.content,
       icon: service.icon || '',
     });
-    setDialogOpen(true);
+    setIsDialogOpen(true);
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this service?')) return;
+  const deleteService = async (service: Service) => {
+    if (!confirm(`Are you sure you want to delete "${service.title}"?`)) return;
 
     try {
       const { error } = await supabase
         .from('services')
         .delete()
-        .eq('id', id);
+        .eq('id', service.id);
 
       if (error) throw error;
       
@@ -127,19 +137,19 @@ const ManageServices = () => {
         description: 'Service deleted successfully',
       });
       fetchServices();
-    } catch (error: any) {
+    } catch (error) {
+      console.error('Error deleting service:', error);
       toast({
         title: 'Error',
-        description: error.message,
+        description: 'Failed to delete service',
         variant: 'destructive',
       });
     }
   };
 
-  const openAddDialog = () => {
-    setEditingService(null);
+  const resetForm = () => {
     setFormData({ title: '', content: '', icon: '' });
-    setDialogOpen(true);
+    setEditingService(null);
   };
 
   if (loading) {
@@ -147,18 +157,16 @@ const ManageServices = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">Manage Services</h1>
-          <p className="text-muted-foreground">
-            Add, edit, and delete service offerings
-          </p>
-        </div>
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <h1 className="text-2xl font-bold">Manage Services</h1>
+        <Dialog open={isDialogOpen} onOpenChange={(open) => {
+          setIsDialogOpen(open);
+          if (!open) resetForm();
+        }}>
           <DialogTrigger asChild>
-            <Button onClick={openAddDialog} className="gap-2">
-              <Plus className="h-4 w-4" />
+            <Button>
+              <Plus className="h-4 w-4 mr-2" />
               Add New Service
             </Button>
           </DialogTrigger>
@@ -168,24 +176,19 @@ const ManageServices = () => {
                 {editingService ? 'Edit Service' : 'Add New Service'}
               </DialogTitle>
             </DialogHeader>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <label htmlFor="title" className="text-sm font-medium">
-                    Service Title *
-                  </label>
+                <div>
+                  <Label htmlFor="title">Service Title</Label>
                   <Input
                     id="title"
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     placeholder="Service title"
-                    required
                   />
                 </div>
-                <div className="space-y-2">
-                  <label htmlFor="icon" className="text-sm font-medium">
-                    Icon (Lucide icon name)
-                  </label>
+                <div>
+                  <Label htmlFor="icon">Icon (Lucide icon name)</Label>
                   <Input
                     id="icon"
                     value={formData.icon}
@@ -194,99 +197,81 @@ const ManageServices = () => {
                   />
                 </div>
               </div>
-
-              <div className="space-y-2">
-                <label htmlFor="content" className="text-sm font-medium">
-                  Service Description *
-                </label>
+              <div>
+                <Label htmlFor="content">Service Description</Label>
                 <Textarea
                   id="content"
                   value={formData.content}
                   onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                   placeholder="Detailed description of the service..."
                   rows={6}
-                  required
                 />
               </div>
-
-              <div className="flex justify-end gap-2">
-                <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
-                  Cancel
-                </Button>
-                <Button type="submit">
-                  {editingService ? 'Update' : 'Add'} Service
-                </Button>
-              </div>
-            </form>
+              <Button
+                onClick={editingService ? handleSubmit : handleSubmit}
+                className="w-full"
+              >
+                {editingService ? 'Update Service' : 'Add Service'}
+              </Button>
+            </div>
           </DialogContent>
         </Dialog>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Services ({services.length})</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {services.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
-              No services found. Add your first service to get started.
-            </div>
-          ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Title</TableHead>
-                  <TableHead>Description</TableHead>
-                  <TableHead>Created</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {services.map((service) => (
-                  <TableRow key={service.id}>
-                    <TableCell className="font-medium flex items-center gap-2">
-                      <Settings className="h-4 w-4 text-muted-foreground" />
+      <div className="grid gap-4">
+        {services.length === 0 ? (
+          <Card>
+            <CardContent className="p-6 text-center">
+              <Settings className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+              <p className="text-muted-foreground">No services created yet</p>
+            </CardContent>
+          </Card>
+        ) : (
+          services.map((service) => (
+            <Card key={service.id}>
+              <CardHeader>
+                <div className="flex justify-between items-start">
+                  <div>
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <Settings className="h-5 w-5 text-muted-foreground" />
                       {service.title}
-                    </TableCell>
-                    <TableCell className="max-w-md">
-                      <p className="truncate text-muted-foreground">
-                        {service.content.substring(0, 100)}
-                        {service.content.length > 100 ? '...' : ''}
+                    </CardTitle>
+                    {service.icon && (
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Icon: {service.icon}
                       </p>
-                    </TableCell>
-                    <TableCell className="flex items-center gap-1">
-                      <Calendar className="h-4 w-4 text-muted-foreground" />
-                      {new Date(service.created_at).toLocaleDateString()}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex justify-end gap-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleEdit(service)}
-                          className="gap-1"
-                        >
-                          <Edit className="h-3 w-3" />
-                          Edit
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleDelete(service.id)}
-                          className="gap-1 text-destructive hover:text-destructive"
-                        >
-                          <Trash2 className="h-3 w-3" />
-                          Delete
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          )}
-        </CardContent>
-      </Card>
+                    )}
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => startEdit(service)}
+                    >
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => deleteService(service)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-3">
+                  {service.content}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Created: {new Date(service.created_at).toLocaleDateString()}
+                </p>
+              </CardContent>
+            </Card>
+          ))
+        )}
+      </div>
     </div>
   );
 };
