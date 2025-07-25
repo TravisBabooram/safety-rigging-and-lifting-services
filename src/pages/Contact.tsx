@@ -39,9 +39,11 @@ export default function Contact() {
                 Available 24/7 for emergency consultations
               </p>
             </div>
-            <Button variant="cta" className="w-full">
-              <PhoneCall className="h-4 w-4 mr-2" />
-              Call Now
+            <Button variant="cta" className="w-full" asChild>
+              <a href="tel:+18683012781">
+                <PhoneCall className="h-4 w-4 mr-2" />
+                Call Now
+              </a>
             </Button>
           </CardContent>
         </Card>
@@ -180,9 +182,11 @@ export default function Contact() {
           and let's discuss how we can help you achieve your goals safely and efficiently.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button variant="light-cta" size="lg">
-            <PhoneCall className="h-5 w-5 mr-2" />
-            Call (868) 301-2781
+          <Button variant="light-cta" size="lg" asChild>
+            <a href="tel:+18683012781">
+              <PhoneCall className="h-5 w-5 mr-2" />
+              Call (868) 301-2781
+            </a>
           </Button>
           <Button variant="dark-cta" size="lg" asChild>
             <Link to="/contact-form">
