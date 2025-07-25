@@ -55,7 +55,7 @@ const Index = () => {
         </div>
         <div className="relative z-10 text-center space-y-8 max-w-4xl mx-auto px-4 text-white">
           <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-            Safety Rigging & Lifting Service
+            Safety Rigging & Lifting Services
           </h1>
           <p className="text-lg md:text-xl opacity-90 max-w-3xl mx-auto">
             We deliver safe, efficient, and customized solutions for every lifting challenge.
