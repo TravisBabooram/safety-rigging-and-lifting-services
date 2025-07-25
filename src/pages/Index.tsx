@@ -61,6 +61,7 @@ const Index = () => {
           plugins={[
             Autoplay({
               delay: 5000,
+              stopOnInteraction: false,
             }),
           ]}
           className="absolute inset-0 w-full h-full"
@@ -69,16 +70,14 @@ const Index = () => {
             loop: true,
           }}
         >
-          <CarouselContent className="h-full">
+          <CarouselContent className="h-full -ml-0">
             {heroImages.map((image, index) => (
-              <CarouselItem key={index} className="h-full">
-                <div className="relative h-full w-full">
-                  <div 
-                    className="absolute inset-0 bg-cover bg-center bg-no-repeat h-full w-full"
-                    style={{ backgroundImage: `url(${image})` }}
-                  >
-                    <div className="absolute inset-0 bg-black/60"></div>
-                  </div>
+              <CarouselItem key={index} className="h-full pl-0 min-w-full">
+                <div 
+                  className="w-full h-full bg-cover bg-center bg-no-repeat"
+                  style={{ backgroundImage: `url(${image})` }}
+                >
+                  <div className="absolute inset-0 bg-black/60"></div>
                 </div>
               </CarouselItem>
             ))}
