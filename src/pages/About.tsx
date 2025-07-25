@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Users, Target, Shield } from "lucide-react";
+import { Users, Target, Shield, HardHat } from "lucide-react";
 import { Link } from "react-router-dom";
 import { DocumentsSection } from "@/components/DocumentsSection";
 export default function About() {
@@ -98,7 +98,7 @@ export default function About() {
         <div className="grid md:grid-cols-3 gap-6">
           <Card className="text-center p-6 hover:shadow-card transition-shadow">
             <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
-              <Shield className="h-8 w-8 text-primary-foreground" />
+              <HardHat className="h-8 w-8 text-primary-foreground" />
             </div>
             <h3 className="text-lg font-bold text-foreground mb-2">Safety Excellence</h3>
             <p className="text-sm text-muted-foreground">
