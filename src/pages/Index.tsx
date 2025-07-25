@@ -56,7 +56,7 @@ const Index = () => {
       </section>
 
       {/* Hero Section */}
-      <section className="relative w-full h-[70vh] flex items-center justify-center overflow-hidden bg-muted">
+      <section className="relative w-full h-[60vh] md:h-[70vh] lg:h-[75vh] flex items-center justify-center overflow-hidden bg-muted">
         <Carousel
           plugins={[
             Autoplay({
@@ -77,7 +77,7 @@ const Index = () => {
                   <img 
                     src={image} 
                     alt={`Hero slide ${index + 1}`}
-                    className="max-w-full max-h-full object-contain"
+                    className="w-full h-full object-cover md:object-contain lg:max-w-[90%] lg:max-h-[90%]"
                   />
                   <div className="absolute inset-0 bg-black/40"></div>
                 </div>
@@ -85,18 +85,18 @@ const Index = () => {
             ))}
           </CarouselContent>
         </Carousel>
-        <div className="relative z-10 text-center space-y-8 max-w-4xl mx-auto px-4 text-white">
-          <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+        <div className="relative z-10 text-center space-y-4 md:space-y-6 lg:space-y-8 max-w-xs sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto px-4 text-white">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
             Safety Rigging & Lifting Services
           </h1>
-          <p className="text-lg md:text-xl opacity-90 max-w-3xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl opacity-90 max-w-xl md:max-w-2xl lg:max-w-3xl mx-auto">
             We deliver safe, efficient, and customized solutions for every lifting challenge.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="cta" size="xl" asChild>
+          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
+            <Button variant="cta" size="lg" className="w-full sm:w-auto" asChild>
               <Link to="/services">Explore Our Services</Link>
             </Button>
-            <Button variant="outline" size="xl" className="border-white text-white hover:bg-white hover:text-black" asChild>
+            <Button variant="outline" size="lg" className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-black" asChild>
               <Link to="/contact">Get in Contact</Link>
             </Button>
           </div>
