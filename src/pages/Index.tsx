@@ -56,7 +56,7 @@ const Index = () => {
       </section>
 
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-muted">
         <Carousel
           plugins={[
             Autoplay({
@@ -70,13 +70,15 @@ const Index = () => {
             loop: true,
           }}
         >
-          <CarouselContent className="h-full -ml-0">
+          <CarouselContent className="h-full">
             {heroImages.map((image, index) => (
-              <CarouselItem key={index} className="h-full pl-0 min-w-full">
-                <div 
-                  className="w-full h-full bg-cover bg-center bg-no-repeat"
-                  style={{ backgroundImage: `url(${image})` }}
-                >
+              <CarouselItem key={index} className="h-full p-0 basis-full">
+                <div className="relative w-full h-full">
+                  <img 
+                    src={image} 
+                    alt={`Hero slide ${index + 1}`}
+                    className="w-full h-full object-cover"
+                  />
                   <div className="absolute inset-0 bg-black/60"></div>
                 </div>
               </CarouselItem>
@@ -94,7 +96,7 @@ const Index = () => {
             <Button variant="cta" size="xl" asChild>
               <Link to="/services">Explore Our Services</Link>
             </Button>
-            <Button variant="outline" size="xl" asChild>
+            <Button variant="outline" size="xl" className="border-white text-white hover:bg-white hover:text-black" asChild>
               <Link to="/contact">Get in Contact</Link>
             </Button>
           </div>
