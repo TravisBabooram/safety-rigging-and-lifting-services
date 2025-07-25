@@ -71,24 +71,17 @@ export default function About() {
         </div>
         <Card className="max-w-4xl mx-auto shadow-card">
           <CardContent className="p-8">
-            <div className="grid md:grid-cols-3 gap-6 items-center">
-              <div className="flex justify-center">
-                <div className="w-48 h-48 bg-gradient-primary rounded-full flex items-center justify-center">
-                  <Users className="h-24 w-24 text-primary-foreground" />
-                </div>
+            <div className="space-y-4 text-center">
+              <div>
+                <h3 className="text-2xl font-bold text-foreground">Michael Williams</h3>
+                <p className="text-accent font-semibold">Managing Director & Principal Consultant</p>
               </div>
-              <div className="md:col-span-2 space-y-4">
-                <div>
-                  <h3 className="text-2xl font-bold text-foreground">Michael Williams</h3>
-                  <p className="text-accent font-semibold">Managing Director & Principal Consultant</p>
-                </div>
-                <p className="text-muted-foreground leading-relaxed">
-                  Michael Williams brings extensive experience in lifting operations, procedural audits, and rigging inspections. His leadership and technical 
-                  knowledge ensure every project meets the highest standards. Michael's expertise spans 
-                  across offshore drilling operations, construction projects, and marine lifting operations 
-                  throughout the Caribbean region.
-                </p>
-              </div>
+              <p className="text-muted-foreground leading-relaxed">
+                Michael Williams brings extensive experience in lifting operations, procedural audits, and rigging inspections. His leadership and technical 
+                knowledge ensure every project meets the highest standards of safety and compliance. Michael's expertise spans 
+                across offshore drilling operations, construction projects, and marine lifting operations 
+                throughout the Caribbean region.
+              </p>
             </div>
           </CardContent>
         </Card>
