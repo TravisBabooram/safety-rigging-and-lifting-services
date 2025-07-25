@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { 
   Phone, 
   Mail, 
-  Clock, 
   MessageSquare, 
   PhoneCall,
   AlertCircle,
@@ -97,45 +96,6 @@ export default function Contact() {
             </Button>
           </CardContent>
         </Card>
-      </section>
-
-      {/* Company Information */}
-      <section className="flex justify-center">
-        <div className="w-full max-w-md">
-          <Card className="shadow-card">
-            <CardHeader>
-              <div className="flex items-center space-x-2">
-                <Clock className="h-6 w-6 text-accent" />
-                <CardTitle>Business Hours</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Monday - Friday</span>
-                  <span className="font-semibold">8:00 AM - 6:00 PM</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Saturday</span>
-                  <span className="font-semibold">9:00 AM - 2:00 PM</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Sunday</span>
-                  <span className="font-semibold">Emergency Only</span>
-                </div>
-              </div>
-              <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
-                <div className="flex items-start space-x-2">
-                  <AlertCircle className="h-5 w-5 text-accent mt-0.5 flex-shrink-0" />
-                  <p className="text-sm text-foreground">
-                    <strong>24/7 Emergency Support</strong><br />
-                    Critical lifting operations and emergency consultations available around the clock.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
       </section>
 
 
