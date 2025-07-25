@@ -1,5 +1,5 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { X } from 'lucide-react';
+import { X, ExternalLink, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface PDFPreviewDialogProps {
@@ -10,10 +10,23 @@ interface PDFPreviewDialogProps {
 }
 
 export function PDFPreviewDialog({ isOpen, onClose, pdfUrl, title }: PDFPreviewDialogProps) {
+  const handleViewInNewTab = () => {
+    window.open(pdfUrl, '_blank');
+  };
+
+  const handleDownload = () => {
+    const link = document.createElement('a');
+    link.href = pdfUrl;
+    link.download = `${title}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl h-[90vh] flex flex-col p-0">
-        <DialogHeader className="px-6 py-4 border-b">
+      <DialogContent className="max-w-md">
+        <DialogHeader>
           <div className="flex items-center justify-between">
             <DialogTitle className="text-lg font-semibold">{title}</DialogTitle>
             <Button
@@ -27,14 +40,29 @@ export function PDFPreviewDialog({ isOpen, onClose, pdfUrl, title }: PDFPreviewD
           </div>
         </DialogHeader>
         
-        <div className="flex-1 p-6">
-          <div className="w-full h-full border rounded-lg overflow-hidden">
-            <iframe
-              src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
-              className="w-full h-full"
-              title={title}
-              style={{ minHeight: '600px' }}
-            />
+        <div className="space-y-4 pt-4">
+          <p className="text-sm text-muted-foreground">
+            Choose how you'd like to view this document:
+          </p>
+          
+          <div className="space-y-3">
+            <Button
+              onClick={handleViewInNewTab}
+              className="w-full justify-start"
+              variant="outline"
+            >
+              <ExternalLink className="h-4 w-4 mr-2" />
+              Open in New Tab
+            </Button>
+            
+            <Button
+              onClick={handleDownload}
+              className="w-full justify-start"
+              variant="outline"
+            >
+              <Download className="h-4 w-4 mr-2" />
+              Download PDF
+            </Button>
           </div>
         </div>
       </DialogContent>
