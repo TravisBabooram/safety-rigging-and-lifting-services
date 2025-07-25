@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, CheckCircle, Shield, Users, Target, Award, Wrench, FileText, AlertTriangle, Search, BarChart3, Phone, Mail } from "lucide-react";
+import { 
+  ArrowLeft, CheckCircle, Shield, Users, Target, Award, Wrench, FileText, 
+  AlertTriangle, Search, BarChart3, Phone, Mail, Settings, Cog, Truck, 
+  HardHat, Building2, Clipboard, Calculator, MapPin, Clock, Zap, 
+  Eye, Package, Hammer, Gauge, Lock, Briefcase, Factory, ArrowUpDown 
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -16,7 +21,27 @@ const iconMap = {
   Users,
   Target,
   Phone,
-  Mail
+  Mail,
+  Settings,
+  Cog,
+  CheckCircle,
+  Award,
+  Truck,
+  HardHat,
+  Building2,
+  Clipboard,
+  Calculator,
+  MapPin,
+  Clock,
+  Zap,
+  Eye,
+  Package,
+  Hammer,
+  Gauge,
+  Lock,
+  Briefcase,
+  Factory,
+  ArrowUpDown,
 };
 
 interface Service {

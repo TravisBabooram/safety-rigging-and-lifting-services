@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Plus, Edit, Trash2, Settings } from 'lucide-react';
+import { IconPicker } from '@/components/IconPicker';
 
 interface Service {
   id: string;
@@ -188,12 +189,11 @@ const ManageServices = () => {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="icon">Icon (Lucide icon name)</Label>
-                  <Input
-                    id="icon"
-                    value={formData.icon}
-                    onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
-                    placeholder="e.g., shield, settings, users"
+                  <Label htmlFor="icon">Icon</Label>
+                  <IconPicker
+                    selectedIcon={formData.icon}
+                    onIconSelect={(iconName) => setFormData({ ...formData, icon: iconName })}
+                    onClear={() => setFormData({ ...formData, icon: '' })}
                   />
                 </div>
               </div>
