@@ -1,5 +1,5 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { X, ExternalLink, Download } from 'lucide-react';
+import { X, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface PDFPreviewDialogProps {
@@ -12,15 +12,6 @@ interface PDFPreviewDialogProps {
 export function PDFPreviewDialog({ isOpen, onClose, pdfUrl, title }: PDFPreviewDialogProps) {
   const handleViewInNewTab = () => {
     window.open(pdfUrl, '_blank');
-  };
-
-  const handleDownload = () => {
-    const link = document.createElement('a');
-    link.href = pdfUrl;
-    link.download = `${title}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
   };
 
   return (
@@ -42,28 +33,17 @@ export function PDFPreviewDialog({ isOpen, onClose, pdfUrl, title }: PDFPreviewD
         
         <div className="space-y-4 pt-4">
           <p className="text-sm text-muted-foreground">
-            Choose how you'd like to view this document:
+            Click below to view this document:
           </p>
           
-          <div className="space-y-3">
-            <Button
-              onClick={handleViewInNewTab}
-              className="w-full justify-start"
-              variant="outline"
-            >
-              <ExternalLink className="h-4 w-4 mr-2" />
-              Open in New Tab
-            </Button>
-            
-            <Button
-              onClick={handleDownload}
-              className="w-full justify-start"
-              variant="outline"
-            >
-              <Download className="h-4 w-4 mr-2" />
-              Download PDF
-            </Button>
-          </div>
+          <Button
+            onClick={handleViewInNewTab}
+            className="w-full justify-start"
+            variant="outline"
+          >
+            <ExternalLink className="h-4 w-4 mr-2" />
+            Open in New Tab
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
