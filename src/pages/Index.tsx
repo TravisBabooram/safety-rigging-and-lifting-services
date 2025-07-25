@@ -85,15 +85,15 @@ const Index = () => {
             {services.map((service, index) => {
               const IconComponent = service.icon;
               return (
-                <Link key={index} to={service.path}>
-                  <Card className="text-center hover:shadow-industrial transition-all duration-300 group cursor-pointer">
-                    <CardHeader>
+                <Link key={index} to={service.path} className="h-full">
+                  <Card className="text-center hover:shadow-industrial transition-all duration-300 group cursor-pointer h-full flex flex-col">
+                    <CardHeader className="flex-shrink-0">
                       <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-primary mx-auto mb-4 group-hover:scale-110 transition-transform">
                         <IconComponent className="h-8 w-8 text-primary-foreground" />
                       </div>
                       <CardTitle className="text-lg">{service.title}</CardTitle>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="flex-grow">
                       <p className="text-muted-foreground">{service.description}</p>
                     </CardContent>
                   </Card>
@@ -109,33 +109,33 @@ const Index = () => {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-foreground mb-8">Why Choose SRLS?</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div className="text-center space-y-3">
+            <div className="text-center space-y-3 flex flex-col h-full">
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-primary mx-auto">
                 <CheckCircle className="h-8 w-8 text-primary-foreground" />
               </div>
               <h3 className="font-semibold">Safety First</h3>
-              <p className="text-sm text-muted-foreground">Reducing risk of accidents and injuries during lifting operations</p>
+              <p className="text-sm text-muted-foreground flex-grow">Reducing risk of accidents and injuries during lifting operations</p>
             </div>
-            <div className="text-center space-y-3">
+            <div className="text-center space-y-3 flex flex-col h-full">
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-primary mx-auto">
                 <CheckCircle className="h-8 w-8 text-primary-foreground" />
               </div>
               <h3 className="font-semibold">Efficiency</h3>
-              <p className="text-sm text-muted-foreground">Streamlining operations to minimize downtime and costs</p>
+              <p className="text-sm text-muted-foreground flex-grow">Streamlining operations to minimize downtime and costs</p>
             </div>
-            <div className="text-center space-y-3">
+            <div className="text-center space-y-3 flex flex-col h-full">
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-primary mx-auto">
                 <CheckCircle className="h-8 w-8 text-primary-foreground" />
               </div>
               <h3 className="font-semibold">Expertise</h3>
-              <p className="text-sm text-muted-foreground">Access to industry knowledge and best practices</p>
+              <p className="text-sm text-muted-foreground flex-grow">Access to industry knowledge and best practices</p>
             </div>
-            <div className="text-center space-y-3">
+            <div className="text-center space-y-3 flex flex-col h-full">
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-primary mx-auto">
                 <CheckCircle className="h-8 w-8 text-primary-foreground" />
               </div>
               <h3 className="font-semibold">Customization</h3>
-              <p className="text-sm text-muted-foreground">Tailoring solutions to specific project needs and challenges</p>
+              <p className="text-sm text-muted-foreground flex-grow">Tailoring solutions to specific project needs and challenges</p>
             </div>
           </div>
           <Button variant="outline" asChild>
