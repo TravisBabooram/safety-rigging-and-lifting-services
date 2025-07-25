@@ -47,6 +47,33 @@ export type Database = {
         }
         Relationships: []
       }
+      pdf_documents: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_order: number
+          file_path: string
+          id: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          file_path: string
+          id?: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          file_path?: string
+          id?: string
+          title?: string
+        }
+        Relationships: []
+      }
       portfolio: {
         Row: {
           category: string

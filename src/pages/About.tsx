@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Users, Target, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
+import { DocumentsSection } from "@/components/DocumentsSection";
 
 export default function About() {
   return (
@@ -147,6 +148,9 @@ export default function About() {
           </Card>
         </div>
       </section>
+
+      {/* Company Documents Section */}
+      <DocumentsSection />
 
       {/* CTA Section */}
       <section className="text-center space-y-6 bg-gradient-primary rounded-lg p-12 text-primary-foreground">

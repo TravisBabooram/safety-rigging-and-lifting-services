@@ -23,8 +23,8 @@ import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import DashboardHome from "./pages/admin/DashboardHome";
-
 import ManageServices from "./pages/admin/ManageServices";
+import ManageDocuments from "./pages/admin/ManageDocuments";
 import ViewMessages from "./pages/admin/ViewMessages";
 import { MaintenancePage } from "./components/MaintenancePage";
 
@@ -83,6 +83,11 @@ const AppContent = () => {
         <Route path="services" element={
           <ProtectedRoute requiredRole="editor">
             <ManageServices />
+          </ProtectedRoute>
+        } />
+        <Route path="documents" element={
+          <ProtectedRoute requiredRole="editor">
+            <ManageDocuments />
           </ProtectedRoute>
         } />
         <Route path="messages" element={

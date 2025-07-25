@@ -15,6 +15,7 @@ import {
   FolderOpen, 
   Settings, 
   MessageSquare, 
+  FileText,
   LogOut,
   Shield
 } from 'lucide-react';
@@ -36,6 +37,12 @@ const menuItems = [
     title: 'Manage Services',
     url: '/admin/services',
     icon: Settings,
+    requiredRole: 'editor' as const,
+  },
+  {
+    title: 'Manage Documents',
+    url: '/admin/documents',
+    icon: FileText,
     requiredRole: 'editor' as const,
   },
   {
