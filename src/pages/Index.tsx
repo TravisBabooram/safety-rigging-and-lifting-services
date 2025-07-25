@@ -64,7 +64,7 @@ const Index = () => {
             <Button variant="cta" size="xl" asChild>
               <Link to="/services">Explore Our Services</Link>
             </Button>
-            <Button variant="outline" size="xl" className="bg-white/10 text-white border-white hover:bg-white/20" asChild>
+            <Button variant="outline" size="xl" asChild>
               <Link to="/contact">Get in Contact</Link>
             </Button>
           </div>
@@ -152,11 +152,11 @@ const Index = () => {
             Contact our expert team today for professional rigging and lifting consultation.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="outline" size="lg" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90">
+            <Button variant="secondary" size="lg">
               <Phone className="h-5 w-5 mr-2" />
               (868) 301-2781
             </Button>
-            <Button variant="ghost" size="lg" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
+            <Button variant="outline" size="lg">
               <Mail className="h-5 w-5 mr-2" />
               srls.mw21@gmail.com
             </Button>

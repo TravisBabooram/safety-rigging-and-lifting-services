@@ -180,11 +180,11 @@ export default function Contact() {
           and let's discuss how we can help you achieve your goals safely and efficiently.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button variant="outline" size="lg" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90">
+          <Button variant="secondary" size="lg">
             <PhoneCall className="h-5 w-5 mr-2" />
             Call (868) 301-2781
           </Button>
-          <Button variant="ghost" size="lg" className="text-primary-foreground border-primary-foreground hover:bg-primary-foreground/10" asChild>
+          <Button variant="outline" size="lg" asChild>
             <Link to="/contact-form">
               <MessageSquare className="h-5 w-5 mr-2" />
               Send Message

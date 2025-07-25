@@ -139,10 +139,10 @@ export default function About() {
           Contact us today for a consultation.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button variant="outline" size="lg" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90" asChild>
+          <Button variant="secondary" size="lg" asChild>
             <Link to="/contact">Get in Touch</Link>
           </Button>
-          <Button variant="ghost" size="lg" className="text-primary-foreground border-primary-foreground hover:bg-primary-foreground/10" asChild>
+          <Button variant="outline" size="lg" asChild>
             <Link to="/services">View Our Services</Link>
           </Button>
         </div>
