@@ -90,7 +90,7 @@ const Services = () => {
       </section>
 
       {/* Hero Section */}
-      <section className="py-16 bg-gradient-hero text-primary-foreground">
+      <section className="py-16 bg-gradient-hero text-white">
         <div className="container mx-auto px-4 text-center space-y-6">
           <h1 className="text-4xl md:text-6xl font-bold">
             Our Services
