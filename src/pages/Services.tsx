@@ -227,10 +227,10 @@ const Services = () => {
             Contact our expert team today for professional rigging and lifting consultation.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="secondary" size="lg" asChild>
+            <Button variant="light-cta" size="lg" asChild>
               <Link to="/contact">Request a Quote</Link>
             </Button>
-            <Button variant="outline" size="lg" asChild>
+            <Button variant="dark-cta" size="lg" asChild>
               <Link to="/portfolio">View Our Work</Link>
             </Button>
           </div>

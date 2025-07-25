@@ -21,6 +21,8 @@ const buttonVariants = cva(
         cta: "bg-primary text-primary-foreground hover:bg-[hsl(33_79%_44%)] shadow-cta hover:shadow-cta hover:scale-105 font-semibold",
         hero: "bg-gradient-primary text-primary-foreground hover:shadow-industrial hover:scale-105 font-semibold border border-primary/20",
         industrial: "bg-gradient-card border border-border text-foreground hover:shadow-card hover:border-primary/30 transition-all duration-300",
+        "light-cta": "bg-white text-black hover:bg-white/90 shadow-card font-semibold border border-white/20",
+        "dark-cta": "bg-white/10 text-white border border-white/20 hover:bg-white/20 backdrop-blur-sm",
       },
       size: {
         default: "h-10 px-4 py-2",

@@ -152,11 +152,11 @@ const Index = () => {
             Contact our expert team today for professional rigging and lifting consultation.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="secondary" size="lg">
+            <Button variant="light-cta" size="lg">
               <Phone className="h-5 w-5 mr-2" />
               (868) 301-2781
             </Button>
-            <Button variant="outline" size="lg">
+            <Button variant="dark-cta" size="lg">
               <Mail className="h-5 w-5 mr-2" />
               srls.mw21@gmail.com
             </Button>
