@@ -14,6 +14,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Send, CheckCircle, Shield, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 // Form validation schema
 const contactFormSchema = z.object({
@@ -51,17 +52,33 @@ export default function ContactForm() {
   });
 
   const onSubmit = async (data: ContactFormData) => {
-    // Simulate form submission
-    console.log("Form submitted:", data);
-    
-    // Set success state
-    setIsSubmitted(true);
-    
-    // Reset form after showing success message
-    setTimeout(() => {
-      form.reset();
-      setIsSubmitted(false);
-    }, 5000);
+    try {
+      // Save to Supabase
+      const { error } = await supabase
+        .from('messages')
+        .insert({
+          name: data.fullName,
+          email: data.email,
+          subject: data.subject,
+          message: data.message,
+          service_type: data.serviceType || null,
+          preferred_contact: data.preferredContact || null,
+        });
+
+      if (error) throw error;
+
+      // Set success state
+      setIsSubmitted(true);
+      
+      // Reset form after showing success message
+      setTimeout(() => {
+        form.reset();
+        setIsSubmitted(false);
+      }, 5000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      // You might want to show an error toast here
+    }
   };
 
   const serviceTypeOptions = [

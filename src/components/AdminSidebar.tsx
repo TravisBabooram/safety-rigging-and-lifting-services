@@ -28,12 +28,6 @@ const menuItems = [
     requiredRole: 'viewer' as const,
   },
   {
-    title: 'Manage Portfolio',
-    url: '/admin/portfolio',
-    icon: FolderOpen,
-    requiredRole: 'editor' as const,
-  },
-  {
     title: 'Manage Services',
     url: '/admin/services',
     icon: Settings,
