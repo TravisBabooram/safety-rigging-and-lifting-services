@@ -1,71 +1,58 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, CheckCircle, Shield, Users, Target, Award, Wrench, FileText, AlertTriangle, Search, BarChart3, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+
+// Icon mapping for database stored icon names
+const iconMap = {
+  Search,
+  FileText,
+  Shield,
+  Wrench,
+  AlertTriangle,
+  BarChart3,
+  Users,
+  Target,
+  Phone,
+  Mail
+};
+
+interface Service {
+  id: string;
+  title: string;
+  content: string;
+  icon: string | null;
+  created_at: string;
+}
 
 const Services = () => {
-  const keyServices = [
-    {
-      icon: Search,
-      title: "Site Assessments",
-      description: "Evaluating the site conditions to determine the best lifting solutions."
-    },
-    {
-      icon: FileText,
-      title: "Lift Planning / Method Statement",
-      description: "Developing detailed lift plans that outline procedures, equipment, and safety measures."
-    },
-    {
-      icon: Shield,
-      title: "Lift Plan Review Services",
-      description: "Providing detailed and documented reviews of safe systems of work against legislative, procedural or contractual obligations to ensure clients always exceed the minimum expected requirements and that safe systems of work are suitable and sufficient for the tasks being undertaken."
-    },
-    {
-      icon: Wrench,
-      title: "Lifting Equipment 'Fit-for-purpose' Assessment Services",
-      description: "Offering consultation to clients selecting, specifying and procuring lifting equipment and accessories. The team will ensure they are fit for their intended use, manufactured in accordance with the correct standards, supplied with the correct documentation, and comply with the appropriate legislation."
-    },
-    {
-      icon: AlertTriangle,
-      title: "Risk Assessment",
-      description: "Conducting risk assessments to identify potential hazards and mitigation strategies."
-    },
-    {
-      icon: BarChart3,
-      title: "Lifting Operations Standardisation and Risk Management Strategies",
-      description: "Providing standardisation services ensuring that lifting operations are harmonised — reducing cost divergence and harnessing optimisations in productivity while simultaneously implementing lessons learned and best practices across multiple locations."
-    },
-    {
-      icon: Users,
-      title: "Training",
-      description: "Providing in-house awareness training for personnel on safe lifting practices and equipment operation."
-    },
-    {
-      icon: Shield,
-      title: "Regulatory Compliance",
-      description: "Ensuring all operations comply with local and international regulations, standards, and legislations."
-    },
-    {
-      icon: Target,
-      title: "On-Site Supervision",
-      description: "Offering on-site support during lifting operations to ensure adherence to the lift plan."
-    },
-    {
-      icon: Search,
-      title: "Incident Investigation",
-      description: "Providing subject matter expert support for investigations involving lifting equipment and helping improve future safety practices."
-    },
-    {
-      icon: FileText,
-      title: "Development of Client Lifting Policies & Procedures",
-      description: "With extensive experience, SRLS is ideally positioned to provide the knowledge and expertise to conduct detailed reviews or, where necessary, develop ground-up client lifting policies and procedures."
-    },
-    {
-      icon: Phone,
-      title: "Technical Support Services",
-      description: "Providing ad-hoc technical support and guidance services to SRLS clients on all matters related to lifting operations risk management and compliance. This includes the option for priority access through a retained services agreement."
-    }
-  ];
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('services')
+          .select('*')
+          .order('created_at');
+
+        if (error) {
+          console.error('Error fetching services:', error);
+        } else {
+          setServices(data || []);
+        }
+      } catch (error) {
+        console.error('Error fetching services:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, []);
 
   const benefits = [
     {
@@ -121,28 +108,34 @@ const Services = () => {
             <h2 className="text-4xl font-bold text-foreground mb-4">Key Services Offered</h2>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {keyServices.map((service, index) => {
-              const IconComponent = service.icon;
-              return (
-                <Card key={index} className="text-left hover:shadow-industrial transition-all duration-300">
-                  <CardHeader>
-                    <div className="flex items-start space-x-4">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-primary flex-shrink-0">
-                        <IconComponent className="h-6 w-6 text-primary-foreground" />
+          {loading ? (
+            <div className="text-center py-8">
+              <p className="text-muted-foreground">Loading services...</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {services.map((service, index) => {
+                const IconComponent = service.icon ? iconMap[service.icon as keyof typeof iconMap] || Search : Search;
+                return (
+                  <Card key={service.id} className="text-left hover:shadow-industrial transition-all duration-300">
+                    <CardHeader>
+                      <div className="flex items-start space-x-4">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-primary flex-shrink-0">
+                          <IconComponent className="h-6 w-6 text-primary-foreground" />
+                        </div>
+                        <div>
+                          <CardTitle className="text-lg leading-tight">{service.title}</CardTitle>
+                        </div>
                       </div>
-                      <div>
-                        <CardTitle className="text-lg leading-tight">{service.title}</CardTitle>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">{service.description}</p>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground">{service.content}</p>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 
