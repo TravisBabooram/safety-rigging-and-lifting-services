@@ -56,7 +56,7 @@ const Index = () => {
       </section>
 
       {/* Hero Section */}
-      <section className="relative w-full min-h-[80vh] flex items-center justify-center overflow-hidden bg-muted">
+      <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-muted">
         <Carousel
           plugins={[
             Autoplay({
