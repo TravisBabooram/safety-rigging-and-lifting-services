@@ -77,7 +77,7 @@ const Index = () => {
                   <img 
                     src={image} 
                     alt={`Hero slide ${index + 1}`}
-                    className="w-full h-full object-cover md:object-contain lg:max-w-[90%] lg:max-h-[90%]"
+                    className="w-full h-full object-cover md:object-contain lg:max-w-[95%] lg:max-h-[95%]"
                   />
                   <div className="absolute inset-0 bg-black/40"></div>
                 </div>
