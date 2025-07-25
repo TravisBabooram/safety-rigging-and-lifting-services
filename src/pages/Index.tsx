@@ -96,7 +96,7 @@ const Index = () => {
             <Button variant="cta" size="lg" className="w-full sm:w-auto" asChild>
               <Link to="/services">Explore Our Services</Link>
             </Button>
-            <Button variant="outline" size="lg" className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-black" asChild>
+            <Button variant="dark-cta" size="lg" className="w-full sm:w-auto" asChild>
               <Link to="/contact">Get in Contact</Link>
             </Button>
           </div>
