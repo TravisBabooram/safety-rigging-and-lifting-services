@@ -67,6 +67,30 @@ export default function ContactForm() {
 
       if (error) throw error;
 
+      // Send email notification
+      try {
+        const { error: emailError } = await supabase.functions.invoke('send-contact-notification', {
+          body: {
+            name: data.fullName,
+            email: data.email,
+            subject: data.subject,
+            message: data.message,
+            serviceType: data.serviceType,
+            preferredContact: data.preferredContact,
+            phoneNumber: data.phoneNumber,
+            companyName: data.companyName,
+          },
+        });
+
+        if (emailError) {
+          console.error('Error sending email notification:', emailError);
+          // Don't throw error here - form submission should still succeed
+        }
+      } catch (emailError) {
+        console.error('Failed to send email notification:', emailError);
+        // Don't throw error here - form submission should still succeed
+      }
+
       // Set success state
       setIsSubmitted(true);
       
