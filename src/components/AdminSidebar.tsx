@@ -16,6 +16,7 @@ import {
   Settings, 
   MessageSquare, 
   FileText,
+  FileEdit,
   LogOut,
   Shield
 } from 'lucide-react';
@@ -37,6 +38,12 @@ const menuItems = [
     title: 'Manage Documents',
     url: '/admin/documents',
     icon: FileText,
+    requiredRole: 'editor' as const,
+  },
+  {
+    title: 'Manage Pages',
+    url: '/admin/pages',
+    icon: FileEdit,
     requiredRole: 'editor' as const,
   },
   {

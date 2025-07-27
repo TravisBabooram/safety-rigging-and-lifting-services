@@ -27,6 +27,7 @@ import DashboardHome from "./pages/admin/DashboardHome";
 import ManageServices from "./pages/admin/ManageServices";
 import ManageDocuments from "./pages/admin/ManageDocuments";
 import ViewMessages from "./pages/admin/ViewMessages";
+import ManagePages from "./pages/admin/ManagePages";
 import { MaintenancePage } from "./components/MaintenancePage";
 
 const queryClient = new QueryClient();
@@ -94,6 +95,11 @@ const AppContent = () => {
         <Route path="messages" element={
           <ProtectedRoute requiredRole="admin">
             <ViewMessages />
+          </ProtectedRoute>
+        } />
+        <Route path="pages" element={
+          <ProtectedRoute requiredRole="editor">
+            <ManagePages />
           </ProtectedRoute>
         } />
       </Route>
