@@ -8,11 +8,11 @@ import Autoplay from "embla-carousel-autoplay";
 
 const Index = () => {
   const heroImages = [
-    "/lovable-uploads/85823cab-9802-42ba-ac41-a859d74aac19.png",
-    "/lovable-uploads/2196359f-3834-4e7f-8657-edc6b441c4ce.png", 
-    "/lovable-uploads/bb510e32-4197-4c6c-ba9f-5aad3e21beca.png",
-    "/lovable-uploads/33c2738b-72b0-43ae-8577-fdf16a85bcf1.png",
-    "/lovable-uploads/a31f43de-44aa-4c56-ba71-82175c7558f2.png"
+    "/assets/images/hero-1.png",
+    "/assets/images/hero-2.png", 
+    "/assets/images/hero-3.png",
+    "/assets/images/hero-4.png",
+    "/assets/images/hero-5.png"
   ];
 
   const services = [
@@ -48,7 +48,7 @@ const Index = () => {
       <section className="py-8 bg-background border-b">
         <div className="container mx-auto px-4 text-center">
           <img 
-            src="/lovable-uploads/25e7cac9-955d-46a1-8e99-1fae325046d6.png" 
+            src="/assets/images/srls-logo.png" 
             alt="SRLS - Safety Rigging & Lifting Services" 
             className="h-40 w-auto mx-auto"
           />

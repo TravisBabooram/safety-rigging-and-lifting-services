@@ -21,7 +21,7 @@ export function Footer() {
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <img 
-                src="/lovable-uploads/cdae1e93-e234-4e65-8bf1-356fd65f4de2.png" 
+                src="/assets/images/srls-logo.png" 
                 alt="SRLS" 
                 className="h-12 w-auto"
               />
