@@ -72,7 +72,7 @@ export default function About() {
          <Card className="max-w-4xl mx-auto shadow-card">
           <CardContent className="p-8">
             <div className="flex flex-col md:flex-row gap-8 items-center">
-              <div className="w-48 h-48 md:w-56 md:h-56 flex-shrink-0 rounded-full overflow-hidden border-4 border-accent/20">
+              <div className="w-48 h-48 md:w-56 md:h-56 flex-shrink-0 rounded-full overflow-hidden">
                 <img 
                   src="/images/michael-williams.jpg" 
                   alt="Michael Williams - Managing Director" 
