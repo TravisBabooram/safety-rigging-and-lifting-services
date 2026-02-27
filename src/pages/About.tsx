@@ -69,19 +69,28 @@ export default function About() {
         <div className="text-center">
           <h2 className="text-3xl font-bold text-foreground mb-4">Meet Our Director</h2>
         </div>
-        <Card className="max-w-4xl mx-auto shadow-card">
+         <Card className="max-w-4xl mx-auto shadow-card">
           <CardContent className="p-8">
-            <div className="space-y-4 text-center">
-              <div>
-                <h3 className="text-2xl font-bold text-foreground">Michael Williams</h3>
-                <p className="text-accent font-semibold">Managing Director & Principal Consultant</p>
+            <div className="flex flex-col md:flex-row gap-8 items-center">
+              <div className="w-48 h-48 md:w-56 md:h-56 flex-shrink-0 rounded-full overflow-hidden border-4 border-accent/20">
+                <img 
+                  src="/images/michael-williams.jpg" 
+                  alt="Michael Williams - Managing Director" 
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
-              <p className="text-muted-foreground leading-relaxed">
-                Michael Williams brings extensive experience in lifting operations, procedural audits, and rigging inspections. His leadership and technical 
-                knowledge ensure every project meets the highest standards of safety and compliance. Michael's expertise spans 
-                across offshore drilling operations, construction projects, and marine lifting operations 
-                throughout the Caribbean region.
-              </p>
+              <div className="space-y-4 text-center md:text-left">
+                <div>
+                  <h3 className="text-2xl font-bold text-foreground">Michael Williams</h3>
+                  <p className="text-accent font-semibold">Managing Director & Principal Consultant</p>
+                </div>
+                <p className="text-muted-foreground leading-relaxed">
+                  Michael Williams brings extensive experience in lifting operations, procedural audits, and rigging inspections. His leadership and technical 
+                  knowledge ensure every project meets the highest standards of safety and compliance. Michael's expertise spans 
+                  across offshore drilling operations, construction projects, and marine lifting operations 
+                  throughout the Caribbean region.
+                </p>
+              </div>
             </div>
           </CardContent>
         </Card>
