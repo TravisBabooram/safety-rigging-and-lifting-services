@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 
-const DEFAULT_OG_IMAGE = "https://safetyriggingandliftingconsultancy.com/assets/images/og-image.png";
+const DEFAULT_OG_IMAGE = "https://safetyriggingandliftingconsultancy.com/assets/images/cdae1e93-e234-4e65-8bf1-356fd65f4de2.png";
 const DEFAULT_OG_TYPE = "website";
 
 interface SEOProps {
