@@ -46,7 +46,6 @@ const ManageDocuments = () => {
       if (error) throw error;
       setDocuments(data || []);
     } catch (error) {
-      console.error('Error fetching documents:', error);
       toast({
         title: 'Error',
         description: 'Failed to fetch documents',
@@ -113,7 +112,6 @@ const ManageDocuments = () => {
       setIsDialogOpen(false);
       fetchDocuments();
     } catch (error) {
-      console.error('Error uploading document:', error);
       toast({
         title: 'Error',
         description: 'Failed to upload document',
@@ -148,7 +146,6 @@ const ManageDocuments = () => {
 
       fetchDocuments();
     } catch (error) {
-      console.error('Error deleting document:', error);
       toast({
         title: 'Error',
         description: 'Failed to delete document',
@@ -192,7 +189,6 @@ const ManageDocuments = () => {
       setIsDialogOpen(false);
       fetchDocuments();
     } catch (error) {
-      console.error('Error updating document:', error);
       toast({
         title: 'Error',
         description: 'Failed to update document',

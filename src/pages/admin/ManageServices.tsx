@@ -5,6 +5,16 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Plus, Edit, Trash2, Settings, GripVertical } from 'lucide-react';
@@ -119,6 +129,7 @@ const ManageServices = () => {
   const [loading, setLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingService, setEditingService] = useState<Service | null>(null);
+  const [serviceToDelete, setServiceToDelete] = useState<Service | null>(null);
   const [formData, setFormData] = useState({
     title: '',
     content: '',
@@ -147,7 +158,6 @@ const ManageServices = () => {
       if (error) throw error;
       setServices(data || []);
     } catch (error) {
-      console.error('Error fetching services:', error);
       toast({
         title: 'Error',
         description: 'Failed to fetch services',
@@ -213,7 +223,6 @@ const ManageServices = () => {
       setIsDialogOpen(false);
       fetchServices();
     } catch (error) {
-      console.error('Error saving service:', error);
       toast({
         title: 'Error',
         description: 'Failed to save service',
@@ -233,8 +242,6 @@ const ManageServices = () => {
   };
 
   const deleteService = async (service: Service) => {
-    if (!confirm(`Are you sure you want to delete "${service.title}"?`)) return;
-
     try {
       const { error } = await supabase
         .from('services')
@@ -242,20 +249,25 @@ const ManageServices = () => {
         .eq('id', service.id);
 
       if (error) throw error;
-      
+
       toast({
         title: 'Success',
         description: 'Service deleted successfully',
       });
       fetchServices();
     } catch (error) {
-      console.error('Error deleting service:', error);
       toast({
         title: 'Error',
         description: 'Failed to delete service',
         variant: 'destructive',
       });
     }
+  };
+
+  const confirmDelete = async () => {
+    if (!serviceToDelete) return;
+    await deleteService(serviceToDelete);
+    setServiceToDelete(null);
   };
 
   const handleDragEnd = async (event: DragEndEvent) => {
@@ -268,26 +280,21 @@ const ManageServices = () => {
       const newServices = arrayMove(services, oldIndex, newIndex);
       setServices(newServices);
 
-      // Update display_order for all affected services
+      // Update display_order for all affected services in a single request
       try {
         const updates = newServices.map((service, index) => ({
-          id: service.id,
-          display_order: index + 1
+          ...service,
+          display_order: index + 1,
         }));
 
-        for (const update of updates) {
-          await supabase
-            .from('services')
-            .update({ display_order: update.display_order })
-            .eq('id', update.id);
-        }
+        const { error } = await supabase.from('services').upsert(updates);
+        if (error) throw error;
 
         toast({
           title: 'Success',
           description: 'Service order updated successfully',
         });
       } catch (error) {
-        console.error('Error updating service order:', error);
         toast({
           title: 'Error',
           description: 'Failed to update service order',
@@ -359,7 +366,7 @@ const ManageServices = () => {
                 />
               </div>
               <Button
-                onClick={editingService ? handleSubmit : handleSubmit}
+                onClick={handleSubmit}
                 className="w-full"
               >
                 {editingService ? 'Update Service' : 'Add Service'}
@@ -389,13 +396,28 @@ const ManageServices = () => {
                   key={service.id}
                   service={service}
                   onEdit={startEdit}
-                  onDelete={deleteService}
+                  onDelete={setServiceToDelete}
                 />
               ))
             )}
           </div>
         </SortableContext>
       </DndContext>
+
+      <AlertDialog open={serviceToDelete !== null} onOpenChange={(open) => !open && setServiceToDelete(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete service?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete "{serviceToDelete?.title}"? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDelete}>Delete</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

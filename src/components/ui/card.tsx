@@ -1,20 +1,29 @@
 import * as React from "react"
+import { motion, type HTMLMotionProps } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
-const Card = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "rounded-lg border bg-card text-card-foreground shadow-sm",
-      className
-    )}
-    {...props}
-  />
-))
+type CardProps = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "onDrag" | "onDragStart" | "onDragEnd" | "onAnimationStart" | "onAnimationEnd"
+> &
+  Pick<HTMLMotionProps<"div">, "onDrag" | "onDragStart" | "onDragEnd">
+
+const Card = React.forwardRef<HTMLDivElement, CardProps>(
+  ({ className, ...props }, ref) => (
+    <motion.div
+      ref={ref}
+      className={cn(
+        "group rounded-xl border border-border bg-card text-card-foreground shadow-sm transition-colors duration-300 hover:border-brand-orange/60",
+        className
+      )}
+      whileHover={{ y: -8, boxShadow: "0 0 0 1px #E8510A, 0 8px 30px rgba(232,81,10,0.2)" }}
+      whileTap={{ scale: 0.97 }}
+      transition={{ duration: 0.3 }}
+      {...props}
+    />
+  )
+)
 Card.displayName = "Card"
 
 const CardHeader = React.forwardRef<

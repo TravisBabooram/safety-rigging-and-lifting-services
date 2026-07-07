@@ -1,38 +1,23 @@
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
-interface GoogleAnalyticsProps {
-  trackingId?: string;
-}
+const GA_ID = import.meta.env.VITE_GA_ID;
 
-export const GoogleAnalytics = ({ trackingId }: GoogleAnalyticsProps) => {
+// The gtag.js bootstrap script and initial pageview live as static tags in
+// index.html (so the very first load is tracked even before React mounts).
+// This component only handles pageviews for subsequent client-side route
+// changes, which the static script can't see on its own.
+export const GoogleAnalytics = () => {
+  const location = useLocation();
+
   useEffect(() => {
-    if (!trackingId) return;
+    if (!GA_ID || typeof window.gtag !== 'function') return;
+    window.gtag('config', GA_ID, {
+      page_path: location.pathname + location.search,
+    });
+  }, [location.pathname, location.search]);
 
-    // Create gtag script element
-    const script1 = document.createElement('script');
-    script1.async = true;
-    script1.src = `https://www.googletagmanager.com/gtag/js?id=${trackingId}`;
-    document.head.appendChild(script1);
-
-    // Create gtag config script
-    const script2 = document.createElement('script');
-    script2.innerHTML = `
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '${trackingId}');
-    `;
-    document.head.appendChild(script2);
-
-    // Cleanup function
-    return () => {
-      // Remove scripts on unmount (though this rarely happens)
-      const scripts = document.querySelectorAll(`script[src*="${trackingId}"]`);
-      scripts.forEach(script => script.remove());
-    };
-  }, [trackingId]);
-
-  return null; // This component doesn't render anything
+  return null;
 };
 
 // Helper function to track custom events
@@ -44,8 +29,8 @@ export const trackEvent = (eventName: string, parameters?: Record<string, any>) 
 
 // Helper function to track page views
 export const trackPageView = (pagePath: string) => {
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('config', 'GA_TRACKING_ID', {
+  if (typeof window !== 'undefined' && window.gtag && GA_ID) {
+    window.gtag('config', GA_ID, {
       page_path: pagePath,
     });
   }

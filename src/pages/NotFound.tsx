@@ -1,19 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AlertTriangle, Home, ArrowLeft } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { MotionWrapper } from "@/components/animations/MotionWrapper";
 
 const NotFound = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
-
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
-      <Card className="max-w-md w-full text-center shadow-industrial">
+      <MotionWrapper className="max-w-md w-full">
+      <Card className="text-center shadow-industrial">
         <CardContent className="p-8 space-y-6">
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-primary mx-auto">
             <AlertTriangle className="h-10 w-10 text-primary-foreground" />
@@ -41,6 +36,7 @@ const NotFound = () => {
           </div>
         </CardContent>
       </Card>
+      </MotionWrapper>
     </div>
   );
 };

@@ -3,8 +3,11 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
+import { AnimatePresence } from "framer-motion";
 import { ThemeProvider } from "@/components/theme-provider";
+import { PageTransition } from "@/components/animations/PageTransition";
 import { AuthProvider } from "@/hooks/useAuth";
 import { MaintenanceModeProvider, useMaintenanceMode } from "@/hooks/useMaintenanceMode";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
@@ -29,30 +32,37 @@ import ManageDocuments from "./pages/admin/ManageDocuments";
 import ViewMessages from "./pages/admin/ViewMessages";
 import ManagePages from "./pages/admin/ManagePages";
 import { MaintenancePage } from "./components/MaintenancePage";
+import { CustomCursor } from "./components/CustomCursor";
+import { LoadingScreen } from "./components/LoadingScreen";
 
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+  <HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
       <AuthProvider>
         <MaintenanceModeProvider>
           <TooltipProvider>
             <Toaster />
             <Sonner />
-            <GoogleAnalytics trackingId={import.meta.env.VITE_GA_TRACKING_ID} />
+            <LoadingScreen />
+            <CustomCursor />
             <BrowserRouter>
+              <GoogleAnalytics />
               <AppContent />
             </BrowserRouter>
           </TooltipProvider>
         </MaintenanceModeProvider>
       </AuthProvider>
     </ThemeProvider>
-  </QueryClientProvider>
+    </QueryClientProvider>
+  </HelmetProvider>
 );
 
 const AppContent = () => {
   const { isMaintenanceMode, maintenanceMessage, loading } = useMaintenanceMode();
+  const location = useLocation();
 
   if (loading) {
     return (
@@ -63,7 +73,8 @@ const AppContent = () => {
   }
 
   return (
-    <Routes>
+    <AnimatePresence mode="wait">
+    <Routes location={location} key={location.pathname}>
       {/* Public Routes */}
       <Route path="/" element={<PublicLayout><Index /></PublicLayout>} />
       <Route path="/about" element={<PublicLayout><About /></PublicLayout>} />
@@ -106,6 +117,7 @@ const AppContent = () => {
       
       <Route path="*" element={<PublicLayout><NotFound /></PublicLayout>} />
     </Routes>
+    </AnimatePresence>
   );
 };
 
@@ -121,7 +133,7 @@ const PublicLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       <main className="flex-1">
-        {children}
+        <PageTransition>{children}</PageTransition>
       </main>
       <Footer />
       <ScrollToTop />

@@ -7,127 +7,171 @@ All colors MUST be HSL.
 */
 
 @layer base {
-  :root {
-    /* SRLS Brand Color Palette */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
+  :root,
+  .dark {
+    /* SRLS Brand Color Palette — extracted from the company logo.
+       This is a single fixed dark identity, not a toggleable light/dark theme,
+       so :root and .dark intentionally share the same values. */
+    --background: 0 0% 10%;        /* #1A1A1A brand-dark */
+    --foreground: 0 0% 100%;       /* #FFFFFF */
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
+    --card: 0 0% 24%;              /* #3D3D3D brand-charcoal */
+    --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
+    --popover: 0 0% 24%;
+    --popover-foreground: 0 0% 100%;
 
-    /* Orange Primary */
-    --primary: 33 92% 54%;
+    /* Brand Orange Primary */
+    --primary: 19 92% 47%;         /* #E8510A brand-orange */
     --primary-foreground: 0 0% 100%;
-    
-    /* Light Gray Secondary */
-    --secondary: 0 0% 97%;
-    --secondary-foreground: 0 0% 25%;
 
-    --muted: 0 0% 97%;
-    --muted-foreground: 0 0% 25%;
+    --secondary: 0 0% 16%;
+    --secondary-foreground: 0 0% 100%;
 
-    /* Orange Accent */
-    --accent: 33 92% 54%;
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 70%;
+
+    /* Brand Orange Accent */
+    --accent: 19 92% 47%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 88%;
-    --input: 0 0% 88%;
-    --ring: 33 92% 54%;
+    --border: 0 0% 24%;            /* brand-charcoal */
+    --input: 0 0% 24%;
+    --ring: 19 92% 47%;
 
     --radius: 0.5rem;
 
     /* SRLS Brand gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(33 92% 54%), hsl(33 79% 44%));
-    --gradient-hero: linear-gradient(135deg, hsl(0 0% 0% / 0.8), hsl(0 0% 0% / 0.6));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(0 0% 97%));
-    
+    --gradient-primary: linear-gradient(135deg, hsl(19 92% 47%), hsl(18 92% 40%));
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 10%), hsl(0 0% 20%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 20%), hsl(0 0% 15%));
+
     /* Shadows with orange accents */
-    --shadow-industrial: 0 10px 30px -10px hsl(33 92% 54% / 0.2);
-    --shadow-card: 0 4px 15px -5px hsl(0 0% 0% / 0.1);
-    --shadow-cta: 0 8px 25px -8px hsl(33 92% 54% / 0.4);
+    --shadow-industrial: 0 10px 30px -10px hsl(19 92% 47% / 0.35);
+    --shadow-card: 0 4px 15px -5px hsl(0 0% 0% / 0.4);
+    --shadow-cta: 0 8px 25px -8px hsl(19 92% 47% / 0.45);
 
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-    /* Navigation colors - Black */
-    --nav-background: 0 0% 0%;
+    /* Navigation colors */
+    --nav-background: 0 0% 10%;
     --nav-foreground: 0 0% 100%;
 
-    --sidebar-background: 0 0% 0%;
+    --sidebar-background: 0 0% 10%;
     --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 33 92% 54%;
+    --sidebar-primary: 19 92% 47%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent: 0 0% 16%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 20%;
-    --sidebar-ring: 33 92% 54%;
+    --sidebar-border: 0 0% 24%;
+    --sidebar-ring: 19 92% 47%;
+
+    /* Plain aliases some components (HeroSVG, CustomCursor) read directly */
+    --bg-primary: 0 0% 10%;    /* #1A1A1A */
+    --bg-card: 0 0% 24%;       /* #3D3D3D */
+    --text-primary: 0 0% 100%; /* #FFFFFF */
+    --text-muted: 0 0% 70%;
   }
 
-  .dark {
-    /* Dark Mode SRLS Palette */
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
+  .light {
+    --background: 0 0% 96%;        /* #F4F4F4 */
+    --foreground: 0 0% 10%;        /* #1A1A1A */
 
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 100%;
+    --card: 0 0% 100%;             /* #FFFFFF */
+    --card-foreground: 0 0% 10%;
 
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
 
-    --primary: 33 92% 54%;
-    --primary-foreground: 0 0% 0%;
+    --primary: 19 92% 47%;         /* orange stays identical in both modes */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 90%;
+    --secondary: 0 0% 92%;
+    --secondary-foreground: 0 0% 10%;
 
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 33%;  /* #555555 */
 
-    /* Orange accent remains vibrant in dark mode */
-    --accent: 33 92% 54%;
-    --accent-foreground: 0 0% 0%;
+    --accent: 19 92% 47%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 33 92% 54%;
+    --border: 0 0% 87%;            /* #DDDDDD */
+    --input: 0 0% 87%;
+    --ring: 19 92% 47%;
 
-    /* Dark mode gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(33 92% 54%), hsl(33 79% 44%));
-    --gradient-hero: linear-gradient(135deg, hsl(0 0% 0%), hsl(0 0% 5%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 5%), hsl(0 0% 10%));
+    /* Gradients: card sections lighten with the theme. The inner-page banner
+       band (--gradient-hero) becomes the brand orange in light mode and
+       stays the dark brand band in dark mode — text inside it is always
+       explicitly white, never inherited body text. */
+    --gradient-primary: linear-gradient(135deg, hsl(19 92% 47%), hsl(18 92% 40%));
+    --gradient-hero: linear-gradient(135deg, hsl(19 92% 50%), hsl(19 92% 44%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(0 0% 94%));
 
-    /* Dark mode shadows */
-    --shadow-industrial: 0 10px 30px -10px hsl(0 0% 0% / 0.5);
-    --shadow-card: 0 4px 15px -5px hsl(0 0% 0% / 0.3);
-    --shadow-cta: 0 8px 25px -8px hsl(33 92% 54% / 0.3);
+    --shadow-industrial: 0 10px 30px -10px hsl(19 92% 47% / 0.25);
+    --shadow-card: 0 4px 15px -5px hsl(0 0% 0% / 0.1);
+    --shadow-cta: 0 8px 25px -8px hsl(19 92% 47% / 0.35);
 
-    --sidebar-background: 0 0% 0%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 33 92% 54%;
-    --sidebar-primary-foreground: 0 0% 0%;
-    --sidebar-accent: 0 0% 10%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 20%;
-    --sidebar-ring: 33 92% 54%;
+    --nav-background: 0 0% 100%;   /* #FFFFFF */
+    --nav-foreground: 0 0% 10%;
+
+    --bg-primary: 0 0% 96%;
+    --bg-card: 0 0% 100%;
+    --text-primary: 0 0% 10%;
+    --text-muted: 0 0% 33%;
   }
 }
 
 @layer base {
   * {
     @apply border-border;
+    transition: background-color 0.4s ease, color 0.3s ease, border-color 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+    }
+  }
+
+  /* CustomCursor takes over pointer rendering on desktop */
+  html.custom-cursor-active,
+  html.custom-cursor-active * {
+    cursor: none !important;
+  }
+
+  /* Theme toggle: circular reveal via the View Transitions API (see
+     navigation.tsx). Suppress the browser's default cross-fade so our
+     expanding clip-path circle is the only visible animation; the new
+     theme sits on top and is progressively revealed outward from the
+     toggle button, with the old theme showing through underneath. */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+
+  ::view-transition-old(root) {
+    z-index: 1;
+  }
+
+  ::view-transition-new(root) {
+    z-index: 2;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
   }
 }

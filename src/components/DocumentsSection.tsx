@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { FileText, Shield, Target } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { PDFPreviewDialog } from './PDFPreviewDialog';
+import { useToast } from '@/hooks/use-toast';
 
 interface PDFDocument {
   id: string;
@@ -31,6 +32,7 @@ export function DocumentsSection() {
   const [selectedDoc, setSelectedDoc] = useState<PDFDocument | null>(null);
   const [pdfUrl, setPdfUrl] = useState<string>('');
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     fetchDocuments();
@@ -46,7 +48,8 @@ export function DocumentsSection() {
       if (error) throw error;
       setDocuments(data || []);
     } catch (error) {
-      console.error('Error fetching documents:', error);
+      // Silent by design — the section just hides itself below when
+      // documents is empty, which already degrades gracefully for visitors.
     }
   };
 
@@ -60,7 +63,11 @@ export function DocumentsSection() {
       setPdfUrl(data.publicUrl);
       setIsPreviewOpen(true);
     } catch (error) {
-      console.error('Error getting PDF URL:', error);
+      toast({
+        title: 'Error',
+        description: 'Could not open this document. Please try again.',
+        variant: 'destructive',
+      });
     }
   };
 

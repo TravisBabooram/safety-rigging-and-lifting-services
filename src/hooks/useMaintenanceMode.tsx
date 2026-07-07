@@ -52,8 +52,9 @@ export const MaintenanceModeProvider = ({ children }: MaintenanceModeProviderPro
       setIsMaintenanceMode(data.maintenance_mode);
       setMaintenanceMessage(data.message);
     } catch (error) {
-      console.error('Error fetching site status:', error);
-      // Default to non-maintenance mode on error
+      // Silent by design — this runs on every page load for every visitor;
+      // default to non-maintenance mode rather than surface a toast for a
+      // background check the visitor can't act on.
       setIsMaintenanceMode(false);
       setMaintenanceMessage(null);
     } finally {
@@ -61,24 +62,21 @@ export const MaintenanceModeProvider = ({ children }: MaintenanceModeProviderPro
     }
   };
 
+  // Errors propagate to the caller (MaintenanceModeToggle), which already
+  // catches and toasts them — no need to duplicate that handling here.
   const updateMaintenanceMode = async (enabled: boolean, message?: string) => {
-    try {
-      const { error } = await supabase
-        .from('site_status')
-        .update({
-          maintenance_mode: enabled,
-          message: message || 'Our site is undergoing maintenance. Please check back shortly.',
-        })
-        .eq('id', (await supabase.from('site_status').select('id').limit(1).single()).data?.id);
+    const { error } = await supabase
+      .from('site_status')
+      .update({
+        maintenance_mode: enabled,
+        message: message || 'Our site is undergoing maintenance. Please check back shortly.',
+      })
+      .eq('id', (await supabase.from('site_status').select('id').limit(1).single()).data?.id);
 
-      if (error) throw error;
-      
-      setIsMaintenanceMode(enabled);
-      setMaintenanceMessage(message || null);
-    } catch (error) {
-      console.error('Error updating maintenance mode:', error);
-      throw error;
-    }
+    if (error) throw error;
+
+    setIsMaintenanceMode(enabled);
+    setMaintenanceMessage(message || null);
   };
 
   useEffect(() => {

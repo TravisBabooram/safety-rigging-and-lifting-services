@@ -9,16 +9,16 @@ export const MaintenancePage = ({ message }: MaintenancePageProps) => {
   const defaultMessage = "Our site is undergoing maintenance. Please check back shortly.";
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <Card className="w-full max-w-2xl mx-auto shadow-xl">
         <CardContent className="p-8 text-center space-y-6">
           <div className="flex justify-center">
             <div className="relative">
-              <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
-                <Wrench className="w-8 h-8 text-primary animate-pulse" />
+              <div className="w-20 h-20 bg-brand-orange/10 rounded-full flex items-center justify-center">
+                <Wrench className="w-8 h-8 text-brand-orange animate-pulse" />
               </div>
               <div className="absolute -top-1 -right-1">
-                <AlertTriangle className="w-6 h-6 text-orange-500" />
+                <AlertTriangle className="w-6 h-6 text-brand-orange" />
               </div>
             </div>
           </div>
