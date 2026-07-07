@@ -14,59 +14,40 @@ const quickLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-black text-white border-t border-gray-800">
+    <footer className="bg-brand-dark text-white border-t border-brand-charcoal">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Company Info */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {/* About */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <img 
-                src="/lovable-uploads/cdae1e93-e234-4e65-8bf1-356fd65f4de2.png" 
-                alt="SRLS" 
-                className="h-12 w-auto"
-              />
-            </div>
-            <p className="text-sm text-gray-400 max-w-xs">
+            <img
+              src="/assets/images/cdae1e93-e234-4e65-8bf1-356fd65f4de2.png"
+              alt="Safety Rigging & Lifting Services Ltd. logo"
+              className="h-12 w-auto"
+            />
+            <p className="text-sm text-white/60 max-w-xs">
               Your trusted partner in rigging & lifting solutions. Expert guidance and support for lifting operations across the Caribbean.
             </p>
-          </div>
-
-          {/* Contact Info */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">Contact Info</h3>
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <Phone className="h-5 w-5 text-muted-foreground" />
-                <div className="text-sm text-muted-foreground space-y-1">
-                  <a href="tel:+18683012781" className="block hover:text-primary transition-colors">
-                    (868) 301-2781
-                  </a>
-                  <a href="tel:+18687741498" className="block hover:text-primary transition-colors">
-                    (868) 774-1498
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Mail className="h-5 w-5 text-muted-foreground" />
-                <a 
-                  href="mailto:srls.mw21@gmail.com" 
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  srls.mw21@gmail.com
-                </a>
-              </div>
-            </div>
+            <Button variant="ghost" size="icon" className="h-8 w-8 -ml-2 text-white/60 hover:text-brand-orange" asChild>
+              <a
+                href="https://www.linkedin.com/company/safety-rigging-lifting-services/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow us on LinkedIn"
+              >
+                <Linkedin className="h-4 w-4" />
+              </a>
+            </Button>
           </div>
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">Quick Links</h3>
+            <h3 className="text-lg font-semibold text-brand-orange">Quick Links</h3>
             <div className="grid grid-cols-1 gap-2">
               {quickLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  className="text-sm text-white/70 hover:text-brand-orange transition-colors"
                 >
                   {link.name}
                 </Link>
@@ -74,63 +55,46 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Social Media & CTA */}
+          {/* Contact Info */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">Connect With Us</h3>
-            <div className="flex space-x-3">
-              <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
-                <a 
-                  href="https://www.linkedin.com/company/safety-rigging-lifting-services/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  aria-label="Follow us on LinkedIn"
+            <h3 className="text-lg font-semibold text-brand-orange">Contact Info</h3>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3">
+                <Phone className="h-5 w-5 text-white/50" />
+                <div className="text-sm text-white/70 space-y-1">
+                  <a href="tel:+18683012781" className="block hover:text-brand-orange transition-colors">
+                    (868) 301-2781
+                  </a>
+                  <a href="tel:+18687741498" className="block hover:text-brand-orange transition-colors">
+                    (868) 774-1498
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Mail className="h-5 w-5 text-white/50" />
+                <a
+                  href="mailto:srls.mw21@gmail.com"
+                  className="text-sm text-white/70 hover:text-brand-orange transition-colors"
                 >
-                  <Linkedin className="h-4 w-4" />
+                  srls.mw21@gmail.com
                 </a>
-              </Button>
+              </div>
             </div>
-            <div className="flex flex-col space-y-3">
-              <Button 
-                variant="cta" 
-                size="sm" 
-                className="w-full" 
-                asChild
+            <Button variant="cta" size="sm" asChild>
+              <Link
+                to="/contact"
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               >
-                <Link 
-                  to="/contact" 
-                  className="block"
-                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                >
-                  Get in Touch
-                </Link>
-              </Button>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="w-full" 
-                asChild
-              >
-                <Link 
-                  to="/services" 
-                  className="block"
-                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                >
-                  Our Services
-                </Link>
-              </Button>
-            </div>
+                Get in Touch
+              </Link>
+            </Button>
           </div>
         </div>
 
-        <Separator className="my-8" />
+        <Separator className="my-8 bg-brand-charcoal" />
 
-        <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0">
-          <div className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Safety Rigging & Lifting Services. All rights reserved.
-          </div>
-          <div className="text-sm text-muted-foreground">
-            Professional rigging consultancy services across the Caribbean
-          </div>
+        <div className="text-center text-sm text-white/50">
+          © {new Date().getFullYear()} Safety Rigging & Lifting Services. All rights reserved.
         </div>
       </div>
     </footer>

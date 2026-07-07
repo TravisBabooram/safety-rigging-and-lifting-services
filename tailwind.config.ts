@@ -61,7 +61,16 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				nav: {
+					DEFAULT: 'hsl(var(--nav-background))',
+					foreground: 'hsl(var(--nav-foreground))'
+				},
+				'brand-orange': '#E8510A',
+				'brand-orange-dark': '#C44208',
+				'brand-charcoal': '#3D3D3D',
+				'brand-dark': '#1A1A1A',
+				'white': '#FFFFFF',
 			},
 			backgroundImage: {
 				'gradient-primary': 'var(--gradient-primary)',
@@ -76,9 +85,14 @@ export default {
 			transitionTimingFunction: {
 				'smooth': 'var(--transition-smooth)',
 				'bounce': 'var(--transition-bounce)',
+				'spring': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+			},
+			transitionDuration: {
+				'400': '400ms',
 			},
 			fontFamily: {
 				'sans': ['Inter', 'system-ui', 'sans-serif'],
+				'heading': ['"Barlow Condensed"', 'Inter', 'system-ui', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

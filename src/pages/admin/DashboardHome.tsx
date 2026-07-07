@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { Settings, MessageSquare, BarChart3 } from 'lucide-react';
 import { MaintenanceModeToggle } from '@/components/MaintenanceModeToggle';
+import { useToast } from '@/hooks/use-toast';
 
 interface DashboardStats {
   servicesCount: number;
@@ -12,6 +13,7 @@ interface DashboardStats {
 
 const DashboardHome = () => {
   const { userRole } = useAuth();
+  const { toast } = useToast();
   const [stats, setStats] = useState<DashboardStats>({
     servicesCount: 0,
     messagesCount: 0,
@@ -33,7 +35,11 @@ const DashboardHome = () => {
           messagesCount: messagesResponse.count || 0,
         });
       } catch (error) {
-        console.error('Error fetching dashboard stats:', error);
+        toast({
+          title: 'Error',
+          description: 'Could not load dashboard statistics.',
+          variant: 'destructive',
+        });
       } finally {
         setLoading(false);
       }

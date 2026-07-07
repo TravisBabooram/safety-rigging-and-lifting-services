@@ -9,6 +9,24 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { MotionWrapper } from "@/components/animations/MotionWrapper";
+import { StaggerContainer } from "@/components/animations/StaggerContainer";
+import { SEO } from "@/components/SEO";
+import { StructuredData } from "@/components/StructuredData";
+
+const SERVICE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Rigging and Lifting Consultancy",
+  provider: {
+    "@type": "ProfessionalService",
+    name: "Safety Rigging & Lifting Services Ltd.",
+    url: "https://safetyriggingandliftingconsultancy.com",
+  },
+  areaServed: "Trinidad and Tobago",
+  description:
+    "Certified rigging inspections, lift planning, load testing, and safety audits across the energy and construction sectors in Trinidad & Tobago.",
+};
 
 // Icon mapping for database stored icon names
 const iconMap = {
@@ -65,12 +83,13 @@ const Services = () => {
           .order('display_order');
 
         if (error) {
-          console.error('Error fetching services:', error);
+          // Silent by design — falls through to the empty-grid state below
+          // rather than alarming visitors over a background fetch.
         } else {
           setServices(data || []);
         }
       } catch (error) {
-        console.error('Error fetching services:', error);
+        // Same as above.
       } finally {
         setLoading(false);
       }
@@ -104,6 +123,13 @@ const Services = () => {
 
   return (
     <div className="space-y-0">
+      <SEO
+        title="Rigging & Lifting Services | SRLS Ltd. Trinidad"
+        description="Rigging inspections, lift planning, load testing, and safety audits. SRLS Ltd. delivers certified rigging and lifting solutions across Trinidad & Tobago."
+        canonical="https://safetyriggingandliftingconsultancy.com/services"
+      />
+      <StructuredData data={SERVICE_SCHEMA} />
+
       {/* Navigation */}
       <section className="py-6 border-b">
         <div className="container mx-auto px-4">
@@ -117,35 +143,44 @@ const Services = () => {
       {/* Hero Section */}
       <section className="py-16 bg-gradient-hero text-white">
         <div className="container mx-auto px-4 text-center space-y-6">
-          <h1 className="text-4xl md:text-6xl font-bold">
-            Our Services
-          </h1>
-          <p className="text-xl md:text-2xl opacity-90 max-w-4xl mx-auto">
-            Safety Rigging and Lifting Services provide expert guidance and support for lifting operations, ensuring safety, efficiency, and compliance with industry standards, regulations, and legislations.
-          </p>
+          <MotionWrapper>
+            <h1 className="text-4xl md:text-6xl font-bold">
+              Our Services
+            </h1>
+          </MotionWrapper>
+          <MotionWrapper delay={0.15}>
+            <p className="text-xl md:text-2xl opacity-90 max-w-4xl mx-auto">
+              Safety Rigging and Lifting Services provide expert guidance and support for lifting operations, ensuring safety, efficiency, and compliance with industry standards, regulations, and legislations.
+            </p>
+          </MotionWrapper>
         </div>
       </section>
 
       {/* Key Services Offered */}
       <section className="py-20 px-4 bg-background">
         <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-4">Key Services Offered</h2>
-          </div>
-          
+          <MotionWrapper>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold text-foreground mb-4">Key Services Offered</h2>
+            </div>
+          </MotionWrapper>
+
           {loading ? (
             <div className="text-center py-8">
               <p className="text-muted-foreground">Loading services...</p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {services.map((service, index) => {
+            <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {services.map((service) => {
                 const IconComponent = service.icon ? iconMap[service.icon as keyof typeof iconMap] || Search : Search;
                 return (
-                  <Card key={service.id} className="text-left hover:shadow-industrial transition-all duration-300">
+                  <Card
+                    key={service.id}
+                    className="text-left hover:shadow-industrial transition-all duration-300 h-full min-h-[280px] flex flex-col border-l-4 border-l-brand-orange"
+                  >
                     <CardHeader>
                       <div className="flex items-start space-x-4">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-primary flex-shrink-0">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-md bg-gradient-primary flex-shrink-0 transition-transform duration-300 group-hover:scale-105">
                           <IconComponent className="h-6 w-6 text-primary-foreground" />
                         </div>
                         <div>
@@ -153,44 +188,53 @@ const Services = () => {
                         </div>
                       </div>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="flex-grow">
                       <p className="text-muted-foreground">{service.content}</p>
                     </CardContent>
                   </Card>
                 );
               })}
-            </div>
+            </StaggerContainer>
           )}
         </div>
       </section>
 
       {/* Benefits of Consultancy Services */}
-      <section className="py-16 bg-gradient-card">
+      <section className="bg-gradient-card py-16">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4">Benefits of Consultancy Services</h2>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <MotionWrapper>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-foreground mb-4">Benefits of Consultancy Services</h2>
+            </div>
+          </MotionWrapper>
+
+          <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {benefits.map((benefit, index) => {
               const IconComponent = benefit.icon;
               return (
-                <div key={index} className="text-center space-y-4">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-primary mx-auto">
-                    <IconComponent className="h-8 w-8 text-primary-foreground" />
-                  </div>
-                  <h3 className="font-bold text-lg">{benefit.title}</h3>
-                  <p className="text-muted-foreground">{benefit.description}</p>
-                </div>
+                <Card
+                  key={index}
+                  className="text-left h-full min-h-[280px] flex flex-col border-l-4 border-l-brand-orange"
+                >
+                  <CardContent className="p-6 flex flex-col flex-grow">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-md bg-gradient-primary mb-4 transition-transform duration-300 group-hover:scale-105">
+                      <IconComponent className="h-6 w-6 text-primary-foreground" />
+                    </div>
+                    <h3 className="font-bold text-lg mb-2">{benefit.title}</h3>
+                    <p className="text-muted-foreground flex-grow">{benefit.description}</p>
+                  </CardContent>
+                </Card>
               );
             })}
-          </div>
-          
-          <div className="text-center">
-            <p className="text-lg text-muted-foreground max-w-4xl mx-auto">
-              Engaging a rigging and lifting consultancy service can significantly enhance the safety and efficiency of lifting operations, providing peace of mind and compliance with regulations, standards, and legislations.
-            </p>
-          </div>
+          </StaggerContainer>
+
+          <MotionWrapper>
+            <div className="text-center">
+              <p className="text-lg text-muted-foreground max-w-4xl mx-auto">
+                Engaging a rigging and lifting consultancy service can significantly enhance the safety and efficiency of lifting operations, providing peace of mind and compliance with regulations, standards, and legislations.
+              </p>
+            </div>
+          </MotionWrapper>
         </div>
       </section>
 
@@ -198,8 +242,10 @@ const Services = () => {
       <section className="py-20 px-4 bg-background">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl font-bold text-foreground mb-8 text-center">Lift Planning</h2>
-            
+            <MotionWrapper>
+              <h2 className="text-4xl font-bold text-foreground mb-8 text-center">Lift Planning</h2>
+            </MotionWrapper>
+
             <div className="prose prose-lg max-w-none text-muted-foreground space-y-6">
               <p className="text-lg">
                 A detailed lift plan is highly important. This ensures that every aspect of a lifting operation is carefully assessed — from the load characteristics, equipment and accessory selection, necessary safety measures, and more. This includes method statements and risk assessments.
@@ -247,16 +293,18 @@ const Services = () => {
       {/* CTA Section */}
       <section className="py-16 bg-gradient-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center space-y-8">
-          <h2 className="text-3xl font-bold">Ready to Enhance Your Lifting Operations?</h2>
-          <p className="text-lg opacity-90 max-w-2xl mx-auto">
-            Contact our expert team today for professional rigging and lifting consultation.
-          </p>
+          <MotionWrapper>
+            <h2 className="text-3xl font-bold">Ready to Enhance Your Lifting Operations?</h2>
+            <p className="text-lg opacity-90 max-w-2xl mx-auto">
+              Contact our expert team today for professional rigging and lifting consultation.
+            </p>
+          </MotionWrapper>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="light-cta" size="lg" asChild>
               <Link to="/contact">Request a Quote</Link>
             </Button>
             <Button variant="dark-cta" size="lg" asChild>
-              <Link to="/portfolio">View Our Work</Link>
+              <Link to="/services">Learn More</Link>
             </Button>
           </div>
         </div>

@@ -14,6 +14,9 @@ import {
   Shield
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { MotionWrapper } from "@/components/animations/MotionWrapper";
+import { StaggerContainer } from "@/components/animations/StaggerContainer";
+import { SEO } from "@/components/SEO";
 
 const siteStructure = [
   {
@@ -47,20 +50,28 @@ const siteStructure = [
 export default function Sitemap() {
   return (
     <div className="container mx-auto px-4 py-16 space-y-16">
+      <SEO
+        title="Sitemap | Safety Rigging & Lifting Services Ltd."
+        description="Site map for Safety Rigging & Lifting Services Ltd."
+        canonical="https://safetyriggingandliftingconsultancy.com/sitemap"
+      />
+
       {/* Hero Section */}
       <section className="text-center space-y-6">
-        <div className="flex items-center justify-center space-x-2 mb-4">
-          <MapPin className="h-8 w-8 text-accent" />
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground">Sitemap</h1>
-        </div>
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          Navigate our website easily with this comprehensive sitemap. Find all pages, 
-          services, and information about Safety Rigging & Lifting Services.
-        </p>
+        <MotionWrapper>
+          <div className="flex items-center justify-center space-x-2 mb-4">
+            <MapPin className="h-8 w-8 text-accent" />
+            <h1 className="text-4xl md:text-6xl font-bold text-foreground">Sitemap</h1>
+          </div>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Navigate our website easily with this comprehensive sitemap. Find all pages,
+            services, and information about Safety Rigging & Lifting Services.
+          </p>
+        </MotionWrapper>
       </section>
 
       {/* Site Structure */}
-      <section className="space-y-8">
+      <StaggerContainer className="space-y-8">
         {siteStructure.map((section, index) => {
           const SectionIcon = section.icon;
           return (
@@ -94,17 +105,19 @@ export default function Sitemap() {
             </Card>
           );
         })}
-      </section>
+      </StaggerContainer>
 
       {/* Quick Navigation */}
       <section className="bg-gradient-primary rounded-lg p-8 text-primary-foreground">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold mb-4">Quick Navigation</h2>
-          <p className="text-lg opacity-90">
-            Jump directly to the most important sections of our website
-          </p>
-        </div>
-        
+        <MotionWrapper>
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-4">Quick Navigation</h2>
+            <p className="text-lg opacity-90">
+              Jump directly to the most important sections of our website
+            </p>
+          </div>
+        </MotionWrapper>
+
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Button variant="outline" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 h-auto p-4 flex-col space-y-2" asChild>
             <Link to="/services">
@@ -137,7 +150,7 @@ export default function Sitemap() {
       </section>
 
       {/* Additional Information */}
-      <section className="grid md:grid-cols-2 gap-8">
+      <StaggerContainer className="grid md:grid-cols-2 gap-8">
         <Card className="shadow-card">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
@@ -150,7 +163,6 @@ export default function Sitemap() {
               <p className="text-sm"><strong>Last Updated:</strong> {new Date().toLocaleDateString()}</p>
               <p className="text-sm"><strong>Total Pages:</strong> {siteStructure.reduce((total, section) => total + section.pages.length, 0)} pages</p>
               <p className="text-sm"><strong>Mobile Responsive:</strong> Yes</p>
-              <p className="text-sm"><strong>Accessibility:</strong> WCAG 2.1 AA Compliant</p>
             </div>
             <Separator />
             <p className="text-xs text-muted-foreground leading-relaxed">
@@ -188,7 +200,7 @@ export default function Sitemap() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </StaggerContainer>
     </div>
   );
 }

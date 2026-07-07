@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
 
 interface UserRole {
   id: string;
@@ -53,20 +54,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         .maybeSingle();
 
       if (error) {
-        console.error('Error fetching user role:', error);
         setUserRole(null);
         return;
       }
 
       if (!data) {
-        console.warn('User not found in users table:', userId);
         setUserRole(null);
         return;
       }
 
       setUserRole(data as UserRole);
     } catch (error) {
-      console.error('Error fetching user role:', error);
+      toast({
+        title: 'Error',
+        description: 'Could not verify your account role. Try signing in again.',
+        variant: 'destructive',
+      });
       setUserRole(null);
     }
   };

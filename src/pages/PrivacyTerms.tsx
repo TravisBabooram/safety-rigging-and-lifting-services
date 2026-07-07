@@ -1,24 +1,34 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Shield, FileText, Eye, Lock, Phone, Mail } from "lucide-react";
+import { MotionWrapper } from "@/components/animations/MotionWrapper";
+import { SEO } from "@/components/SEO";
 
 export default function PrivacyTerms() {
   return (
     <div className="container mx-auto px-4 py-16 space-y-16">
+      <SEO
+        title="Privacy Policy & Terms | Safety Rigging & Lifting Services Ltd."
+        description="Privacy policy and terms of use for Safety Rigging & Lifting Services Ltd."
+        canonical="https://safetyriggingandliftingconsultancy.com/privacy-terms"
+      />
+
       {/* Hero Section */}
       <section className="text-center space-y-6">
-        <div className="flex items-center justify-center space-x-2 mb-4">
-          <Shield className="h-8 w-8 text-accent" />
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground">Privacy & Terms</h1>
-        </div>
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          Your privacy and trust are important to us. Learn about how we collect, use, 
-          and protect your information, and our terms of service.
-        </p>
+        <MotionWrapper>
+          <div className="flex items-center justify-center space-x-2 mb-4">
+            <Shield className="h-8 w-8 text-accent" />
+            <h1 className="text-4xl md:text-6xl font-bold text-foreground">Privacy & Terms</h1>
+          </div>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Your privacy and trust are important to us. Learn about how we collect, use,
+            and protect your information, and our terms of service.
+          </p>
+        </MotionWrapper>
       </section>
 
       {/* Privacy Policy */}
-      <section>
+      <MotionWrapper as="section">
         <Card className="shadow-industrial">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2 text-2xl">
@@ -120,10 +130,10 @@ export default function PrivacyTerms() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </MotionWrapper>
 
       {/* Terms of Use */}
-      <section>
+      <MotionWrapper as="section">
         <Card className="shadow-industrial">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2 text-2xl">
@@ -191,18 +201,20 @@ export default function PrivacyTerms() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </MotionWrapper>
 
       {/* Contact for Privacy/Terms Questions */}
       <section className="bg-gradient-card rounded-lg p-8 shadow-card">
-        <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-foreground mb-4">Questions About Privacy or Terms?</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            If you have any questions about this Privacy Policy or Terms of Use, please contact us using 
-            the information below.
-          </p>
-        </div>
-        
+        <MotionWrapper>
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-foreground mb-4">Questions About Privacy or Terms?</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              If you have any questions about this Privacy Policy or Terms of Use, please contact us using
+              the information below.
+            </p>
+          </div>
+        </MotionWrapper>
+
         <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
           <div className="text-center space-y-2">
             <Phone className="h-8 w-8 text-accent mx-auto" />

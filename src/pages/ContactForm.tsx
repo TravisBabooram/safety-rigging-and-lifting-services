@@ -15,6 +15,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Send, CheckCircle, Shield, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 // Form validation schema
 const contactFormSchema = z.object({
@@ -35,7 +36,8 @@ type ContactFormData = z.infer<typeof contactFormSchema>;
 
 export default function ContactForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  
+  const { toast } = useToast();
+
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -83,12 +85,11 @@ export default function ContactForm() {
         });
 
         if (emailError) {
-          console.error('Error sending email notification:', emailError);
-          // Don't throw error here - form submission should still succeed
+          // Don't throw or toast here — the message was saved successfully;
+          // the email side-channel failing shouldn't read as a form error.
         }
       } catch (emailError) {
-        console.error('Failed to send email notification:', emailError);
-        // Don't throw error here - form submission should still succeed
+        // Same as above — form submission already succeeded.
       }
 
       // Set success state
@@ -100,8 +101,11 @@ export default function ContactForm() {
         setIsSubmitted(false);
       }, 5000);
     } catch (error) {
-      console.error('Error submitting form:', error);
-      // You might want to show an error toast here
+      toast({
+        title: 'Error',
+        description: 'Could not send your message. Please try again.',
+        variant: 'destructive',
+      });
     }
   };
 
