@@ -205,7 +205,11 @@ export function HeroSVG() {
       aria-hidden="true"
       data-cursor="crosshair"
     >
-      <svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} className="h-full w-full">
+      <svg
+        viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+        preserveAspectRatio="xMidYMin meet"
+        className="h-full w-full"
+      >
         <g strokeLinecap="round" strokeLinejoin="round" fill="none">
           {/* Mast (draw index 0) */}
           <motion.rect
