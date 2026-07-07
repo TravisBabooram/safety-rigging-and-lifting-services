@@ -101,7 +101,7 @@ const Index = () => {
       <StructuredData data={LOCAL_BUSINESS_SCHEMA} />
 
       {/* Hero Section — SVG draw crane with scroll-driven text reveal */}
-      <section ref={heroRef} className="relative w-full h-screen overflow-hidden">
+      <section ref={heroRef} className="relative w-full h-dvh overflow-hidden">
         <motion.div style={{ y: craneParallaxY }} className="absolute inset-0">
           <Suspense fallback={<div className="absolute inset-0 bg-background" />}>
             <HeroSVG />
