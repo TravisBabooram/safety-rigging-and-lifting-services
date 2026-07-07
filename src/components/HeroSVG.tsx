@@ -6,6 +6,14 @@ import { useTheme } from "next-themes";
 const VIEW_W = 800;
 const VIEW_H = 600;
 
+// The crane artwork itself only occupies y=130 (cab top) through y=530
+// (mast bottom) of the 0-600 coordinate space above — everything outside
+// that band is empty. Crop the viewBox to that content window (plus a
+// small buffer) so there's no dead space baked into the drawing itself,
+// regardless of how the container's aspect ratio scales it.
+const VIEW_Y_MIN = 115;
+const VIEW_Y_H = 435;
+
 // Mast
 const MAST_X = 390;
 const MAST_Y = 150;
@@ -206,7 +214,7 @@ export function HeroSVG() {
       data-cursor="crosshair"
     >
       <svg
-        viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+        viewBox={`0 ${VIEW_Y_MIN} ${VIEW_W} ${VIEW_Y_H}`}
         preserveAspectRatio="xMidYMin meet"
         className="h-full w-full"
       >
