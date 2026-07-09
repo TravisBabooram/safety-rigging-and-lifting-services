@@ -305,10 +305,12 @@ export function LogoHero({ onBuildComplete }: LogoHeroProps) {
               {/* bow (drawn after = in front of the pin) */}
               <g id="bow">
                 <circle cx="500" cy="300" r="160" fill="#57585a" stroke="#1a1a1a" strokeWidth={7} />
-                {/* keyhole opening (stops just below the pin) */}
+                {/* keyhole opening (stops just below the pin) — genuinely
+                    transparent, not an opaque fill matching some assumed
+                    backdrop, so it reads correctly on any background */}
                 <path
                   d="M458,127 L458,240 A85,85 0 1 0 542,240 L542,127 Z"
-                  fill="#fdfdfc"
+                  fill="none"
                   stroke="#1a1a1a"
                   strokeWidth={6}
                   strokeLinejoin="round"
