@@ -11,6 +11,28 @@ const STEEL = "hsl(var(--muted-foreground))";
 const OUTLINE = "hsl(var(--foreground))";
 const ORANGE = "hsl(var(--primary))";
 
+// Lattice geometry — mast/jib rails plus evenly-spaced struts and
+// alternating diagonal bracing, the same truss language the original
+// crane hero animation used, so this reads as a real structure rather
+// than a couple of flat bars.
+const MAST_RAIL_L = 28;
+const MAST_RAIL_R = 35;
+const MAST_TOP = 40;
+const MAST_BOTTOM = 408;
+const JIB_TOP = 36;
+const JIB_BOTTOM = 45;
+const JIB_END_X = 133;
+const COUNTER_END_X = 10;
+
+function evenlySpaced(start: number, end: number, count: number) {
+  const step = (end - start) / (count - 1);
+  return Array.from({ length: count }, (_, i) => start + step * i);
+}
+
+const MAST_BRACE_YS = evenlySpaced(MAST_TOP, MAST_BOTTOM, 10);
+const JIB_STRUT_XS = evenlySpaced(MAST_RAIL_R, JIB_END_X, 8);
+const COUNTER_STRUT_XS = evenlySpaced(COUNTER_END_X, MAST_RAIL_L, 3);
+
 // Local SVG units (viewBox is 0 0 144 420) — where the hook starts (slack,
 // text not yet lifted) and where it rests once the tagline has risen. Rest
 // lands the hook directly on the plate's corner (measured against the
@@ -73,21 +95,62 @@ function CraneRig({ ready, reduced, hookRestY }: { ready: boolean; reduced: bool
   }, [ready, reduced, hookRestY, cable, hook]);
 
   return (
-    <svg viewBox="0 0 144 420" className="h-full w-auto overflow-visible">
-      {/* counterweight + counter-jib, purely for silhouette balance */}
-      <rect x="4" y="34" width="10" height="26" rx="2" fill={STEEL} />
-      <rect x="14" y="38" width="14" height="8" fill={STEEL} />
-      {/* mast */}
-      <rect x="28" y="40" width="7" height="368" fill={STEEL} />
-      {/* jib, extends toward the tagline */}
-      <rect x="28" y="36" width="109" height="9" fill={STEEL} />
-      {/* jib-tip bracket */}
-      <rect x="133" y="31" width="5" height="18" fill={OUTLINE} />
+    <svg viewBox="0 0 144 420" className="h-full w-auto overflow-visible" strokeLinecap="round">
+      {/* counterweight block */}
+      <rect x="2" y="30" width="12" height="27" rx="1.5" fill={STEEL} stroke={OUTLINE} strokeWidth={1.25} />
+
+      {/* counter-jib truss (short arm balancing the counterweight) */}
+      <line x1={COUNTER_END_X} y1={JIB_TOP} x2={MAST_RAIL_L} y2={JIB_TOP} stroke={STEEL} strokeWidth={1.75} />
+      <line x1={COUNTER_END_X} y1={JIB_BOTTOM} x2={MAST_RAIL_L} y2={JIB_BOTTOM} stroke={STEEL} strokeWidth={1.75} />
+      {COUNTER_STRUT_XS.map((x) => (
+        <line key={`cs-${x}`} x1={x} y1={JIB_TOP} x2={x} y2={JIB_BOTTOM} stroke={STEEL} strokeWidth={1} />
+      ))}
+
+      {/* jib truss, extends toward the tagline */}
+      <line x1={MAST_RAIL_R} y1={JIB_TOP} x2={JIB_END_X} y2={JIB_TOP} stroke={STEEL} strokeWidth={1.75} />
+      <line x1={MAST_RAIL_R} y1={JIB_BOTTOM} x2={JIB_END_X} y2={JIB_BOTTOM} stroke={STEEL} strokeWidth={1.75} />
+      {JIB_STRUT_XS.map((x) => (
+        <line key={`js-${x}`} x1={x} y1={JIB_TOP} x2={x} y2={JIB_BOTTOM} stroke={STEEL} strokeWidth={1} />
+      ))}
+      {JIB_STRUT_XS.slice(0, -1).map((x, i) => {
+        const nextX = JIB_STRUT_XS[i + 1];
+        const forward = i % 2 === 0;
+        return (
+          <line
+            key={`jd-${x}`}
+            x1={forward ? x : nextX} y1={JIB_TOP}
+            x2={forward ? nextX : x} y2={JIB_BOTTOM}
+            stroke={STEEL} strokeWidth={0.75}
+          />
+        );
+      })}
+
+      {/* mast lattice */}
+      <line x1={MAST_RAIL_L} y1={MAST_TOP} x2={MAST_RAIL_L} y2={MAST_BOTTOM} stroke={STEEL} strokeWidth={2.25} />
+      <line x1={MAST_RAIL_R} y1={MAST_TOP} x2={MAST_RAIL_R} y2={MAST_BOTTOM} stroke={STEEL} strokeWidth={2.25} />
+      {MAST_BRACE_YS.slice(0, -1).map((y, i) => {
+        const nextY = MAST_BRACE_YS[i + 1];
+        const forward = i % 2 === 0;
+        return (
+          <line
+            key={`mb-${y}`}
+            x1={forward ? MAST_RAIL_L : MAST_RAIL_R} y1={y}
+            x2={forward ? MAST_RAIL_R : MAST_RAIL_L} y2={nextY}
+            stroke={STEEL} strokeWidth={0.85}
+          />
+        );
+      })}
+
+      {/* operator's cab, tucked under the jib at the mast */}
+      <rect x="19" y="46" width="21" height="14" rx="1.5" fill={STEEL} stroke={OUTLINE} strokeWidth={1.25} />
+
+      {/* jib-tip bracket, anchors the cable */}
+      <rect x={JIB_END_X} y={JIB_TOP - 5} width="5" height={JIB_BOTTOM - JIB_TOP + 10} fill={OUTLINE} />
 
       {/* cable — y2 animates from slack (HOOK_START_Y) up to resting (hookRestY) */}
       <motion.line
         x1={135.5}
-        y1={45}
+        y1={JIB_BOTTOM}
         x2={135.5}
         initial={{ y2: reduced ? hookRestY : HOOK_START_Y }}
         animate={cable}
@@ -95,12 +158,18 @@ function CraneRig({ ready, reduced, hookRestY }: { ready: boolean; reduced: bool
         strokeWidth={2}
       />
 
-      {/* hook — translates in lockstep with the cable's endpoint, reaching
-          down onto the plate's corner (rendered on top of it, per normal
-          stacking, so it reads as gripping the edge) */}
+      {/* hook block — translates in lockstep with the cable's endpoint,
+          reaching down onto the plate's corner (rendered on top of it, per
+          normal stacking, so it reads as gripping the edge) */}
       <motion.g initial={{ y: reduced ? hookRestY : HOOK_START_Y }} animate={hook}>
-        <circle cx={135.5} cy={0} r={6} fill={ORANGE} stroke={OUTLINE} strokeWidth={2} />
-        <path d="M135.5,4 q10,10 0,19" fill="none" stroke={OUTLINE} strokeWidth={2.5} strokeLinecap="round" />
+        <rect x={135.5 - 5.5} y={0} width={11} height={9} rx={1.5} fill={STEEL} stroke={OUTLINE} strokeWidth={1.5} />
+        <circle cx={135.5} cy={4.5} r={1.6} fill={ORANGE} />
+        <path
+          d={`M${135.5 - 3.5},9 L${135.5 - 3.5},14.5 A3.5,3.5 0 0 0 ${135.5 + 3.5},14.5 L${135.5 + 3.5},9`}
+          fill="none"
+          stroke={OUTLINE}
+          strokeWidth={2}
+        />
       </motion.g>
     </svg>
   );
