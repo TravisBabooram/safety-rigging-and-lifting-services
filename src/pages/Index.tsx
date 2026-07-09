@@ -40,25 +40,6 @@ const LOCAL_BUSINESS_SCHEMA = {
   priceRange: "$$",
 };
 
-// A short chain-link stub hinting the plate is suspended from the crane on
-// that side — deliberately short and decorative rather than a precisely
-// measured line to the crane's hook, since the plate's width (and the
-// crane's fixed vw/vh position) both shift independently across viewports.
-function ChainStub({ mirrored }: { mirrored?: boolean }) {
-  return (
-    <svg
-      viewBox="0 0 40 60"
-      className={`h-9 w-auto sm:h-11 ${mirrored ? "-scale-x-100" : ""}`}
-      style={{ overflow: "visible" }}
-    >
-      <g transform="rotate(-30 20 30)" stroke="hsl(var(--muted-foreground))" strokeWidth={3} fill="none">
-        <ellipse cx={20} cy={10} rx={6} ry={9} />
-        <ellipse cx={20} cy={28} rx={6} ry={9} />
-      </g>
-    </svg>
-  );
-}
-
 const TAGLINE_WORDS = "PRECISION LIFTING. PROVEN SAFETY.".split(" ");
 const SUBHEADING = "Trinidad's trusted rigging & lifting consultancy — certified, experienced, precise.";
 // A brief pause after the logo settles, not a guess at how long the logo
@@ -161,14 +142,6 @@ const Index = () => {
               }
               transition={{ delay: REVEAL_BUFFER, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             >
-              {/* chain stubs — hint the plate hangs from the cranes flanking it */}
-              <div className="pointer-events-none absolute -left-7 -top-9 hidden lg:block [@media(max-height:700px)]:hidden">
-                <ChainStub />
-              </div>
-              <div className="pointer-events-none absolute -right-7 -top-9 hidden lg:block [@media(max-height:700px)]:hidden">
-                <ChainStub mirrored />
-              </div>
-
               <h1
                 className="font-heading font-bold uppercase text-foreground text-4xl sm:text-5xl md:text-6xl xl:text-7xl [@media(max-height:700px)]:text-2xl leading-[1.05] tracking-wide"
                 style={{ textWrap: "balance" }}
