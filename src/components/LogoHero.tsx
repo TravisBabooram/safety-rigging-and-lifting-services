@@ -282,6 +282,14 @@ export function LogoHero({ onBuildComplete }: LogoHeroProps) {
             <clipPath id="barClip">
               <rect id="barClipRect" x="55" y="805" width="0" height="72" rx="10" />
             </clipPath>
+            {/* Punches an actual hole in the bow circle for the keyhole —
+                fill="none" on a path only skips painting new fill, it
+                doesn't erase what's already been drawn underneath, so the
+                circle needs to be masked to be genuinely see-through. */}
+            <mask id="keyholeMask">
+              <rect x="0" y="0" width="1000" height="920" fill="#fff" />
+              <path d="M458,127 L458,240 A85,85 0 1 0 542,240 L542,127 Z" fill="#000" />
+            </mask>
           </defs>
 
           <g id="logo" style={{ filter: "drop-shadow(0 22px 26px rgba(0,0,0,.35))" }}>
@@ -304,10 +312,10 @@ export function LogoHero({ onBuildComplete }: LogoHeroProps) {
               </g>
               {/* bow (drawn after = in front of the pin) */}
               <g id="bow">
-                <circle cx="500" cy="300" r="160" fill="#57585a" stroke="#1a1a1a" strokeWidth={7} />
-                {/* keyhole opening (stops just below the pin) — genuinely
-                    transparent, not an opaque fill matching some assumed
-                    backdrop, so it reads correctly on any background */}
+                <circle cx="500" cy="300" r="160" fill="#57585a" stroke="#1a1a1a" strokeWidth={7} mask="url(#keyholeMask)" />
+                {/* keyhole opening (stops just below the pin) — the mask
+                    above does the actual cutting; this just draws the ink
+                    border on top of the hole it left */}
                 <path
                   d="M458,127 L458,240 A85,85 0 1 0 542,240 L542,127 Z"
                   fill="none"
