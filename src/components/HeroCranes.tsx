@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion, useAnimation, useReducedMotion, type AnimationControls } from "framer-motion";
+import { motion, useAnimation, useReducedMotion, type LegacyAnimationControls } from "framer-motion";
 
 interface HeroCranesProps {
   // Same signal LogoHero's onBuildComplete feeds into — the cranes hoist
@@ -60,8 +60,8 @@ function useIsWideViewport() {
 }
 
 function CraneRig({ ready, reduced, hookRestY }: { ready: boolean; reduced: boolean; hookRestY: number }) {
-  const cable: AnimationControls = useAnimation();
-  const hook: AnimationControls = useAnimation();
+  const cable: LegacyAnimationControls = useAnimation();
+  const hook: LegacyAnimationControls = useAnimation();
 
   useEffect(() => {
     if (reduced) {
