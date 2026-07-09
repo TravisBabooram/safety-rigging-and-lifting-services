@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, lazy, Suspense } from "react";
+import { useCallback, useEffect, useRef, useState, lazy, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Construction, FileText, Shield, GraduationCap, Phone, Mail, CheckCircle, ChevronDown } from "lucide-react";
@@ -41,15 +41,18 @@ const LOCAL_BUSINESS_SCHEMA = {
 
 const TAGLINE_WORDS = "PRECISION LIFTING. PROVEN SAFETY.".split(" ");
 const SUBHEADING = "Trinidad's trusted rigging & lifting consultancy — certified, experienced, precise.";
-const TAGLINE_START = 3.5;
+// A brief pause after the logo settles, not a guess at how long the logo
+// animation itself takes — that's reported live via onBuildComplete below.
+const REVEAL_BUFFER = 0.15;
 const TAGLINE_STAGGER = 0.08;
 const TAGLINE_DURATION = 0.5;
-const SUBHEADING_DELAY = TAGLINE_START + TAGLINE_WORDS.length * TAGLINE_STAGGER + TAGLINE_DURATION;
+const SUBHEADING_DELAY = REVEAL_BUFFER + TAGLINE_WORDS.length * TAGLINE_STAGGER + TAGLINE_DURATION;
 const CTA_DELAY = SUBHEADING_DELAY + 0.4;
 
 const Index = () => {
   const heroRef = useRef<HTMLElement>(null);
   const [showScrollHint, setShowScrollHint] = useState(true);
+  const [logoReady, setLogoReady] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -62,6 +65,15 @@ const Index = () => {
     const handleScroll = () => setShowScrollHint(window.scrollY < 100);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleLogoBuildComplete = useCallback(() => setLogoReady(true), []);
+
+  // Safety net: reveal the tagline even if the logo's onBuildComplete never
+  // fires (e.g. the lazy chunk fails to load).
+  useEffect(() => {
+    const fallback = setTimeout(() => setLogoReady(true), 8000);
+    return () => clearTimeout(fallback);
   }, []);
 
   const services = [
@@ -104,17 +116,17 @@ const Index = () => {
       <section ref={heroRef} className="relative w-full h-dvh overflow-hidden">
         <motion.div style={{ y: logoParallaxY }} className="absolute inset-0">
           <Suspense fallback={<div className="absolute inset-0 bg-background" />}>
-            <LogoHero />
+            <LogoHero onBuildComplete={handleLogoBuildComplete} />
           </Suspense>
         </motion.div>
 
         <motion.div
           style={{ y: textParallaxY }}
-          className="absolute inset-0 flex items-end justify-center px-4 pb-28 md:pb-32 pointer-events-none"
+          className="absolute inset-0 flex items-end justify-center px-4 pb-28 md:pb-32 [@media(max-height:700px)]:pb-6 pointer-events-none"
         >
-          <div className="text-center max-w-4xl space-y-6">
+          <div className="text-center max-w-4xl space-y-6 [@media(max-height:700px)]:space-y-2">
             <h1
-              className="font-heading font-bold uppercase text-foreground text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-wide"
+              className="font-heading font-bold uppercase text-foreground text-4xl sm:text-5xl md:text-6xl lg:text-7xl [@media(max-height:700px)]:text-2xl leading-[1.05] tracking-wide"
               style={{ textWrap: "balance" }}
             >
               {TAGLINE_WORDS.map((word, i) => (
@@ -122,9 +134,9 @@ const Index = () => {
                   key={i}
                   className="inline-block mr-[0.25em]"
                   initial={{ y: 30, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
+                  animate={logoReady ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
                   transition={{
-                    delay: TAGLINE_START + i * TAGLINE_STAGGER,
+                    delay: REVEAL_BUFFER + i * TAGLINE_STAGGER,
                     duration: TAGLINE_DURATION,
                     ease: "easeOut",
                   }}
@@ -137,7 +149,7 @@ const Index = () => {
             <motion.p
               className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto"
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              animate={logoReady ? { opacity: 1 } : { opacity: 0 }}
               transition={{ delay: SUBHEADING_DELAY, duration: 0.6, ease: "easeOut" }}
             >
               {SUBHEADING}
@@ -146,7 +158,7 @@ const Index = () => {
             <motion.div
               className="pointer-events-auto pt-2 flex flex-col sm:flex-row gap-4 justify-center"
               initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
+              animate={logoReady ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
               transition={{ delay: CTA_DELAY, duration: 0.5, type: "spring", stiffness: 260, damping: 18 }}
             >
               <Button variant="cta" size="xl" asChild>

@@ -1,11 +1,23 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 
+interface LogoHeroProps {
+  // Fired once the build-in sequence finishes (or immediately, under
+  // prefers-reduced-motion) so callers can time other UI — e.g. the hero
+  // tagline — to when the logo actually settles instead of guessing.
+  onBuildComplete?: () => void;
+}
+
 // Ported from src/srls-logo-animated.html — the shackle-and-plate brand mark
 // assembling itself, then swaying gently at rest. Runs entirely on GSAP
 // against id selectors scoped to this component via gsap.context, mirroring
 // the standalone demo file 1:1 so it stays easy to diff against.
-export function LogoHero() {
+//
+// The choreography below is the demo's original, unhurried pacing; it's
+// compressed with tl.timeScale() rather than rewritten so every relative
+// beat (bounce, overlap, jolt) stays intact while the whole build-in fits
+// a hero's attention span.
+export function LogoHero({ onBuildComplete }: LogoHeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const fxRef = useRef<SVGGElement>(null);
   const masterRef = useRef<gsap.core.Timeline | null>(null);
@@ -74,7 +86,13 @@ export function LogoHero() {
         gsap.set("#barClipRect", { attr: { width: 0 } });
         gsap.set("#glint", { x: -100 });
 
-        const tl = gsap.timeline({ defaults: { ease: "power3.out" }, onComplete: startAmbient });
+        const tl = gsap.timeline({
+          defaults: { ease: "power3.out" },
+          onComplete: () => {
+            startAmbient();
+            onBuildComplete?.();
+          },
+        });
 
         // 1 — bow crashes in from above
         tl.from("#bow", { y: -620, duration: 1.0, ease: "bounce.out" })
@@ -118,11 +136,16 @@ export function LogoHero() {
           // 9 — first glint sweep
           .fromTo("#glint", { x: -100 }, { x: 1600, duration: 1.1, ease: "power2.inOut" }, "-=1.0");
 
+        // The full 9.4s choreography above is the demo's original pacing —
+        // compress it 2x so the hero's tagline isn't waiting on it.
+        tl.timeScale(2);
+
         return tl;
       }
 
       if (reduced) {
         gsap.set("#barClipRect", { attr: { width: 890 } });
+        onBuildComplete?.();
       } else {
         masterRef.current = build();
       }
@@ -148,16 +171,18 @@ export function LogoHero() {
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 flex items-start justify-center bg-background transition-colors duration-400 pt-[9vh] sm:pt-[10vh] md:pt-[11vh]"
+      className="absolute inset-0 flex items-start justify-center bg-background transition-colors duration-400 pt-[2vh] [@media(max-height:700px)]:pt-[1vh]"
       aria-hidden="true"
     >
-      <div
-        className="w-[54vw] max-w-[320px] sm:max-w-[360px] md:max-w-[420px] lg:max-w-[460px] cursor-pointer"
-        onClick={handleClick}
-      >
+      {/* Sized against viewport height, not width — the constraint that
+          matters here is clearing the tagline pinned below, which is a
+          function of how tall the viewport is, not how wide. The
+          max-height variant covers short/landscape viewports (old
+          laptops, rotated phones) where 30vh would still collide. */}
+      <div className="cursor-pointer" onClick={handleClick}>
         <svg
           viewBox="0 0 1000 920"
-          className="w-full h-auto overflow-visible"
+          className="h-[30vh] sm:h-[32vh] md:h-[34vh] [@media(max-height:700px)]:h-[20vh] w-auto max-w-[85vw] overflow-visible"
           aria-label="Safety Rigging &amp; Lifting Services Ltd. logo"
         >
           <defs>
