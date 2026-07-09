@@ -8,6 +8,7 @@ import { MotionWrapper } from "@/components/animations/MotionWrapper";
 import { StaggerContainer } from "@/components/animations/StaggerContainer";
 import { SEO } from "@/components/SEO";
 import { StructuredData } from "@/components/StructuredData";
+import { HeroCranes } from "@/components/HeroCranes";
 
 // Animation-heavy hero graphic — kept out of the main bundle.
 const LogoHero = lazy(() => import("@/components/LogoHero"));
@@ -124,6 +125,7 @@ const Index = () => {
           style={{ y: textParallaxY }}
           className="absolute inset-0 flex items-end justify-center px-4 pb-28 md:pb-32 [@media(max-height:700px)]:pb-6 pointer-events-none"
         >
+          <HeroCranes ready={logoReady} />
           <div className="text-center max-w-4xl space-y-6 [@media(max-height:700px)]:space-y-2">
             <h1
               className="font-heading font-bold uppercase text-foreground text-4xl sm:text-5xl md:text-6xl lg:text-7xl [@media(max-height:700px)]:text-2xl leading-[1.05] tracking-wide"
