@@ -14,7 +14,7 @@ const ORANGE = "hsl(var(--primary))";
 // Local SVG units (viewBox is 0 0 130 420) — where the hook starts (slack,
 // text not yet lifted) and where it rests once the tagline has risen.
 const HOOK_START_Y = 300;
-const HOOK_REST_Y = 55;
+const HOOK_REST_Y = 126;
 
 function CraneRig({ ready, reduced }: { ready: boolean; reduced: boolean }) {
   const cable: AnimationControls = useAnimation();
@@ -92,13 +92,13 @@ export function HeroCranes({ ready }: HeroCranesProps) {
   return (
     <>
       <div
-        className="pointer-events-none absolute bottom-0 left-[2vw] hidden h-[64vh] lg:block xl:left-[4vw] [@media(max-height:700px)]:hidden"
+        className="pointer-events-none absolute bottom-0 left-[2vw] hidden h-[82vh] lg:block xl:left-[4vw] [@media(max-height:700px)]:hidden"
         aria-hidden="true"
       >
         <CraneRig ready={ready} reduced={reduced} />
       </div>
       <div
-        className="pointer-events-none absolute bottom-0 right-[2vw] hidden h-[64vh] -scale-x-100 lg:block xl:right-[4vw] [@media(max-height:700px)]:hidden"
+        className="pointer-events-none absolute bottom-0 right-[2vw] hidden h-[82vh] -scale-x-100 lg:block xl:right-[4vw] [@media(max-height:700px)]:hidden"
         aria-hidden="true"
       >
         <CraneRig ready={ready} reduced={reduced} />
