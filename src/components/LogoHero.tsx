@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { motion, useReducedMotion } from "framer-motion";
 
 interface LogoHeroProps {
   // Fired once the build-in sequence finishes (or immediately, under
@@ -21,6 +22,63 @@ export function LogoHero({ onBuildComplete }: LogoHeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const fxRef = useRef<SVGGElement>(null);
   const masterRef = useRef<gsap.core.Timeline | null>(null);
+  const emberRef = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  // Ambient embers drifting across the whole hero — independent of the
+  // build timeline above, so they're just atmosphere behind the logo.
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+    const container = emberRef.current;
+    if (!container) return;
+
+    let cancelled = false;
+    let timeoutId = window.setTimeout(spawn, 600);
+
+    function spawn() {
+      if (cancelled) return;
+      const ember = document.createElement("span");
+      const left = 6 + Math.random() * 88;
+      const top = 20 + Math.random() * 70;
+      const size = 2 + Math.random() * 2;
+      Object.assign(ember.style, {
+        position: "absolute",
+        left: `${left}%`,
+        top: `${top}%`,
+        width: `${size}px`,
+        height: `${size}px`,
+        borderRadius: "9999px",
+        background: "#E8510A",
+        pointerEvents: "none",
+        opacity: "0",
+        filter: "blur(0.3px)",
+      });
+      container.appendChild(ember);
+
+      gsap.to(ember, {
+        opacity: 0.5 + Math.random() * 0.3,
+        duration: 1.2,
+        ease: "power1.out",
+        onComplete: () => {
+          gsap.to(ember, {
+            y: -(50 + Math.random() * 70),
+            x: (Math.random() - 0.5) * 40,
+            opacity: 0,
+            duration: 3 + Math.random() * 2,
+            ease: "power1.out",
+            onComplete: () => ember.remove(),
+          });
+        },
+      });
+
+      timeoutId = window.setTimeout(spawn, 700 + Math.random() * 900);
+    }
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeoutId);
+    };
+  }, [prefersReducedMotion]);
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -174,12 +232,39 @@ export function LogoHero({ onBuildComplete }: LogoHeroProps) {
       className="absolute inset-0 flex items-start justify-center bg-background transition-colors duration-400 pt-[2vh] [@media(max-height:700px)]:pt-[1vh]"
       aria-hidden="true"
     >
+      {/* Blueprint grid — faint, drifts slowly. Pure background atmosphere,
+          drawn from --border so it adapts to theme with no JS. */}
+      <motion.div
+        className="absolute inset-0 opacity-[0.4]"
+        style={{
+          backgroundImage:
+            "linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)",
+          backgroundSize: "56px 56px",
+        }}
+        animate={prefersReducedMotion ? undefined : { backgroundPosition: ["0px 0px", "56px 56px"] }}
+        transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+      />
+
+      {/* Radial glow — breathes behind the logo, sized/positioned to match
+          its own height breakpoints so it stays centered on it. */}
+      <div className="absolute left-1/2 top-[2vh] -translate-x-1/2 [@media(max-height:700px)]:top-[1vh]">
+        <motion.div
+          className="aspect-square h-[30vh] rounded-full blur-3xl sm:h-[32vh] md:h-[34vh] [@media(max-height:700px)]:h-[20vh]"
+          style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.35), transparent 70%)" }}
+          animate={prefersReducedMotion ? undefined : { opacity: [0.5, 0.9, 0.5], scale: [0.95, 1.05, 0.95] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
+
+      {/* Ambient embers layer, populated by the effect above */}
+      <div ref={emberRef} className="absolute inset-0 overflow-hidden" />
+
       {/* Sized against viewport height, not width — the constraint that
           matters here is clearing the tagline pinned below, which is a
           function of how tall the viewport is, not how wide. The
           max-height variant covers short/landscape viewports (old
           laptops, rotated phones) where 30vh would still collide. */}
-      <div className="cursor-pointer" onClick={handleClick}>
+      <div className="relative z-10 cursor-pointer" onClick={handleClick}>
         <svg
           viewBox="0 0 1000 920"
           className="h-[30vh] sm:h-[32vh] md:h-[34vh] [@media(max-height:700px)]:h-[20vh] w-auto max-w-[85vw] overflow-visible"
