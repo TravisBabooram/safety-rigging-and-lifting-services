@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SRLS — Animated Logo</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#F26522;
+    --steel:#57585a;
+    --steel-mid:#4a4a4b;
+    --steel-dark:#3f4041;
+    --ink:#1a1a1a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    background:radial-gradient(1000px 700px at 50% 42%, #ffffff 0%, #f2f0ec 55%, #e6e3dd 100%);
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+    font-family:'Barlow Condensed','Arial Narrow',sans-serif;
+  }
+  .stage{width:min(92vw, 640px);cursor:pointer}
+  svg{width:100%;height:auto;display:block;overflow:visible}
+  #logo{filter:drop-shadow(0 22px 26px rgba(0,0,0,.22))}
+
+  .replay{
+    position:fixed;top:20px;right:20px;
+    background:#1a1a1a;color:#f2f0ec;border:none;
+    font:600 13px/1 'Barlow Condensed',sans-serif;
+    letter-spacing:.18em;text-transform:uppercase;
+    padding:10px 18px;cursor:pointer;border-radius:3px;
+  }
+  .replay:hover{background:var(--orange);color:#1a1a1a}
+  .hint{
+    position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
+    font:600 12px/1 'Barlow Condensed',sans-serif;letter-spacing:.2em;
+    text-transform:uppercase;color:#9b978f;
+  }
+</style>
+</head>
+<body>
+
+<button class="replay" onclick="replay()">↻ Replay</button>
+<div class="hint">click the logo to swing it</div>
+
+<div class="stage" id="stage">
+<svg viewBox="0 0 1000 920" xmlns="http://www.w3.org/2000/svg" aria-label="SRLS — Safety Rigging and Lifting Services Ltd.">
+  <defs>
+    <linearGradient id="glintGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0"   stop-color="#fff" stop-opacity="0"/>
+      <stop offset=".5"  stop-color="#fff" stop-opacity=".35"/>
+      <stop offset="1"   stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="plateClip">
+      <rect x="92" y="577" width="816" height="181" rx="12"/>
+    </clipPath>
+    <clipPath id="barClip">
+      <rect id="barClipRect" x="55" y="805" width="0" height="72" rx="10"/>
+    </clipPath>
+  </defs>
+
+  <g id="logo">
+
+    <!-- ================= SHACKLE ================= -->
+    <g id="shackle">
+      <!-- pin assembly (drawn first = sits behind the bow) -->
+      <g id="pinGroup">
+        <rect id="pin" x="310" y="70" width="390" height="54" rx="27" fill="#5b5c5e" stroke="#1a1a1a" stroke-width="7"/>
+        <g id="pinhead">
+          <circle cx="678" cy="97" r="48" fill="#47484a" stroke="#1a1a1a" stroke-width="7"/>
+          <circle cx="678" cy="97" r="19" fill="#2e2f30" stroke="#1a1a1a" stroke-width="5"/>
+        </g>
+        <g id="nut">
+          <rect x="278" y="56" width="54" height="82" rx="10" fill="#4d4e50" stroke="#1a1a1a" stroke-width="7"/>
+          <rect x="246" y="80" width="36" height="34" rx="6" fill="#57585a" stroke="#1a1a1a" stroke-width="6"/>
+          <!-- cotter pin prongs -->
+          <path d="M246,88 L222,74" stroke="#1a1a1a" stroke-width="7" stroke-linecap="round"/>
+          <path d="M246,106 L222,120" stroke="#1a1a1a" stroke-width="7" stroke-linecap="round"/>
+        </g>
+      </g>
+      <!-- bow (drawn after = in front of the pin) -->
+      <g id="bow">
+        <circle cx="500" cy="300" r="160" fill="#57585a" stroke="#1a1a1a" stroke-width="7"/>
+        <!-- keyhole opening (stops just below the pin) -->
+        <path d="M458,127 L458,240 A85,85 0 1 0 542,240 L542,127 Z"
+              fill="#fdfdfc" stroke="#1a1a1a" stroke-width="6" stroke-linejoin="round"/>
+        <!-- lugs -->
+        <rect x="380" y="62" width="78" height="170" rx="36" fill="#57585a" stroke="#1a1a1a" stroke-width="7"/>
+        <rect x="542" y="62" width="78" height="170" rx="36" fill="#57585a" stroke="#1a1a1a" stroke-width="7"/>
+        <!-- emblem: black M peaks over inverted orange W -->
+        <g id="emblem" stroke-linecap="square" fill="none" stroke-width="9">
+          <path d="M448,335 L478,300 L508,335" stroke="#1a1a1a"/>
+          <path d="M492,335 L522,300 L552,335" stroke="#1a1a1a"/>
+          <path d="M458,315 L488,347 L518,315" stroke="#F26522"/>
+          <path d="M482,315 L512,347 L542,315" stroke="#F26522"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- ================= SLINGS ================= -->
+    <g id="slings" fill="none" stroke-linecap="round">
+      <path id="slingL_u" d="M500,392 L118,560" stroke="#1a1a1a" stroke-width="34" pathLength="1"/>
+      <path id="slingR_u" d="M500,392 L882,560" stroke="#1a1a1a" stroke-width="34" pathLength="1"/>
+      <path id="slingL_o" d="M500,392 L118,560" stroke="#F26522" stroke-width="22" pathLength="1"/>
+      <path id="slingR_o" d="M500,392 L882,560" stroke="#F26522" stroke-width="22" pathLength="1"/>
+    </g>
+
+    <!-- ================= PLATE ================= -->
+    <g id="plateGroup">
+      <rect x="60" y="545" width="880" height="245" rx="22" fill="#F26522" stroke="#1a1a1a" stroke-width="8"/>
+      <rect x="92" y="577" width="816" height="181" rx="12" fill="#4a4a4b" stroke="#1a1a1a" stroke-width="6"/>
+    </g>
+
+    <!-- ================= LETTERS (block-built, not a font) ================= -->
+    <g id="letters" fill="#F26522" stroke="#1a1a1a" stroke-width="6" stroke-linejoin="round">
+      <path id="L1" d="M120,595 h160 v40 h-120 v15 h120 v95 h-160 v-40 h120 v-15 h-120 z"/>
+      <path id="L2" fill-rule="evenodd" d="M330,595 L490,595 L490,690 L450,690 L490,745 L440,745 L405,698 L370,698 L370,745 L330,745 Z
+                                           M370,635 h80 v15 h-80 z"/>
+      <path id="L3" d="M540,595 h40 v110 h90 v40 h-130 z"/>
+      <path id="L4" d="M720,595 h160 v40 h-120 v15 h120 v95 h-160 v-40 h120 v-15 h-120 z"/>
+    </g>
+
+    <!-- glint sweep over plate -->
+    <g clip-path="url(#plateClip)">
+      <rect id="glint" x="-380" y="540" width="220" height="260" fill="url(#glintGrad)" transform="skewX(-18)"/>
+    </g>
+
+    <!-- ================= NAME BAR ================= -->
+    <g id="barGroup">
+      <rect x="55" y="805" width="890" height="72" rx="10" fill="#3f4041" stroke="#1a1a1a" stroke-width="6"/>
+      <g clip-path="url(#barClip)">
+        <text x="500" y="856" text-anchor="middle"
+              font-family="'Barlow Condensed','Arial Narrow',sans-serif" font-weight="700"
+              font-size="47" fill="#F26522" stroke="#1a1a1a" stroke-width="1.5" letter-spacing="2">
+          SAFETY RIGGING &amp; LIFTING SERVICES LTD.</text>
+      </g>
+    </g>
+
+    <!-- fx layer (dust / sparks) -->
+    <g id="fx"></g>
+  </g>
+</svg>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let master, ambient;
+
+function spawnDust(x, y, color){
+  const fx = document.getElementById('fx');
+  for(let i=0;i<6;i++){
+    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',x); c.setAttribute('cy',y);
+    c.setAttribute('r', 5+Math.random()*7);
+    c.setAttribute('fill', color || 'rgba(120,115,105,.45)');
+    fx.appendChild(c);
+    gsap.to(c,{
+      x:(Math.random()-.5)*160,
+      y:-(20+Math.random()*50),
+      scale:2.2+Math.random(),
+      opacity:0,
+      duration:.7+Math.random()*.4,
+      ease:'power2.out',
+      onComplete:()=>c.remove()
+    });
+    gsap.set(c,{opacity:.9,transformOrigin:'center'});
+  }
+}
+
+function startAmbient(){
+  ambient = gsap.timeline({repeat:-1, yoyo:true, defaults:{ease:'sine.inOut'}});
+  ambient.to('#logo',{rotation:1.3, transformOrigin:'50% -8%', duration:2.6},0)
+         .to('#logo',{y:6, duration:2.6},0);
+  // each letter sways lightly on its own — different speeds and phases
+  const letterSway = [
+    ['#L1', 1.6, 1.9, 0.0],
+    ['#L2', -1.4, 2.3, 0.4],
+    ['#L3', 1.8, 2.1, 0.8],
+    ['#L4', -1.6, 2.5, 0.2]
+  ];
+  letterSway.forEach(([sel, rot, dur, delay])=>{
+    gsap.fromTo(sel, {rotation:-rot}, {
+      rotation:rot, transformOrigin:'50% -30%',
+      duration:dur, delay:delay,
+      repeat:-1, yoyo:true, ease:'sine.inOut'
+    });
+    gsap.to(sel, {y:3, duration:dur*0.8, delay:delay+0.3, repeat:-1, yoyo:true, ease:'sine.inOut'});
+  });
+  // recurring glint sweep
+  gsap.fromTo('#glint',{x:0},{x:1600, duration:1.2, ease:'power2.inOut', repeat:-1, repeatDelay:4.2, delay:1});
+}
+
+function build(){
+  gsap.set('#logo',{rotation:0, y:0});
+  gsap.set('#L1, #L2, #L3, #L4',{rotation:0, y:0});
+  gsap.set(['#slingL_u','#slingR_u','#slingL_o','#slingR_o'],{strokeDasharray:1, strokeDashoffset:1});
+  gsap.set('#barClipRect',{attr:{width:0}});
+  gsap.set('#glint',{x:-100});
+
+  const tl = gsap.timeline({defaults:{ease:'power3.out'}, onComplete:startAmbient});
+
+  // 1 — bow crashes in from above
+  tl.from('#bow',{y:-620, duration:1.0, ease:'bounce.out'})
+    .from('#bow',{rotation:5, transformOrigin:'50% 20%', duration:.9, ease:'elastic.out(1,.35)'},'-=.55')
+
+  // 2 — pin slides through the lugs, head seats, nut spins on, cotter snaps
+    .from('#pin',{x:460, opacity:0, duration:.45, ease:'power4.out'},'-=.35')
+    .from('#pinhead',{scale:0, transformOrigin:'678px 97px', duration:.35, ease:'back.out(2.5)'},'-=.1')
+    .from('#nut',{x:-120, opacity:0, duration:.35, ease:'power4.out'})
+    .from('#nut',{rotation:120, transformOrigin:'305px 97px', duration:.5, ease:'back.out(1.6)'},'-=.2')
+    .add(()=>spawnDust(300, 97, 'rgba(242,101,34,.5)'))
+
+  // 3 — emblem locks together piece by piece
+    .from('#emblem path',{scale:0, rotation:-90, transformOrigin:'500px 326px', stagger:.09, duration:.4, ease:'back.out(2.2)'},'-=.1')
+
+  // 4 — slings pay out from the shackle to the corners
+    .to(['#slingL_u','#slingL_o'],{strokeDashoffset:0, duration:.55, ease:'power2.inOut'},'+=.05')
+    .to(['#slingR_u','#slingR_o'],{strokeDashoffset:0, duration:.55, ease:'power2.inOut'},'<.08')
+
+  // 5 — plate hooks on and takes the load
+    .from('#plateGroup',{y:340, opacity:0, duration:.7, ease:'back.out(1.2)'},'-=.15')
+    .to('#logo',{rotation:-1.6, transformOrigin:'50% -8%', duration:.25, ease:'power2.out'},'-=.3')
+    .to('#logo',{rotation:0, duration:1.1, ease:'elastic.out(1,.3)'})
+
+  // 6 — letters drop in one by one, plate jolts on each impact
+  const drops=[['#L1',200],['#L2',410],['#L3',605],['#L4',800]];
+  drops.forEach((d,i)=>{
+    tl.from(d[0],{y:-260, opacity:0, duration:.45, ease:'bounce.out'}, i===0 ? '-=.6' : '-=.18')
+      .add(()=>spawnDust(d[1], 748))
+      .to('#plateGroup',{scaleY:.975, transformOrigin:'50% 100%', duration:.06, yoyo:true, repeat:1},'-=.05');
+  });
+
+  // 7 — name bar stamps in, text wipes across
+  tl.from('#barGroup',{scaleY:0, transformOrigin:'50% 805px', duration:.35, ease:'back.out(2)'},'-=.1')
+    .to('#barClipRect',{attr:{width:890}, duration:.7, ease:'power2.inOut'})
+
+  // 8 — final hoist: whole logo picks up and settles
+    .to('#logo',{y:-22, duration:.5, ease:'power2.out'},'+=.15')
+    .to('#logo',{y:0, rotation:.8, transformOrigin:'50% -8%', duration:1.4, ease:'elastic.out(1,.3)'})
+
+  // 9 — first glint sweep
+    .fromTo('#glint',{x:-100},{x:1600, duration:1.1, ease:'power2.inOut'},'-=1.0');
+
+  return tl;
+}
+
+function replay(){
+  if(ambient) ambient.kill();
+  gsap.killTweensOf('*');
+  document.getElementById('fx').innerHTML='';
+  if(reduced){ gsap.set('#barClipRect',{attr:{width:890}}); return; }
+  master = build();
+}
+
+// swing impulse on click
+document.getElementById('stage').addEventListener('click', ()=>{
+  if(reduced || (master && master.isActive())) return;
+  if(ambient) ambient.kill();
+  gsap.timeline({onComplete:startAmbient})
+    .to('#logo',{rotation:-5, transformOrigin:'50% -8%', duration:.18, ease:'power2.out'})
+    .to('#logo',{rotation:0, duration:2.2, ease:'elastic.out(1,.18)'});
+});
+
+// go
+if(reduced){
+  gsap.set('#barClipRect',{attr:{width:890}});
+}else{
+  master = build();
+}
+</script>
+</body>
+</html>

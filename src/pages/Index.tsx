@@ -10,7 +10,7 @@ import { SEO } from "@/components/SEO";
 import { StructuredData } from "@/components/StructuredData";
 
 // Animation-heavy hero graphic — kept out of the main bundle.
-const HeroSVG = lazy(() => import("@/components/HeroSVG"));
+const LogoHero = lazy(() => import("@/components/LogoHero"));
 
 const LOCAL_BUSINESS_SCHEMA = {
   "@context": "https://schema.org",
@@ -56,7 +56,7 @@ const Index = () => {
     offset: ["start start", "end start"],
   });
   const textParallaxY = useTransform(scrollYProgress, [0, 1], [0, -120]);
-  const craneParallaxY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  const logoParallaxY = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
   useEffect(() => {
     const handleScroll = () => setShowScrollHint(window.scrollY < 100);
@@ -100,11 +100,11 @@ const Index = () => {
       />
       <StructuredData data={LOCAL_BUSINESS_SCHEMA} />
 
-      {/* Hero Section — SVG draw crane with scroll-driven text reveal */}
+      {/* Hero Section — animated brand logo with scroll-driven text reveal */}
       <section ref={heroRef} className="relative w-full h-dvh overflow-hidden">
-        <motion.div style={{ y: craneParallaxY }} className="absolute inset-0">
+        <motion.div style={{ y: logoParallaxY }} className="absolute inset-0">
           <Suspense fallback={<div className="absolute inset-0 bg-background" />}>
-            <HeroSVG />
+            <LogoHero />
           </Suspense>
         </motion.div>
 
