@@ -326,10 +326,13 @@ export function LogoHero({ onBuildComplete }: LogoHeroProps) {
                 {/* lugs */}
                 <rect x="380" y="62" width="78" height="170" rx="36" fill="#57585a" stroke="#1a1a1a" strokeWidth={7} />
                 <rect x="542" y="62" width="78" height="170" rx="36" fill="#57585a" stroke="#1a1a1a" strokeWidth={7} />
-                {/* emblem: black M peaks over inverted orange W */}
+                {/* emblem: M peaks (theme foreground — white on dark,
+                    near-black on light, so it stays visible now that the
+                    keyhole behind it is genuinely transparent) over
+                    inverted orange W */}
                 <g id="emblem" strokeLinecap="square" fill="none" strokeWidth={9}>
-                  <path d="M448,335 L478,300 L508,335" stroke="#1a1a1a" />
-                  <path d="M492,335 L522,300 L552,335" stroke="#1a1a1a" />
+                  <path d="M448,335 L478,300 L508,335" stroke="hsl(var(--foreground))" />
+                  <path d="M492,335 L522,300 L552,335" stroke="hsl(var(--foreground))" />
                   <path d="M458,315 L488,347 L518,315" stroke="#F26522" />
                   <path d="M482,315 L512,347 L542,315" stroke="#F26522" />
                 </g>
