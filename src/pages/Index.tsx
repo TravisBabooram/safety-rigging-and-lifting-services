@@ -40,6 +40,25 @@ const LOCAL_BUSINESS_SCHEMA = {
   priceRange: "$$",
 };
 
+// A short chain-link stub hinting the plate is suspended from the crane on
+// that side — deliberately short and decorative rather than a precisely
+// measured line to the crane's hook, since the plate's width (and the
+// crane's fixed vw/vh position) both shift independently across viewports.
+function ChainStub({ mirrored }: { mirrored?: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 40 60"
+      className={`h-9 w-auto sm:h-11 ${mirrored ? "-scale-x-100" : ""}`}
+      style={{ overflow: "visible" }}
+    >
+      <g transform="rotate(-30 20 30)" stroke="hsl(var(--muted-foreground))" strokeWidth={3} fill="none">
+        <ellipse cx={20} cy={10} rx={6} ry={9} />
+        <ellipse cx={20} cy={28} rx={6} ry={9} />
+      </g>
+    </svg>
+  );
+}
+
 const TAGLINE_WORDS = "PRECISION LIFTING. PROVEN SAFETY.".split(" ");
 const SUBHEADING = "Trinidad's trusted rigging & lifting consultancy — certified, experienced, precise.";
 // A brief pause after the logo settles, not a guess at how long the logo
@@ -127,26 +146,50 @@ const Index = () => {
         >
           <HeroCranes ready={logoReady} />
           <div className="text-center max-w-4xl space-y-6 [@media(max-height:700px)]:space-y-2">
-            <h1
-              className="font-heading font-bold uppercase text-foreground text-4xl sm:text-5xl md:text-6xl lg:text-7xl [@media(max-height:700px)]:text-2xl leading-[1.05] tracking-wide"
-              style={{ textWrap: "balance" }}
+            <motion.div
+              className="relative inline-block max-w-[88vw] rounded-2xl border-2 px-6 py-4 sm:px-10 sm:py-6 lg:max-w-[700px] xl:max-w-[820px] [@media(max-height:700px)]:px-4 [@media(max-height:700px)]:py-2"
+              style={{
+                backgroundColor: "hsl(var(--card) / 0.85)",
+                borderColor: "hsl(var(--primary))",
+                boxShadow: "0 18px 34px -14px rgba(0,0,0,.5)",
+              }}
+              initial={{ y: 26, opacity: 0, scale: 0.96 }}
+              animate={
+                logoReady
+                  ? { y: 0, opacity: 1, scale: [0.96, 1.03, 1] }
+                  : { y: 26, opacity: 0, scale: 0.96 }
+              }
+              transition={{ delay: REVEAL_BUFFER, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             >
-              {TAGLINE_WORDS.map((word, i) => (
-                <motion.span
-                  key={i}
-                  className="inline-block mr-[0.25em]"
-                  initial={{ y: 30, opacity: 0 }}
-                  animate={logoReady ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
-                  transition={{
-                    delay: REVEAL_BUFFER + i * TAGLINE_STAGGER,
-                    duration: TAGLINE_DURATION,
-                    ease: "easeOut",
-                  }}
-                >
-                  {word}
-                </motion.span>
-              ))}
-            </h1>
+              {/* chain stubs — hint the plate hangs from the cranes flanking it */}
+              <div className="pointer-events-none absolute -left-7 -top-9 hidden lg:block [@media(max-height:700px)]:hidden">
+                <ChainStub />
+              </div>
+              <div className="pointer-events-none absolute -right-7 -top-9 hidden lg:block [@media(max-height:700px)]:hidden">
+                <ChainStub mirrored />
+              </div>
+
+              <h1
+                className="font-heading font-bold uppercase text-foreground text-4xl sm:text-5xl md:text-6xl xl:text-7xl [@media(max-height:700px)]:text-2xl leading-[1.05] tracking-wide"
+                style={{ textWrap: "balance" }}
+              >
+                {TAGLINE_WORDS.map((word, i) => (
+                  <motion.span
+                    key={i}
+                    className="inline-block mr-[0.25em]"
+                    initial={{ y: 30, opacity: 0 }}
+                    animate={logoReady ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
+                    transition={{
+                      delay: REVEAL_BUFFER + i * TAGLINE_STAGGER,
+                      duration: TAGLINE_DURATION,
+                      ease: "easeOut",
+                    }}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </h1>
+            </motion.div>
 
             <motion.p
               className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto"

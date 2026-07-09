@@ -14,7 +14,7 @@ const ORANGE = "hsl(var(--primary))";
 // Local SVG units (viewBox is 0 0 130 420) — where the hook starts (slack,
 // text not yet lifted) and where it rests once the tagline has risen.
 const HOOK_START_Y = 300;
-const HOOK_REST_Y = 132;
+const HOOK_REST_Y = 55;
 
 function CraneRig({ ready, reduced }: { ready: boolean; reduced: boolean }) {
   const cable: AnimationControls = useAnimation();
