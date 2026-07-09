@@ -37,8 +37,8 @@ export default function About() {
         </MotionWrapper>
         <MotionWrapper delay={0.15}>
           <p className="text-xl text-white/85 max-w-3xl mx-auto">
-            Your trusted partner in rigging & lifting solutions with over a decade of expertise
-            in safety, compliance, and operational excellence.
+            Your trusted partner in rigging & lifting solutions with over two decades of
+            expertise in safety, compliance, and operational excellence.
           </p>
         </MotionWrapper>
       </section>

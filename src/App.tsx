@@ -15,6 +15,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scroll-to-top";
+import { ScrollRestoration } from "@/components/ScrollRestoration";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Services from "./pages/Services";
@@ -50,6 +51,7 @@ const App = () => (
             <CustomCursor />
             <BrowserRouter>
               <GoogleAnalytics />
+              <ScrollRestoration />
               <AppContent />
             </BrowserRouter>
           </TooltipProvider>

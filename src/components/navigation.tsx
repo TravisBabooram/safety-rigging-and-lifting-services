@@ -10,13 +10,16 @@ import {
 } from "framer-motion";
 import { Menu, X, Sun, Moon } from "lucide-react";
 
-interface ViewTransition {
+// Minimal shape for the View Transitions API — intersected rather than
+// `extends Document` so it doesn't have to match lib.dom.d.ts's fuller
+// ViewTransition type (which varies across TS versions) member-for-member.
+interface ViewTransitionShim {
   ready: Promise<void>;
 }
 
-interface ViewTransitionDocument extends Document {
-  startViewTransition?: (callback: () => void) => ViewTransition;
-}
+type ViewTransitionDocument = Document & {
+  startViewTransition?: (callback: () => void) => ViewTransitionShim;
+};
 
 const navItems = [
   { name: "Home", path: "/" },

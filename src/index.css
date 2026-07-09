@@ -71,7 +71,7 @@ All colors MUST be HSL.
     --sidebar-border: 0 0% 24%;
     --sidebar-ring: 19 92% 47%;
 
-    /* Plain aliases some components (HeroSVG, CustomCursor) read directly */
+    /* Plain aliases some components read directly */
     --bg-primary: 0 0% 10%;    /* #1A1A1A */
     --bg-card: 0 0% 24%;       /* #3D3D3D */
     --text-primary: 0 0% 100%; /* #FFFFFF */
